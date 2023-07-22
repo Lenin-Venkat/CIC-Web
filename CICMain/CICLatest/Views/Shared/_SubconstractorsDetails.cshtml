@@ -123,7 +123,7 @@
                                 {
                                     <tr id="@i">
                                         <td class="row-index">
-                                            <select asp-for="tab3SecSection[i].NameofSubContractors" class="custom-select form-control" id="SubContractor_0" asp-items="@(new SelectList(@Model.ListOfSubContractors, "SubContractorValue", "SubContractorText"))" onchange="subContractorsChange(0)">
+                                            <select asp-for="tab3SecSection[i].NameofSubContractors" class="custom-select form-control" id="SubContractor_${@i}" asp-items="@(new SelectList(Model.ListOfSubContractors, "SubContractorValue", "SubContractorText"))" onchange="subContractorsChange(@i)">
                                                 <option selected>Select</option>
                                             </select>
                                             @*@Html.DropDownListFor(x => x.tab3SecSection[i].NameofSubContractors, new SelectList(@ViewBag.ListOfSubContractors, "SubContractorValue", "SubContractorText"), "Select", new { id = "SubContractor_" + i, @class = "custom-select form-control" })*@
@@ -516,7 +516,6 @@
             url: "@(Url.Action("GetSubContractorDetails", "Form8"))",
             data: { SubContractor: subContractorElement.val() },
             success: function (data) {
-                debugger;
                 var subcontractorsData = JSON.parse(data);
 
                 var child = $(`#SubContractor_${x}`).closest('tr').nextAll();

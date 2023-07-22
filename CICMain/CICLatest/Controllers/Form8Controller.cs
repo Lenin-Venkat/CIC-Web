@@ -1553,12 +1553,13 @@ namespace CICLatest.Controllers
             saveModelForm8.FaxNo = p1.tabb1.FaxNo;
             saveModelForm8.MobileNo = p1.tabb1.MobileNo;
             saveModelForm8.EmailAddress = p1.tabb1.EmailAddress;
+            //saveModelForm8.PostalAddress = p1.tabb1.Form1PostalAddress;
+
             //2 tab details
             saveModelForm8.Name = p1.tab2.Name;
             saveModelForm8.IDNO = p1.tab2.IDNO;
             saveModelForm8.PassportNo = p1.tab2.PassportNo;
-            saveModelForm8.PostalAddress = p1.tab2.PostalAddress;
-            saveModelForm8.PostalAddress = p1.tab2.PostalAddress;
+            saveModelForm8.PostalAddress = $"{p1.tabb1.Form1PostalAddress}|{p1.tab2.PostalAddress}" ;
             saveModelForm8.PhysicalAddress = p1.tab2.PhysicalAddress;
             saveModelForm8.PhysicalAddress = p1.tab2.PhysicalAddress;
             saveModelForm8.TelephoneWorkdiscipline = p1.tab2.Telephone;
@@ -1745,26 +1746,46 @@ namespace CICLatest.Controllers
                 Tab3SecSection tab3Sec = new Tab3SecSection();
                 if (p1.tab3SecSection != null)
                 {
+                    //Delete all Subcontractors for the given RowKey.
+                    AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", p1.RowKey, out jsonData);
+
+                    JObject subContractorsObj = JObject.Parse(jsonData);
+                    var subcontractorsList = subContractorsObj["value"];
+                    if (subcontractorsList.Any())
+                    {
+                        for (int i = 0; i < subcontractorsList.Count(); i++)
+                        { 
+                            AzureTablesData.DeleteEntity(StorageName, StorageKey , "CicForm8DetailsOfAllSubContractors", (string)subContractorsObj["value"][i]["PartitionKey"], p1.RowKey, string.Empty);
+                        }
+                    }
+
+                    //Workaround to set missing mandatory values
+                    if (p1.tab3SecSection.Count > 1)
+                    {
+                        SetMandatoryColumns(p1);
+                    }
+
+
                     for (int i = 0; i < p1.tab3SecSection.Count; i++)
                     {
                         bool DFlag = cv.IsAnyNullOrEmpty(p1.tab3SecSection[i]);
                         if (DFlag == false)
                         {
+                            //Commenting: This code only inserts or updates the rows present in the Grid - But misses the rows that the user deleted
+
+                            //string Data;
+
+                            //AzureTablesData.GetEntitybyRowPartition(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", p1.tab3SecSection[i].PartitionKey, p1.tab3SecSection[i].RowKey, out Data);
+
+                            //JObject myJObject = JObject.Parse(Data);
+                            //int cntJson = myJObject["value"].Count();
+
+                            //if (cntJson != 0)
+                            //{
+                            //    AzureTablesData.DeleteEntity(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", p1.tab3SecSection[i].PartitionKey, p1.tab3SecSection[i].RowKey, Data);
 
 
-                            string Data;
-
-                            AzureTablesData.GetEntitybyRowPartition(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", p1.tab3SecSection[i].PartitionKey, p1.tab3SecSection[i].RowKey, out Data);
-
-                            JObject myJObject = JObject.Parse(Data);
-                            int cntJson = myJObject["value"].Count();
-
-                            if (cntJson != 0)
-                            {
-                                AzureTablesData.DeleteEntity(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", p1.tab3SecSection[i].PartitionKey, p1.tab3SecSection[i].RowKey, Data);
-
-
-                            }
+                            //}
 
                             tab3Sec.PartitionKey = p1.tab3SecSection[i].NameofSubContractors;
                             tab3Sec.RowKey = "PRN" + tempMax.ToString();
@@ -1787,26 +1808,48 @@ namespace CICLatest.Controllers
                 Tab3ThirdSection tab3Third = new Tab3ThirdSection();
                 if (p1.tab3ThirdSection != null)
                 {
+
+                    //Delete all Suppliers for the given RowKey.
+                    AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8AllSupplier", p1.RowKey, out jsonData);
+
+                    JObject suppliersObj = JObject.Parse(jsonData);
+                    var suppliersList = suppliersObj["value"];
+                    if (suppliersList.Any())
+                    {
+                        for (int i = 0; i < suppliersList.Count(); i++)
+                        {
+                            AzureTablesData.DeleteEntity(StorageName, StorageKey, "CicForm8AllSupplier", (string)suppliersObj["value"][i]["PartitionKey"], p1.RowKey, string.Empty);
+                        }
+                    }
+
+                    //Workaround to set missing mandatory values
+                    if (p1.tab3ThirdSection.Count > 1)
+                    {
+                        Settab3ThirdSectionMandatoryColumns(p1);
+                    }
+
                     for (int i = 0; i < p1.tab3ThirdSection.Count; i++)
                     {
 
                         bool DFlag = cv.IsAnyNullOrEmpty(p1.tab3ThirdSection[i]);
                         if (DFlag == false)
                         {
-                            string Data;
+                            //Commenting: This code only inserts or updates the rows present in the Grid - But misses the rows that the user deleted
+
+                            //string Data;
 
 
-                            AzureTablesData.GetEntitybyRowPartition(StorageName, StorageKey, "CicForm8AllSupplier", p1.tab3ThirdSection[i].PartitionKey, p1.tab3ThirdSection[i].RowKey, out Data);
+                            //AzureTablesData.GetEntitybyRowPartition(StorageName, StorageKey, "CicForm8AllSupplier", p1.tab3ThirdSection[i].PartitionKey, p1.tab3ThirdSection[i].RowKey, out Data);
 
-                            JObject myJObject = JObject.Parse(Data);
-                            int cntJson = myJObject["value"].Count();
+                            //JObject myJObject = JObject.Parse(Data);
+                            //int cntJson = myJObject["value"].Count();
 
-                            if (cntJson != 0)
-                            {
-                                AzureTablesData.DeleteEntity(StorageName, StorageKey, "CicForm8AllSupplier", p1.tab3ThirdSection[i].PartitionKey, p1.tab3ThirdSection[i].RowKey, Data);
+                            //if (cntJson != 0)
+                            //{
+                            //    AzureTablesData.DeleteEntity(StorageName, StorageKey, "CicForm8AllSupplier", p1.tab3ThirdSection[i].PartitionKey, p1.tab3ThirdSection[i].RowKey, Data);
 
 
-                            }
+                            //}
                             //Saving data for Third section
 
                             tab3Third.PartitionKey = p1.tab3ThirdSection[i].Supplier;
@@ -1841,6 +1884,32 @@ namespace CICLatest.Controllers
 
             // return response;
             return FormRegNo;
+        }
+
+        private static void SetMandatoryColumns(MainViewModel p1)
+        {
+            var rowKey = p1.tab3SecSection[0].RowKey;
+            var regNo = p1.tab3SecSection[0].FormRegistrationNo;
+
+            foreach (var item in p1.tab3SecSection)
+            {
+                item.PartitionKey = item.NameofSubContractors;
+                item.RowKey = rowKey;
+                item.FormRegistrationNo = regNo;
+            }
+        }
+
+        private static void Settab3ThirdSectionMandatoryColumns(MainViewModel p1)
+        {
+            var rowKey = p1.tab3ThirdSection[0].RowKey;
+            var regNo = p1.tab3ThirdSection[0].FormRegistrationNo;
+
+            foreach (var item in p1.tab3ThirdSection)
+            {
+                item.PartitionKey = item.Supplier;
+                item.RowKey = rowKey;
+                item.FormRegistrationNo = regNo;
+            }
         }
 
 
@@ -2078,8 +2147,8 @@ namespace CICLatest.Controllers
                     Telephone = (string)myJObject["value"][i]["Telephone"],
                     FaxNo = (string)myJObject["value"][i]["FaxNo"],
                     MobileNo = (string)myJObject["value"][i]["MobileNo"],
-                    EmailAddress = (string)myJObject["value"][i]["EmailAddress"]
-
+                    EmailAddress = (string)myJObject["value"][i]["EmailAddress"],
+                    Form1PostalAddress = GetPostalAddress(myJObject, i, 0),
                 };
 
 
@@ -2090,7 +2159,7 @@ namespace CICLatest.Controllers
                     Name = (string)myJObject["value"][i]["Name"],
                     IDNO = (string)myJObject["value"][i]["IDNO"],
                     PassportNo = (string)myJObject["value"][i]["PassportNo"],
-                    PostalAddress = (string)myJObject["value"][i]["PostalAddress"],
+                    PostalAddress = GetPostalAddress(myJObject, i, 1),
                     PhysicalAddress = (string)myJObject["value"][i]["PhysicalAddress"],
                     Telephone = (string)myJObject["value"][i]["TelephoneWorkdiscipline"],
                     FaxNo = (string)myJObject["value"][i]["FaxNoWorkdiscipline"],
@@ -2209,15 +2278,27 @@ namespace CICLatest.Controllers
             }
             model.Tab3MainSection = d;
 
-            string jsonData2;
-            AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", rowkey, out jsonData2);
+            AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8DetailsOfAllSubContractors", rowkey, out string jsonData2);
             JObject myJObject2 = JObject.Parse(jsonData2);
             int cntJson2 = myJObject2["value"].Count();
-            List<Tab3SecSection> a = new List<Tab3SecSection>();
+
+            var tab3SecSectionList = new List<Tab3SecSection>();
+            if(cntJson2 == 0)
+                tab3SecSectionList.Add( new Tab3SecSection() 
+                    { 
+                        ContactDetails = string.Empty,
+                        CountryofOrigin = string.Empty,
+                        FormRegistrationNo = 0,
+                        NameofSubContractors = string.Empty,
+                        RegistrationNo = string.Empty,
+                        ScopeofWork = string.Empty,
+                        PartitionKey = string.Empty,
+                        RowKey = "DEFAULT" 
+                    } );
             for (int i = 0; i < cntJson2; i++)
             {
 
-                a.Add(new Tab3SecSection
+                tab3SecSectionList.Add(new Tab3SecSection
                 {
 
                     ContactDetails = (string)myJObject2["value"][i]["ContactDetails"],
@@ -2227,22 +2308,35 @@ namespace CICLatest.Controllers
                     RegistrationNo = (string)myJObject2["value"][i]["RegistrationNo"],
                     ScopeofWork = (string)myJObject2["value"][i]["ScopeofWork"],
                     PartitionKey = (string)myJObject2["value"][i]["PartitionKey"],
-                    RowKey = (string)myJObject2["value"][i]["RowKey"],
+                    RowKey = (string)myJObject2["value"][i]["RowKey"]
 
 
                 });
             }
-            model.tab3SecSection = a;
-            model.Tab3Sec = a.Count;
-            string jsonData3;
-            AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8AllSupplier", rowkey, out jsonData3);
+            if(tab3SecSectionList.Any()) model.tab3SecSection = tab3SecSectionList;
+            model.Tab3Sec = tab3SecSectionList.Count;
+
+            AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8AllSupplier", rowkey, out string jsonData3);
             JObject myJObject3 = JObject.Parse(jsonData3);
             int cntJson3 = myJObject3["value"].Count();
-            List<Tab3ThirdSection> w = new List<Tab3ThirdSection>();
+
+            var tab3ThirdSectionList = new List<Tab3ThirdSection>();
+            if(cntJson3 == 0)
+                tab3ThirdSectionList.Add(new Tab3ThirdSection
+                {
+                    ScopeofWork = string.Empty, 
+                    ContactDetails = string.Empty,
+                    CountryofOrigin = string.Empty,
+                    FormRegistrationNo = 0,
+                    RegistrationNo = string.Empty,
+                    Supplier = string.Empty,
+                    PartitionKey = string.Empty,
+                    RowKey = string.Empty
+                });
             for (int i = 0; i < cntJson3; i++)
             {
 
-                w.Add(new Tab3ThirdSection
+                tab3ThirdSectionList.Add(new Tab3ThirdSection
                 {
 
                     ScopeofWork = (string)myJObject3["value"][i]["ScopeofWork"],
@@ -2292,8 +2386,8 @@ namespace CICLatest.Controllers
             }
 
 
-            model.tab3ThirdSection = w;
-            model.Tab3Third = w.Count;
+            model.tab3ThirdSection = tab3ThirdSectionList;
+            model.Tab3Third = tab3ThirdSectionList.Count;
             model.formval = "Edit";
             List<Category> AList = new List<Category>();
             AList = ViewBag.ListofCategory;
@@ -2306,6 +2400,15 @@ namespace CICLatest.Controllers
             memoryCache.Set("Form8", model);
             return RedirectToAction("CicForm8", "Form8");
 
+        }
+
+        private static string GetPostalAddress(JObject myJObject, int i, int pageId)
+        {
+            var postalAddressArray = ((string)myJObject["value"][i]["PostalAddress"])?.Split('|');
+            if(postalAddressArray.Any() && postalAddressArray.Count() > 1) 
+                return postalAddressArray[pageId];
+            else 
+                return string.Empty;
         }
 
         public void removeDatafromSession()
