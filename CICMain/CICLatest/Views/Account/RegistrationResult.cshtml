@@ -1,0 +1,43 @@
+﻿@{ ViewData["Title"] = "Registration Result"; }
+
+<style type="text/css">
+    header {
+        display: none;
+    }
+</style>
+
+<div class="registration-result-page">
+    <div class="regresult-content">
+
+        <div class="reg-header">
+            <div class="reg-logo">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/reg-logo.png" alt="CiC Logo" width="174" height="111" />
+                </a>
+            </div>
+            <div class="divider">
+                <img src="~/images/divider.svg" alt="divider line" />
+            </div>
+        </div>
+
+        <div class="reg-reuslt-body">
+
+            <div class="reg-action-stutus">
+                <img src="~/images/like.svg" width="27" height="24" alt="like status" />
+            </div>
+            <div class="reg-short-content">
+                <h3>Customer Number - @ViewBag.cust</h3>
+                <p>
+                    Your account login has now been created.
+                    We have your login credentials to your email
+                    address
+                </p>
+            </div>
+          
+
+            <a asp-action="Login" asp-controller="Account">Go to login</a>
+
+        </div>
+
+    </div>
+</div>

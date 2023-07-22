@@ -1,0 +1,283 @@
+﻿<h4 class="text-center">Determining Financial Capability</h4>
+<div class="cic-application-wrapper">
+    @model CICForm1Model
+    <div class="cic-fielset-inner">
+        <div class="fieldset">
+            <div class="title">
+                <strong>
+                    1. Annual Turnover (attach financial statements for the 3 years immediately preceding the application and, if applicable, the description and proof of financial sponsorship).
+                </strong>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="fname">Financial Year 1 end Total Turnover <span class="asterisk">*</span> </label>
+                    <input class="form-control decimal-field" placeholder="Please enter value" type="text" asp-for="financialCapabilityModel.AnnualTurnoverYear1" />
+                    <span asp-validation-for="financialCapabilityModel.AnnualTurnoverYear1" class="text-danger"></span>
+                </div>
+                <div class="col-lg form-group">
+                    <label for="lname">Financial Year 2 end Total Turnover @*<span class="asterisk">*</span>*@</label>
+                    <input class="form-control decimal-field" placeholder="Please enter value" type="text" asp-for="financialCapabilityModel.AnnualTurnoverYear2" />
+                    <span asp-validation-for="financialCapabilityModel.AnnualTurnoverYear2" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="lname">Financial Year 3 end Total Turnover @*<span class="asterisk">*</span>*@</label>
+                    <input class="form-control decimal-field" placeholder="Please enter value" type="text" asp-for="financialCapabilityModel.AnnualTurnoverYear3" />
+                    <span asp-validation-for="financialCapabilityModel.AnnualTurnoverYear3" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="fname">2. Financial Value of surety if any: E <span class="asterisk">*</span> </label>
+                    <input class="form-control decimal-field" placeholder="Please enter Financial Value" type="text" asp-for="financialCapabilityModel.FinancialValue" />
+                    <span asp-validation-for="financialCapabilityModel.FinancialValue" class="text-danger"></span>
+                </div>
+                <div class="col-lg form-group">
+                    <label for="lname">Indicate the name of the Financial Institution(s) <span class="asterisk">*</span></label>
+                    <input class="form-control decimal-field" placeholder="Please enter Financial Institution(s) name" type="text" asp-for="financialCapabilityModel.FinancialInstitutionName" />
+                    <span asp-validation-for="financialCapabilityModel.FinancialInstitutionName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 form-group">
+                    <label for="fname">3. Available Capital E <span class="asterisk">*</span> </label>
+                    <input class="form-control decimal-field" placeholder="Please enter Available Capital" type="text" asp-for="financialCapabilityModel.AvailableCapital" />
+                    <small>(attach financial statements for the 3 financial years immediately preceding the application)</small>
+                    <span asp-validation-for="financialCapabilityModel.AvailableCapital" class="text-danger"></span>
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 form-group">
+                    <div class="Attachmentlabel">Signature <span class="asterisk">*</span></div>
+                    <div class="CertificateAttachment">
+                        <span id="filename">Drag & drop your file here or Browse &nbsp; </span>
+                        <label for="file-upload">
+                            @*Browse*@
+                            <input id="uploadcapital" type="file" asp-for="financialCapabilityModel.StatmentFile">
+                        </label>
+                        @if (Model.financialCapabilityModel != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.financialCapabilityModel.statementFilename" onclick="downloadfile('@Model.financialCapabilityModel.statementFilename');">@Model.financialCapabilityModel.statementFilename</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.financialCapabilityModel.statementFilename</label>
+                            }
+                        }
+                    </div>
+                    <span asp-validation-for="financialCapabilityModel.StatmentFile" class="text-danger"></span>
+                    <div class="formonesignature">
+                        If you don't have Signature, Please click here
+                        <a href="javascript:void(0);" class="signatureToggle">
+                            Create New Signature
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="cic-table-wrapper">
+        <div class="title">
+            <strong>Applicants Banks</strong>
+            <img src="~/images/info-icon.svg" alt="infomation about applcant bank" />
+        </div>
+        @Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })
+        @for (int i = 0; i < Model.applicantBank.Count; i++)
+        {
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="table-validation-error">
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].BankName" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].BranchName" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].BranchCode" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].AccountHoulderName" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].AccountNo" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].AccountTYpe" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="applicantBank[i].TelephoneNo" class="text-danger"></span></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <div class="table-fieldset">
+            <div class="table-responsive-lg">
+                <table class="table table-bordered" id="tblBank">
+                    <thead>
+                        <tr>
+                            <th scope="col">Bank Name</th>
+                            <th scope="col">Branch Name</th>
+                            <th scope="col">Branch Code</th>
+                            <th scope="col">Holder Name</th>
+                            <th scope="col">Account Number</th>
+                            <th scope="col">Account Type</th>
+                            <th scope="col">Telephone No</th>
+                            <th scope="col"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody1">
+                        @for (int i = 0; i < Model.applicantBank.Count; i++)
+                        {
+                            <tr id="@i">
+                                <td class="row-index1"><input class="form-control" type="text" asp-for="applicantBank[i].BankName" /></td>
+                                <td class="row-index2"><input class="form-control" type="text" asp-for="applicantBank[i].BranchName" /></td>
+                                <td class="row-index3"><input class="form-control" type="text" asp-for="applicantBank[i].BranchCode" /></td>
+                                <td class="row-index4"><input class="form-control" type="text" asp-for="applicantBank[i].AccountHoulderName" /></td>
+                                <td class="row-index5"><input class="form-control" type="text" asp-for="applicantBank[i].AccountNo" /></td>
+                                <td class="row-index6">
+                                    <select class="custom-select form-control" asp-for="applicantBank[i].AccountTYpe">
+                                        <option required>Select Account</option>
+                                        <option value="SavingAccount">Saving account</option>
+                                        <option value="CurrentAccount">Current account</option>
+                                        <option value="CorporateAccount">corporate account</option>
+                                    </select>
+                                </td>
+                                <td class="row-index7"><input class="form-control" type="text" asp-for="applicantBank[i].TelephoneNo" /><input type="hidden" asp-for="cFin" /></td>
+                                <td><button class="removeFin" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="Addnewrecord-td">
+                                <button type="button" id="btnAddFin" class="btnTblRow"> <span><img src="/images/plus.svg" alt="" /> </span> Add new record</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+            <script>
+                var counter1 = document.getElementById("cFin").value;
+                $(function () {
+
+                    $('#btnAddFin').click(function () {
+                        $(`<tr id="${counter1}"><td class="row-index1">                                                                                                                                                                                                  <input type="text" class="form-control" name="applicantBank[${counter1}].BankName" value=""/>
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index2">
+                                                                                                                                                                                                    <input type="text" class="form-control" name="applicantBank[${counter1}].BranchName" value=" "  />
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index3">
+                                                                                                                                                                                                    <input type="text" class="form-control" name="applicantBank[${counter1}].BranchCode" value=" " />
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index4">
+                                                                                                                                                                                                    <input type="text" class="form-control" name="applicantBank[${counter1}].AccountHoulderName" value=" "/>
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index5">
+                                                                                                                                                                                                    <input type="text" class="form-control" name="applicantBank[${counter1}].AccountNo" value="0"  />
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index6">
+                                                                                                                                                                                                    <select class="custom-select form-control" asp-for="applicantBank[${counter1}].AccountTYpe"><option required>Select Account</option><option value="SavingAccount">Saving account</option><option value="CurrentAccount">Current account</option><option value="CorporateAccount">corporate account</option></select >
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td class="row-index7">
+                                                                                                                                                                                                    <input type="text" class="form-control" name="applicantBank[${counter1}].TelephoneNo" value="0"  />
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    <td>
+                                                                                                                                                                                                    <button type="button" class="removeFin"><img src="/images/trush.svg" alt="remove row" /></button>
+                                                                                                                                                                                                    </td>
+                                                                                                                                                                                                    </tr>`).appendTo('#tblBank');
+                        counter1++;
+                        document.getElementById("cFin").value = counter1;
+                        return false;
+                    });
+                });
+
+                $(document).ready(function () {
+
+                    $('#tbody1').on('click', '.removeFin', function () {
+
+                        // containing the clicked button
+                        var child = $(this).closest('tr').nextAll();
+
+                        child.each(function () {
+
+                            // Getting <tr> id.
+                            var id = $(this).attr('id');
+
+                            // Getting the <p> inside the .row-index class.
+                            var idx = $(this).children('.row-index1').children('input');
+                            var idx1 = $(this).children('.row-index2').children('input');
+                            var idx2 = $(this).children('.row-index3').children('input');
+                            var idx3 = $(this).children('.row-index4').children('input');
+                            var idx4 = $(this).children('.row-index5').children('input');
+                            var idx5 = $(this).children('.row-index6').children('select');
+                            var idx6 = $(this).children('.row-index7').children('input');
+
+                            // Gets the row number from <tr> id.
+                            var dig = parseInt(id);
+
+                            var cnew = dig - 1;
+                            // Modifying row index.
+                            //idx.html(`Row ${dig - 1}`);
+                            idx.attr('name', `applicantBank[${cnew}].BankName`)
+                            idx1.attr('name', `applicantBank[${cnew}].BranchName`)
+                            idx2.attr('name', `applicantBank[${cnew}].BranchCode`)
+                            idx3.attr('name', `applicantBank[${cnew}].AccountHoulderName`)
+                            idx4.attr('name', `applicantBank[${cnew}].AccountNo`)
+                            idx5.attr('name', `applicantBank[${cnew}].AccountType`)
+                            idx6.attr('name', `applicantBank[${cnew}].TelephoneNo`)
+
+                            // Modifying row id.
+                            $(this).attr('id', `${dig - 1}`);
+                        });
+
+                        // Removing the current row.
+                        $(this).closest('tr').remove();
+
+                        // Decreasing total number of rows by 1.
+                        counter1--;
+                        document.getElementById("cFin").value = counter1;
+                    });
+                });
+            </script>
+
+            <div class="noted-info">
+                <p>
+                    *NB: Application will be deemed non-compliant if financial statements are not compiled by a qualified  accounting officer or auditing firm
+                </p>
+            </div>
+
+            <ul class="cic-form-action-block">
+                <li>
+                    <button type="submit" class="default-btn btn-preview" asp-route-pre="business" asp-route-name="finance">Previous</button>
+                    <button type="submit" class="default-btn btn-draft" asp-route-name="draft">Save as Draft</button>
+                </li>
+                <li>
+                    <button type="submit" class="btn btn-submit" asp-route-next="work" asp-route-name="finance">Next</button>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Function to format decimal value to two decimal places
+            function formatDecimal(value) {
+                //return parseFloat(value).toFixed(2);
+                return (Math.round(value * 100) / 100).toFixed(2);
+            }
+
+            // Attach event listeners to the decimal input fields
+            // This will update the value with decimal places as the user types
+            $('.decimal-field').on('blur', function () {
+                var inputValue = $(this).val();
+                var formattedValue = formatDecimal(inputValue);
+                $(this).val(formattedValue);
+            });
+        });
+    </script>
+</div>

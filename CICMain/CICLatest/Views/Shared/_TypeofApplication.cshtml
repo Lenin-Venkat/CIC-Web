@@ -1,0 +1,158 @@
+﻿<h4 class="text-center">Type of Application</h4>
+@model CICForm1Model
+@*<form method="post">*@
+<div class="cic-application-wrapper">
+    <div class="cic-form-block">
+        <div class="cic-logo-upload">
+            <div class="col-ting">
+                <div class="control-group file-upload" id="file-upload1">
+                    <div class="image-box text-center">
+                        <p>Company<br />Logo</p>
+                        <img src="" alt="" id="selectedCompanyLogo">
+                    </div>
+                    <div class="controls" style="display: none;">
+                        <input type="file" name="contact_image_1" />
+                    </div>
+                </div>
+            </div>
+            <h3>My Company</h3>
+        </div>
+    </div>
+    <div class="cic-fielset-inner">
+        <div class="fieldset">
+            <div class="title">
+                <strong>Type of Application <span class="asterisk">*</span></strong>
+            </div>
+            <div class="form-fields">
+                <ul>
+                    <li>
+                        <label class="custom-radio">
+                            <span>New Application for Registration</span>
+                            <input type="radio" asp-for="@Model.App.AppType" value="NewApplication" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            <span>Additional Work Discipline</span>
+                            <input type="radio" asp-for="@Model.App.AppType" value="AdditionalWork" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            <span>Registration Renewal</span>
+                            <input type="radio" asp-for="@Model.App.AppType" value="Renewal" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            <span>Upgrading</span>
+                            <input type="radio" asp-for="@Model.App.AppType" value="Upgrading" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            @Html.ValidationMessageFor(m => m.App.AppType, "", new { @class = "text-danger" })
+            <div class="divider"></div>
+        </div>
+        <script type="text/javascript">
+
+            function hideDocSection(myRadio) {
+                var value = myRadio.value;
+                if (value == 'Renewal') {
+                    $('#Newsection1').hide();
+                    $('#Newsection2').hide();
+                    $('#doc1').hide();
+                    $('#compliance').hide();
+                }
+                else {
+                    $('#Newsection1').show();
+                    $('#Newsection2').show();
+                    $('#doc1').hide();
+                    $('#compliance').hide();
+                }
+                if (value == 'NewApplication') {
+                    $('#presentGrade').hide();
+                }
+                else {
+                    $('#presentGrade').show();
+                }
+
+                if (value == 'AdditionalWork' || value == 'Renewal' || value == 'Upgrading') {
+                    window.location.href = '/Form1/GetData?apptype=' + value;
+                }
+
+
+            }
+        </script>
+        <div class="fieldset">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="fname">Association Name <span class="asterisk">*</span></label>
+                    @*<select id="Associationname" class="custom-select form-control" asp-for="@Model.App.AssociationName">
+                    <option required>Select association name</option>
+                    <option>SAICC (Imvukuzane)</option>
+                    <option>SAEES</option>
+                    <option>ECA (Eswatini Contractors Association)</option>
+                    <option>BMSA</option>
+                    </select>*@
+                    <select asp-for="@Model.App.AssociationName" class="custom-select" id="AssociationId" asp-items="@(new SelectList(@ViewBag.ListofAssociation, "AssociationName", "AssociationName1"))"></select>
+                    <span asp-validation-for="@Model.App.AssociationName" class="text-danger"></span>
+                    @*@Html.ValidationMessageFor(m => m.App.AssociationName, "", new { @class = "text-danger" })*@
+                </div>
+                <div class="col-lg form-group">
+                    <label for="lname">Name of Authorised Officer <span class="asterisk">*</span></label>
+                    <input class="form-control" placeholder="Name of Authorised Officer" type="text" asp-for="@Model.App.AuthorisedOfficerName" />
+                    <span asp-validation-for="@Model.App.AuthorisedOfficerName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group mb0">
+                    <div class="Attachmentlabel">Association Certificate Attachment <span class="asterisk">*</span></div>
+                    <div class="CertificateAttachment">
+                        <span id="filename">Drag & drop your file here or  Browse &nbsp; </span>
+                        <label for="file-upload">
+                            <input asp-for="@Model.App.Filesignature" type="file" id="Filesignature" multiple/>
+                        </label>
+                        @if (Model.App != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                string path = Model.App.ImagePath + @"\Filesignature_" + Model.App.signaturefilename;
+                                path = path.Replace("https:\\", "");
+                                path = path.Replace("\\", "/");
+                                <a href="" asp-for="@Model.App.signaturefilename" id="signfile">@Model.App.signaturefilename</a>
+                                <input type="hidden" asp-for="@Model.formval" />
+                                <input type="hidden" asp-for="@Model.FirmRegistrationNo" />
+                                <input type="hidden" asp-for="@Model.PartitionKey" />
+                                <input type="hidden" asp-for="@Model.RowKey" />
+                                <input type="hidden" asp-for="@Model.CreatedDate" />
+                                <input type="hidden" asp-for="@Model.App.ImagePath" id="path" />
+                            }
+                            else
+                            {
+                                <input type="hidden" asp-for="@Model.FirmRegistrationNo" />
+                                <label style="color:darkblue;" asp-for="@Model.App.signaturefilename">@Model.App.signaturefilename</label>
+                            }
+                        }
+                    </div>
+                    <input type="hidden" asp-for="@Model.FormName" />
+                    <span asp-validation-for="@Model.App.Filesignature" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <ul class="cic-form-action-block">
+            <li>
+                <button type="submit" class="default-btn btn-draft" asp-route-name="draft">Save as Draft</button>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-submit" asp-route-next="business" asp-route-name="type">Next</button>
+            </li>
+        </ul>
+    </div>
+</div>
+

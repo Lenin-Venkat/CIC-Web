@@ -1,0 +1,390 @@
+﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserModel> SignInManager
+@inject UserManager<UserModel> UserManager
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CICLatest</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Merriweather&family=PT+Serif&family=Pacifico&family=Rowdies&family=Rubik&family=Supermercado+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="master-wrapper-page">
+        <header>
+            <div class="header-content">
+                <div class="header-logo">
+                    <a><img src="~/images/CiC-logo.png" width="133" height="85" /></a>
+                </div>
+                <div class="header-link-wrapper">
+                    <div class="header-link">
+                        @*<div class="notification">
+                        <a href="javascript:void(0);">
+                        <img src="~/images/bell.svg" alt="Notification alarm" width="28" height="32" />
+                        <span class="">5</span>
+                        </a>
+
+                        </div>*@
+
+                        @*<a href="javascript:void(0);" class="create-signature" id="signatureToggle">
+                        <span><img src="~/images/signature-icon.svg" alt="" /> Create signature</span>
+                        </a>*@
+
+                        <div class="myaccount">
+                            <div class="myaccount-content">
+                                @*<div class="profile-pic">
+                                <img src="~/images/profile-avator.png" alt="profile picture" width="65" height="65" />
+                                </div>*@
+                                <a href="javascript:void(0);" class="dropdown-btn">
+                                    @*<span class="welcometest">Welcome to</span>*@
+                                    <img src="~/images/usericon.svg" alt="" />
+                                    <span class="username">
+                                        @*@if (SignInManager.IsSignedIn(User))
+                                        {
+                                            @UserManager.GetUserAsync(User).Result.Firstname
+
+                                        }*@
+                                        @if (SignInManager.IsSignedIn(User))
+                                        {
+                                            @if (User.IsInRole("NormalUser"))
+                                            {
+                                                @UserManager.GetUserAsync(User).Result.BusinessName
+                                            }
+                                            else
+                                            {
+                                                @UserManager.GetUserAsync(User).Result.Firstname
+                                            }
+                                        }
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <ul>
+                                        @if (!User.IsInRole("Admin"))
+                                        {
+                                            <li><a asp-action="ReviewerDashboard" asp-controller="ReviewerDashboard"><img src="~/images/dashboard.svg" alt="" /> My Dashboard</a></li>
+                                            @if (!User.IsInRole("NormalUser"))
+                                            {
+                                                <li><a asp-action="Reports" asp-controller="Admin"><img src="~/images/invoice.svg" alt="" /> Reports</a></li>
+                                                <li><a asp-action="OperationalReports" asp-controller="Admin"><img src="~/images/invoice.svg" alt="" />Operational Reports</a></li>
+
+                                            }
+
+                                        }
+                                        @if (User.IsInRole("NormalUser"))
+                                        {
+                                            <li><a asp-action="Index" asp-controller="Invoice"><img src="~/images/invoice.svg" alt="" /> Invoice</a></li>
+                                        }
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <li><a asp-action="Reports" asp-controller="Admin"><img src="~/images/invoice.svg" alt="" /> Reports</a></li>
+                                            <li><a asp-action="OperationalReports" asp-controller="Admin"><img src="~/images/invoice.svg" alt="" />Operational Reports</a></li>
+                                            <li><a asp-action="GracePeriod" asp-controller="Admin"><img src="~/images/file.svg" alt="" />Set Grace Period</a></li>
+                                        }
+                                        <li><a asp-action="Logout" asp-controller="Account"><img src="~/images/logout.svg" alt="" /> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="master-wrapper-content">
+            <div class="master-column-wrapper">
+                <div class="">
+                    <main role="main">
+                        @RenderBody()
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2021 Construction Industry Council (CIC). All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal fade SignatureModal" id="SignatureModal" tabindex="-1" role="dialog" style="z-index:3000;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="~/images/close.svg" />
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="signature-wrapper">
+                        <div class="signature-content">
+                            <div class="sign-columns">
+                                <div class="columns columnOne">
+                                    <h5 class="modal-title" id="exampleModalLabel"> Your Information</h5>
+                                    <form id="form">
+
+                                        @*<div class="form-group textarea">
+                                        <label>Enter your name & designation</label>
+                                        <textarea class="form-control" id="nameField" style=" min-height: 160px;"></textarea>
+                                        </div>*@
+
+
+                                        @*<button class="clear-button">CLEAR</button>*@
+                                        <div class="form-group">
+                                            <label>Choose font style</label>
+                                            <select class="fonts-select">
+                                                <option selected disabled>Select font here...</option>
+                                                <option value="Pacifico">Pacifico</option>
+                                                <option value="Merriweather">Merriweather</option>
+                                                <option value="Anton">Anton</option>
+                                            </select>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="form-group">
+                                            <label>Enter your name </label>
+                                            <input class="form-control spelling-input" type="text" placeholder="Input spelling here.">
+                                        </div>
+
+                                        <div class="form-group designationfield">
+                                            <label>Enter your designation</label>
+                                            <input class="form-control spelling-designation" type="text" placeholder="Input spelling here.">
+                                        </div>
+
+                                        <div class="form-group imgupload-blok">
+                                            <label>Company logo upload</label>
+                                            <div class="uoloadgroup">
+                                                <input type="file" class="form-control" id="pictureupload" />
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="columns columnTwo">
+                                    <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                                    <article class="message is-primary" id="sign-preview-content" style="background-color:#fff;">
+                                        <div class="massage-body">
+                                            <table cellpadding="0" cellspacing="0" id="previewsignature" style="background-color:#fff;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td id="tblcolname">
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td id="tblcoldesignation">
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td id="tblcoluploader">
+                                                            <div class="ploaderImgBlock">
+                                                                <img src="" id="tblcoluploaderImg" />
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </article>
+                                    <div class="prev-action">
+                                        <input id="btn-preview-image" class="btn btn-secondary" type="button" value="preview" />
+                                        <a href="javascript:void(0);" id="signatureDownload" class="btn btn-submit">Download</a>
+                                        @*<input id="btnSaveContinue" class="default-btn btn-draft" type="button" value="Save & Continue" />*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="previewImage" class="previewImage-container">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
+    <script src='~/js/html2canvas.min.js' asp-append-version="true"></script>
+    <script src='~/js/canvas2image.js' asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/custom.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+
+        const /*clearButton = document.getElementsByClassName('clear-button')[0],*/
+            spellingInput = document.getElementsByClassName('spelling-input')[0],
+            spellingdesign = document.getElementsByClassName('spelling-designation')[0],
+            fontsSelect = document.getElementsByClassName('fonts-select')[0],
+            styledTextArea = document.getElementsByClassName('styled-text-area')[0];
+
+        //clearButton.addEventListener('click', function () {
+        //    spellingInput.value = '';
+        //    styledTextArea.value = '';
+        //});
+
+        spellingInput.addEventListener('input', function () {
+            $("#tblcolname").text(spellingInput.value);
+        });
+        fontsSelect.addEventListener('change', function () {
+            document.getElementById("tblcolname").style.fontFamily = fontsSelect.value;
+        });
+
+        spellingdesign.addEventListener('input', function () {
+            $("#tblcoldesignation").text(spellingdesign.value);
+        });
+        fontsSelect.addEventListener('change', function () {
+            document.getElementById("tblcoldesignation").style.fontFamily = fontsSelect.value;
+        });
+
+    </script>
+    <script type="text/javascript">
+
+        $("#nameField").on("keyup", function (e) {
+            var messagebx = $("#nameField").val();
+            if (messagebx == "") {
+                alert("please enter signature");
+
+            } else {
+                $("#tblcolname").text(messagebx);
+                messagebx = messagebx.replace(/\r?\n/g, '<br/>');
+                $("#tblcolname").html(messagebx);
+            }
+
+        });
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            document.getElementById('pictureupload').addEventListener('change', handleFileSelect, false);
+        } else {
+            alert('The file APIs are fully supported in this browse.');
+        }
+
+        $(".previewImage-container").hide();
+
+        function handleFileSelect(evt) {
+            var f = evt.target.files[0];
+            var mimetype = evt.target.files[0].type;
+            var reader = new FileReader();
+
+            reader.onload = (function () {
+                return function (e) {
+                    var binaryDate = e.target.result;
+                    var base64String = window.btoa(binaryDate);
+                    var imageURL = "data:" + mimetype + ";base64," + base64String;
+
+                    $("#tblcoluploaderImg").attr("src", imageURL);
+                }
+
+            })(f);
+
+            reader.readAsBinaryString(f);
+        }
+
+        var element = $("#previewsignature");
+        var getCanvas;
+        $("#btn-preview-image").on('click', function () {
+            $("#previewImage").empty("");
+            $(".previewImage-container").show();
+            html2canvas(element, {
+                onrendered: function (canvas) {
+                    $("#previewImage").append(canvas);
+                    getCanvas = canvas;
+                }
+            });
+        });
+
+        //$("#btnSaveContinue").on('click', function () {
+        //    $("#savepreview").empty("");
+        //    html2canvas(element, {
+        //        onrendered: function (canvas) {
+        //            $("#savepreview").append(canvas);
+        //            getCanvas = canvas;
+        //        }
+        //    });
+        //    $('#SignatureModal').modal('hide');
+
+        //});
+
+        $(".signatureToggle").click(function () {
+            $("#SignatureModal").modal({
+                backdrop: "static",
+            });
+
+
+        });
+
+        $('#SignatureModal').on('shown.bs.modal', function () {
+            $("body.modal-open").removeAttr("style");
+        });
+
+        //$("#signatureDownload").on('click', function () {
+        //    var imageData = getCanvas.toDataURL("image/jpeg");
+        //    var newData = imageData.replace(/^data:image\/JPEG/, "data:application/octet-stream");
+        //    $("#signatureDownload").attr("download", "signature.png").attr("href", newData);
+        //});
+
+
+        document.querySelector('#signatureDownload').addEventListener('click', function () {
+            html2canvas(document.querySelector('#previewsignature'), {
+                onrendered: function (canvas) {
+                    // document.body.appendChild(canvas);
+                    return Canvas2Image.saveAsPNG(canvas);
+                }
+            });
+        });
+
+        $(function () {
+            $('.myaccount-content > a').on('click', function (event) {
+                event.preventDefault();
+                $('body').addClass('overlay');
+                $(this).toggleClass('selected');
+                $(this).parent().find('.dropdown-menu').first().addClass('open');
+                $(this).parent().siblings().find('.dropdown-menu').removeClass('open');
+
+                //Hide menu when clicked outside
+                $(this).parent().find('.dropdown-menu').parent().mouseleave(function () {
+                    var thisUI = $(this);
+                    $('html').click(function () {
+                        $('body').removeClass('overlay');
+                        thisUI.children(".dropdown-menu").removeClass('open');
+                        thisUI.children("a").removeClass('selected');
+                        $('html').unbind('click');
+                    });
+                });
+
+            });
+
+        });
+
+
+        jQuery(document).ready(function () {
+            var initialTime = new Date();
+            var intervalId = setInterval(function Redirect() {
+                var minutes = Math.abs((initialTime - new Date()) / 1000 / 60);
+                if (minutes > 15) {
+                    clearInterval(intervalId);
+                    alert('Your session is expired, please login again.');
+                    window.location.href = '/Account/Logout';
+                }
+            }, 60000); //1 min
+
+            $(document).delegate("#form1", "click change", function () {
+                initialTime = new Date();
+            });
+            //<-- end
+        });
+    </script>
+
+</body>
+</html>

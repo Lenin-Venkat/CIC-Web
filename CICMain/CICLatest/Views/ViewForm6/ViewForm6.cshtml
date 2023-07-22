@@ -1,0 +1,391 @@
+﻿
+@{ ViewData["Title"] = "Individual artisans registration form – CICF 6"; }
+@model CICLatest.Models.SaveModelForm6
+    <style>
+        .GFG {
+            background-color: white;
+            //border: 2px solid black;
+            color: green;
+            padding: 5px 10px;
+            text-align: center;
+            display: inline-block;
+            font-size: 20px;
+            margin: 10px 0px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<form method="post" asp-controller="ViewForm6" asp-action="ViewForm6">
+    <section class="Cic-form-wrapper">
+        <div class="cic-breadcurm">
+            <ul>
+                <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+                @*  <li><strong class="current-item">@ViewBag.FormTitle</strong></li>*@
+                <li><strong class="current-item">Form details</strong></li>
+            </ul>
+        </div>
+
+        <div class="Cic-form-content saveasdraft">
+            <h1>@ViewBag.FormTitle</h1>
+            <div class="">
+                <div class="">
+                    <h1>INDIVIDUAL ARTISANS REGISTRATION FORM – CICF 6 </h1>
+                    <div class="product-number-blk">
+                        <h5>Form Registration Number - <span class="vals">@Model.FormRegistrationNo</span></h5>
+                    </div>
+                   
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="true">Type of Application</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#PersonalDetails" data-toggle="tab" aria-controls="PersonalDetails" role="tab" aria-expanded="false"> Personal Details</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#EducationReferences" data-toggle="tab" aria-controls="EducationReferences" role="tab">
+                                        Education Background & References
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                        <div class="tab-content saveasdraft-content">
+                            <div class="tab-pane active" role="tabpanel" id="TypeofApplication">
+                                <div class="TypeofApplication-wrapper">
+                                    <div class="row">
+                                        <div class="col-lg form-group">Type of Application</div>
+                                        <div class="col-lg form-group vals">@Model.AppType</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Categories for registration</div>
+                                        <div class="col-lg form-group vals">@Model.Categories</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Association Name</div>
+                                        <div class="col-lg form-group vals">@Model.AssociationName</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Name of Authorised Officer</div>
+                                        <div class="col-lg form-group vals">@Model.AuthorisedOfficerName</div>
+                                    </div>
+                                    <div class="row">
+                                        @if (Model.FileeName != null)
+                                        {
+                                            string path = Model.path + @"\Filee_" + Model.FileeName;
+                                            path = path.Replace("https:\\", "");
+                                            path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Association Certificate Attachment
+                                        </div>
+                                            <div class="col-lg form-group vals">
+                                                <a href="//@path" target="_blank">@Model.FileeName</a>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" role="tabpanel" id="PersonalDetails">
+                                <div class="PersonalDetails-wrapper">
+                                    <div class="row">
+                                        <div class="col-lg form-group">Name</div>
+                                        <div class="col-lg form-group vals" id="Name">@Model.Name</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Surname</div>
+                                        <div class="col-lg form-group vals">@Model.Surname</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">ID No</div>
+                                        <div class="col-lg form-group vals">@Model.IDNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Nationality</div>
+                                        <div class="col-lg form-group vals">@Model.Nationality</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Home Area</div>
+                                        <div class="col-lg form-group vals">@Model.HomeArea</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Chief</div>
+                                        <div class="col-lg form-group vals">@Model.Chief</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Indvuna</div>
+                                        <div class="col-lg form-group vals">@Model.Indvuna</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Temporal Residence Permit No</div>
+                                        <div class="col-lg form-group vals">@Model.TemporalResidencePermitNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Work Permit No</div>
+                                        <div class="col-lg form-group vals">@Model.WorkPermitNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Cellphone No</div>
+                                        <div class="col-lg form-group vals">@Model.CellphoneNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Email address</div>
+                                        <div class="col-lg form-group vals"><label id="Email">@Model.Emailaddress</label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Fax No</div>
+                                        <div class="col-lg form-group vals">@Model.FaxNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Residential Address</div>
+                                        <div class="col-lg form-group vals">@Model.ResidentialAddress</div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Next of Kin</div>
+                                        <div class="col-lg form-group vals">@Model.NextofKin</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Relationship</div>
+                                        <div class="col-lg form-group vals">@Model.Relationship</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Contact No</div>
+                                        <div class="col-lg form-group vals">@Model.ContactNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Nature of Trade/Expertise</div>
+                                        <div class="col-lg form-group vals">@Model.NatureofTradeExpertise</div>
+                                    </div>
+                                    <div class="row">
+                                        @if (Model.NatureofTradeUploadName != null)
+                                        {
+                                            string path = Model.path + @"\NatureofTradeUpload_" + Model.NatureofTradeUploadName;
+                                            path = path.Replace("https:\\", "");
+                                            path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Nature of Trade/Expertise Attachment
+                                        </div>
+                                            <div class="col-lg form-group vals">
+                                                <a href="//@path" target="_blank">@Model.NatureofTradeUploadName</a>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="EducationReferences">
+                                <div class="FinancialCapability-wrapper">
+                                    <div class="tab-pane" role="tabpanel" id="WorksCapability">
+                                        <div>
+                                            <h5>Education Background</h5>
+                                        </div>
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                <table class="table table-bordered" id="tblwork">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Highest Education Level</th>
+                                                            <th scope="col">Qualifications Attained</th>
+                                                            <th scope="col">Education Institution</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+                                                        @for (int i = 0; i < Model.educationBackground.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.educationBackground[i].HighestEducationLevel</td>
+                                                                <td>@Model.educationBackground[i].QualificationsAttained</td>
+                                                                <td>@Model.educationBackground[i].EducationInstitution</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5> References (list of projects/people that you have undertaken work for)</h5>
+                                        </div>
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                <table class="table table-bordered" id="tblwork">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Names and Surname</th>
+                                                            <th scope="col">Type of Work Performed</th>
+                                                            <th scope="col">Telephone/Cellphone No.</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+                                                        @for (int i = 0; i < Model.backGroundetails.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.backGroundetails[i].NamesandSurname</td>
+                                                                <td>@Model.backGroundetails[i].TypeofWorkPerformed</td>
+                                                                <td>@Model.backGroundetails[i].TelephoneNo</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                <div class="DocumentUpload-wrapper">
+                                    <div class="tab-pane" role="tabpanel" id="WorksCapability">
+                                        <div class="row">
+                                            @if (Model.fileupload1Name != null)
+                                            {
+                                                string path = Model.path + @"\fileupload1_" + Model.fileupload1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Certified copy of qualifications / letter of testimony from project owner for previously completed projects
+
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.fileupload1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.fileupload2Name != null)
+                                            {
+                                                string path = Model.path + @"\fileupload2_" + Model.fileupload2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Certified copy of Identity document
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.fileupload2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.fileupload3Name != null)
+                                            {
+                                                string path = Model.path + @"\fileupload3_" + Model.fileupload3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Proof of registration with the Eswatini Contractors Association
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.fileupload3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.SignatureName != null)
+                                            {
+                                                string path = Model.path + @"\Signature_" + Model.SignatureName;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Signature
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.SignatureName</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.fileupload6Name != null)
+                                            {
+                                                string path = Model.path + @"\fileupload6_" + Model.fileupload6Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Witnessed Signature
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.fileupload6Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="comment">Comment:</label>&nbsp; <label id="GFG"></label>
+                                            <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                                        </div>
+                                        <ul class="cic-form-action-block">
+                                            <li>
+                                                <button type="submit" class="btn btn-submit">Approve</button>
+                                                <button type="button" class="btn btn-reject" onclick="submitForm('Reject');">Reject</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        @*<a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard"> Back to Dashboard</a>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</form>
+<script type="text/javascript">
+    function submitForm(x) {
+        var label = $('#Email');
+        var email = label.text();
+        var RepresentativeName = $('#Name').text();
+        var comment = document.getElementById('comment').value;
+        if (comment) {
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("RejectForm", "ViewForm6"))",
+            data: { "value": x, "emailId": email, "RepresentativeName": RepresentativeName, "comment": comment},
+            success: function (result) {
+               // alert('Successfully received Data ');
+                window.location.href = '/ReviewerDashboard/ReviewerDashboard';                
+            },
+            error: function () {
+               // alert('Failed to receive the Data');
+                
+            }
+        })
+        }
+        else {
+            document.getElementById('GFG').innerHTML = "Please enter comment";
+            document.getElementById('GFG').style.color = "red";
+        }
+    }
+
+    function download() {
+         $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("DownloadFile", "ViewForm6"))",
+            success: function (result) {
+                alert('Successfully downloaded files to C:\CICFiles');               
+            },
+            error: function () {
+                alert('Failed to receive the Data');                
+            }
+        })
+    }
+
+
+</script>
+
+
+

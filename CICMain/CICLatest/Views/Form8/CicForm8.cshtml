@@ -1,0 +1,292 @@
+﻿@model CICLatest.Models.MainViewModel
+
+@{ ViewData["Title"] = "Construction projects and levy assessment registration form – CICF 8"; }
+<script src="/lib/jquery/dist/jquery.js"></script>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li>
+                <strong class="current-item">
+                    Construction projects and levy assessment registration form – CICF 8
+                </strong>
+            </li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+
+        <div class="">
+            <div class="">
+                <h1>Construction projects and levy assessment registration form – CICF 8 </h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="@ViewBag.type">
+                                <a href="#Contractorliable" data-toggle="tab" aria-controls="Contractorliable" role="tab" aria-expanded="true">
+                                    Details of contractor liable
+                                </a>
+                            </li>
+
+                            <li role="presentation" class="@ViewBag.business">
+                                <a href="#Workdiscipline" data-toggle="tab" aria-controls="Workdiscipline" role="tab">
+                                    Details of owner/client & Work discipline
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.fin">
+                                <a href="#SubconstractorsDetails" data-toggle="tab" aria-controls="SubconstractorsDetails" role="tab">
+                                    Details of all sub-contractors & Details of All Suppliers
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.work">
+                                <a href="#Projectlevypayment" data-toggle="tab" aria-controls="Projectlevypayment" role="tab">
+                                    Details of project & Levy payment options
+                                </a>
+                            </li>
+
+                            <li role="presentation" class="@ViewBag.doc">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" id="form8part">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane  @ViewBag.type" role="tabpanel" id="Contractorliable">
+
+                                <div class="DetailsConstraction-wrapper">
+                                    @*<partial name="~/Views/Shared/_Contractorliable.cshtml" />*@
+                                    @Html.Partial("_Contractorliable", @Model)
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane  @ViewBag.business" role="tabpanel" id="Workdiscipline">
+                                <div class="Workdiscipline-wrapper">
+
+                                    @*<partial name="~/Views/Shared/_Workdiscipline.cshtml" />*@
+                                    @Html.Partial("_Workdiscipline", @Model)
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane  @ViewBag.fin" role="tabpanel" id="SubconstractorsDetails">
+                                <div class="SubconstractorsDetails-wrapper">
+                                    @*<partial name="~/Views/Shared/_SubconstractorsDetails.cshtml" />*@
+                                    @Html.Partial("_SubconstractorsDetails", @Model)
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.work" role="tabpanel" id="Projectlevypayment">
+                                <div class="DetailsProject-wrapper">
+
+                                    <div class="DetailsProjectLevy-wrapper">
+                                        @*<partial name="~/Views/Shared/_DetailsProjectnLevy.cshtml" />*@
+                                        @Html.Partial("_DetailsProjectnLevy", @Model)
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.doc" role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="uploadDocument-wrapper">
+                                        <div class="title">
+                                            <h3>Mandatory Documents</h3>
+                                        </div>
+                                        <div class="document-upload">
+                                            <div class="document-upload-fieldset">
+                                                <ul class="uploadItem">
+                                                    <li>Contract Bill of Quantities/Works Order (summary page)</li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input asp-for="@Model.tab5.SummaryPage" id="upload1" type="file">
+                                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+
+                                                        </div>
+                                                        @if (Model.SummaryPage != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.SummaryPage">@Model.SummaryPage</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.SummaryPage</label>
+                                                            }
+                                                        }
+
+
+                                                        <span asp-validation-for="@Model.tab5.SummaryPage" class="text-danger"></span>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Letter of Contract Award from Project Owner
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload2" type="file" asp-for="@Model.tab5.LetterOfContract">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+
+                                                        </div>
+                                                        @if (Model.LetterOfContract != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.LetterOfContract">@Model.LetterOfContract</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.LetterOfContract</label>
+                                                            }
+                                                        }
+                                                        <div>
+                                                            <span asp-validation-for="@Model.tab5.LetterOfContract" class="text-danger"></span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Letter indicating payment schedule
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload3" type="file" asp-for="@Model.tab5.Letterindicating">
+                                                            <label for="upload3" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+
+                                                        </div>
+
+                                                        @if (Model.Letterindicating != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.Letterindicating">@Model.Letterindicating</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.Letterindicating</label>
+                                                            }
+                                                        }
+                                                        <div><span asp-validation-for="@Model.tab5.Letterindicating" class="text-danger"></span></div>
+                                                    </li>
+                                            </ul>
+
+                                            <ul class="uploadItem">
+                                                <li>
+                                                    Signed letter of agreement in the event that the Main Contractor and Project Owner
+                                                    have agreed that the levy will be remitted to the Council by the Project Owner
+
+                                                </li>
+                                                <li>
+                                                    <div class="fileAttachment">
+                                                        <input id="upload4" type="file" asp-for="@Model.tab5.Signedletterupload">
+                                                        <label for="upload4" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                            Upload
+                                                        </label>
+
+                                                    </div>
+
+                                                    @if (Model.Signedletterupload != null)
+                                                    {
+                                                        if (Model.formval == "Edit")
+                                                        {
+                                                            <a href="" asp-for="@Model.Signedletterupload">@Model.Signedletterupload</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <label style="color:darkblue;">@Model.Signedletterupload</label>
+                                                        }
+                                                    }
+                                                    <div> <span asp-validation-for="@Model.tab5.Signedletterupload" class="text-danger"></span></div>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="DocumentUpload-wrapper">
+                                    @*<partial name="~/Views/Shared/_Declaration8.cshtml" />*@
+                                    @Html.Partial("_Declaration8", @Model)
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    // Get all input fields and error message elements
+    // Get all input fields and error message elements
+    const inputFields5 = document.querySelectorAll('file[data-val="true"]');
+    const errorMessages5 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+    // Add event listeners to all input fields to hide their respective error messages when the input value changes
+    inputFields5.forEach(function (inputField) {
+        const errorMessage = getErrorMessageElement(inputField);
+        inputField.addEventListener('file', function () {
+            if (inputField.value.trim() !== '') {
+                errorMessage.style.display = 'none';
+            }
+        });
+    });
+
+    // Helper function to get the corresponding error message element for an input field
+    function getErrorMessageElement(inputField) {
+        const fieldName = inputField.getAttribute('name');
+        const errorMessage = Array.from(errorMessages5).find(function (element) {
+            return element.getAttribute('data-valmsg-for') === fieldName;
+        });
+        return errorMessage;
+    }
+</script>
+
+<script type="text/javascript">
+    window.onload = function ()
+    {
+        $("#Other").hide();
+        $('#other').hide();
+        //$("#SubCategoryID").hide();
+        //$('#specialist').hide();
+
+    };
+</script>
+<script type="text/javascript">
+    $('#Reviseddate').hide();
+
+    function handleClick(myProject) {
+
+        var projectType = myProject.value;
+
+        if (projectType == 'Ongoingproject') {
+            $('#Reviseddate').show();
+        }
+        else {
+            $('#Reviseddate').hide();
+        }
+    }
+</script>
+

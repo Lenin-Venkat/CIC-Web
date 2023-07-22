@@ -1,0 +1,45 @@
+﻿@{ ViewData["Title"] = "Form review"; }
+
+<div class="CicFormreview-wrapper">
+    <div class="CicFormreview-inner">
+        <div class="review-icon">
+            <img src="~/images/review-icon.svg" alt="" />
+        </div>
+        @if (ViewBag.sts != null)
+        {
+            if (ViewBag.sts == "Draft")
+            {
+                <div class="review-block">
+                    <h2>Draft - @ViewBag.Result</h2>
+                    <p>your application for the financial year @ViewBag.yr CIC registration/renewal has been saved as draft. To edit your application, please go to dashboard and continue with your application and submit.</p>
+
+                    
+                </div>
+            }
+            else
+            {
+                <div class="review-block">
+                    <h2>Under review - @ViewBag.Result</h2>
+                    <p>your application for the financial year @ViewBag.yr CIC registration/renewal has been successfully submitted. You are qualified for grade - @ViewBag.grade. To view your application status, please log in and view your dashboard</p>
+
+                    
+                </div>
+            }
+        }
+        else
+        {
+            <div class="review-block">
+                <h2>Under review</h2>
+                <p>Thank you for filling in. we verify the credentials now and will inform you once you can make full use of the customer portal</p>
+
+                <small>This usually takes 1 business day</small>
+            </div>
+        }
+        <div class="btn-action">
+            <a class="btn btn-finish" asp-action="Index" asp-controller="Home">Finish</a>
+        </div>
+
+    </div>
+</div>
+
+

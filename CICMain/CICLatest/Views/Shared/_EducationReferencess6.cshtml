@@ -1,0 +1,331 @@
+﻿@model CICLatest.Models.Cicf6Model
+
+<script src="~/js/jquery.min.js"></script>
+
+<h4 class="text-center">Education Background & References</h4>
+<div class="cic-application-wrapper">
+
+    <div class="cic-table-wrapper">
+        <div class="title">
+            <strong>SECTION C - Education Background</strong>
+
+        </div>
+
+        @for (int i = 0; i < Model.educationBackground.Count; i++)
+        {
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="table-validation-error">
+
+                        <div class="validationmsg"><span asp-validation-for="educationBackground[i].HighestEducationLevel" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="educationBackground[i].QualificationsAttained" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="educationBackground[i].EducationInstitution" class="text-danger"></span></div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="table-fieldset">
+            <div class="table-responsive-lg">
+                <table id="submissionTable" class="table table-bordered">
+                    <thead>
+                        <tr>
+
+                            <th scope="col">Highest Education Level</th>
+                            <th scope="col">Qualifications Attained</th>
+                            <th scope="col">Education Institution</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyEdu">
+
+                        @for (int i = 0; i < Model.educationBackground.Count; i++)
+                        {
+
+                            <tr id="@i">
+
+                                <td class="row-index">
+                                    <input class="form-control" placeholder="" asp-for="educationBackground[i].HighestEducationLevel" type="text" />
+                                </td>
+                                <td class="row-index1"><input class="form-control" placeholder="" asp-for="educationBackground[i].QualificationsAttained" type="text" /></td>
+                                <td class="row-index2">
+                                    <input class="form-control" placeholder="" asp-for="educationBackground[i].EducationInstitution" type="text" />
+                                    <input type="hidden" asp-for="c" />
+                                    <input type="hidden" asp-for="educationBackground[i].RowKey" />
+                                    <input type="hidden" asp-for="educationBackground[i].PartitionKey" />
+
+                                </td>
+
+                                <td class="text-center">
+
+                                  
+                                    <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="Addnewrecord-td">
+
+
+                                <button class="btnTblRow" id="btnedu" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="cic-table-wrapper">
+        <div class="title">
+            <strong>
+                SECTION D - References
+            </strong>(list of projects/people that you have undertaken work for)
+            @for (int i = 0; i < Model.backGroundetails.Count; i++)
+            {
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="table-validation-error">
+                            <div class="validationmsg"><span asp-validation-for="backGroundetails[i].NamesandSurname" class="text-danger"></span></div>
+                            <div class="validationmsg"><span asp-validation-for="backGroundetails[i].TypeofWorkPerformed" class="text-danger"></span></div>
+                            <div class="validationmsg"><span asp-validation-for="backGroundetails[i].TelephoneNo" class="text-danger"></span></div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="table-fieldset">
+            <div class="table-responsive-lg">
+                <table id="background" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Names and Surname</th>
+                            <th scope="col">Type of Work Performed</th>
+                            <th scope="col">Telephone/Cellphone No.</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody1">
+
+
+                        @for (int i = 0; i < Model.backGroundetails.Count; i++)
+                        {
+
+                            <tr id="@i">
+
+                                <td class="row-index"><input class="form-control" asp-for="backGroundetails[i].NamesandSurname" type="text" /></td>
+                                <td class="row-index1"><input class="form-control" asp-for="backGroundetails[i].TypeofWorkPerformed" type="text" /></td>
+                                <td class="row-index2">
+                                    <input class="form-control" asp-for="backGroundetails[i].TelephoneNo" type="text" />
+                                    <div>
+                                        <input type="hidden" asp-for="d" />
+                                        <input type="hidden" asp-for="backGroundetails[i].RowKey" />
+                                        <input type="hidden" asp-for="backGroundetails[i].PartitionKey" />
+                                    </div>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    @*<button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>*@
+
+                                    <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+
+                                </td>
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="Addnewrecord-td">
+
+
+                                <button class="btnTblRow" id="btnbackgr" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+
+            <ul class="cic-form-action-block">
+                <li>
+
+
+                    <button type="submit" class="default-btn btn-preview" asp-route-pre="business" asp-route-name="finance">Previous</button>
+
+                    <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                </li>
+                <li>
+
+                    <button type="submit" class="btn btn-submit" asp-route-next="work" asp-route-name="finance">Next</button>
+
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script>
+    var counter = document.getElementById("c").value;
+
+    $(function () {
+
+        $('#btnedu').click(function () {
+
+            $(`<tr id="${counter}"><td class="row-index">
+                                            <input type="text" class="form-control" name="educationBackground[${counter}].HighestEducationLevel" value=""/>
+                                            </td>
+
+                                            <td class="row-index1">
+                                            <input type="text" class="form-control" name="educationBackground[${counter}].QualificationsAttained" value=" "  />
+                                            </td>
+                                            <td class="row-index2">
+                                            <input type="text" class="form-control" name="educationBackground[${counter}].EducationInstitution" value=" " />
+                                            </td>
+
+                                            <td class="text-center">
+                                            <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                                            </td>
+                                            </tr>`).appendTo('#submissionTable');
+            counter++;
+
+            document.getElementById("c").value = counter;
+
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#tbodyEdu').on('click', '.remove', function ()
+        {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            // Iterating across all the rows
+            // obtained to change the index
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row-index').children('input');
+                var idx1 = $(this).children('.row-index1').children('input');
+                var idx2 = $(this).children('.row-index2').children('input');
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `educationBackground[${cnew}].HighestEducationLevel`)
+                idx1.attr('name', `educationBackground[${cnew}].QualificationsAttained`)
+                idx2.attr('name', `educationBackground[${cnew}].EducationInstitution`)
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counter--;
+            document.getElementById("c").value = counter;
+        });
+    });
+</script>
+
+
+<script>
+    var counter1 = document.getElementById("d").value;
+
+    $(function () {
+
+        $('#btnbackgr').click(function () {
+
+            $(`<tr id="${counter1}"><td class="row-index">
+                                            <input type="text" class="form-control" name="backGroundetails[${counter1}].NamesandSurname" value=""/>
+                                            </td>
+
+                                            <td class="row-index1">
+                                            <input type="text" class="form-control" name="backGroundetails[${counter1}].TypeofWorkPerformed" value=" "  />
+                                            </td>
+                                            <td class="row-index2">
+                                            <input type="text" class="form-control" name="backGroundetails[${counter1}].TelephoneNo" value=" " />
+                                            </td>
+
+                                            <td class="text-center">
+                                           
+                                           <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                                            </td>
+                                            </tr>`).appendTo('#background');
+            counter1++;
+
+            document.getElementById("d").value = counter1;
+
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#tbody1').on('click', '.remove', function () {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            // Iterating across all the rows
+            // obtained to change the index
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row-index').children('input');
+                var idx1 = $(this).children('.row-index1').children('input');
+                var idx2 = $(this).children('.row-index2').children('input');
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `backGroundetails[${cnew}].NamesandSurname`)
+                idx1.attr('name', `backGroundetails[${cnew}].TypeofWorkPerformed`)
+                idx2.attr('name', `backGroundetails[${cnew}].TelephoneNo`)
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counter1--;
+            document.getElementById("d").value = counter1;
+        });
+    });
+</script>

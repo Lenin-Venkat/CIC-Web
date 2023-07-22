@@ -1,0 +1,890 @@
+﻿@{ ViewData["Title"] = "Joint venture consultancy practices registration form – CICF 5"; }
+@model CICLatest.Models.Cicf5Model
+<script src="~/js/jquery.min.js"></script>
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Joint venture consultancy practices registration form – CICF 5</strong></li>
+        </ul>
+    </div>
+
+    <div class="Cic-form-content">
+        <h1>@ViewBag.FormTitle</h1>
+        <div class="">
+            <div class="">
+                <h1>Joint venture consultancy practices registration form – CICF 5 </h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="@ViewBag.type">
+                                <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="true">
+                                    Type of Application
+                                </a>
+                            </li>
+
+                            <li role="presentation" class=" @ViewBag.business">
+                                <a href="#BusinessDetails" data-toggle="tab" aria-controls="BusinessDetails" role="tab">
+                                    Business Details
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.fin">
+                                <a href="#DetailsProject" data-toggle="tab" aria-controls="DetailsProject" role="tab">
+                                    Details of Project
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.work">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form method="post"  asp-controller="CicForm5" id="form5" asp-action="CicForm5" enctype="multipart/form-data">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane  @ViewBag.type" role="tabpanel" id="TypeofApplication">
+
+                                <div class="TypeofApplication-wrapper">
+                                    <h4 class="text-center">Type of Application</h4>
+                                    <div class="cic-application-wrapper">
+
+                                        <div class="cic-form-block">
+                                            <div class="cic-logo-upload">
+                                                <div class="col-ting">
+                                                    <div class="control-group file-upload" id="file-upload1">
+                                                        <div class="image-box text-center">
+                                                            <p>Company<br />Logo</p>
+                                                            <img src="" alt="">
+                                                        </div>
+                                                        <div class="controls" style="display: none;">
+                                                            <input type="file" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <h3>My Company</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="cic-fielset-inner">
+                                            <div class="fieldset">
+                                                <div class="title">
+                                                    <strong>Type of Application <span class="asterisk">*</span></strong>
+                                                    @Html.ValidationMessageFor(m => m.App.AppType, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="form-fields">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                New Application for Registration
+                                                                <input type="radio" asp-for="@Model.App.AppType" checked="checked" value="NewApplication" onclick="getdata(this);" />
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Registration Renewal
+                                                                <input type="radio" asp-for="@Model.App.AppType" value="Renewal" onclick="getdata(this);" />
+
+                                                                <span class="checkmark"></span>
+                                                            </label>
+
+
+                                                            @if (Model.formval == "Edit")
+                                                            {
+
+                                                                <input type="hidden" asp-for="@Model.formval" />
+                                                                <input type="hidden" asp-for="@Model.FormRegistrationNo" />
+                                                                <input type="hidden" asp-for="@Model.PartitionKey" />
+                                                                <input type="hidden" asp-for="@Model.RowKey" />
+                                                                <input type="hidden" asp-for="@Model.ImagePath" id="path" />
+                                                            }
+
+                                                        </li>
+                                                    </ul>
+                                                    <script type="text/javascript">
+
+                                                        function getdata(myRadio) {
+                                                            var value = myRadio.value;
+
+                                                            if (value == 'Renewal') {
+                                                                window.location.href = '/Cicform5/GetData?apptype=' + value;
+                                                            }
+
+
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <div class="divider"></div>
+                                            </div>
+
+
+                                            <ul class="cic-form-action-block">
+                                                <li>
+                                                    <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+
+                                                </li>
+                                                <li>
+
+                                                    <button type="submit" class="btn btn-submit" asp-route-next="business" asp-route-name="type">Next</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.business" role="tabpanel" id="BusinessDetails">
+                                <h4 class="text-center">Business Details</h4>
+                                <div class="Businessdetals-fielset">
+                                    <div class="fieldset">
+                                        <div class="form-fields">
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label>Name of Joint Venture <span class="asterisk">*</span></label>
+                                                    <input asp-for="@Model.businessdetails5.NameOFJoinVenture" class="form-control" placeholder="Please Enter name of Joint Venture" type="text" />
+                                                    <span asp-validation-for="businessdetails5.NameOFJoinVenture" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col form-group">
+                                                    <div class="title">
+                                                        <strong>Type of Joint Venture <span class="asterisk">*</span>  </strong>
+                                                    </div>
+
+                                                    <ul class="typeofjoinventure">
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Swazi/Swazi
+                                                                <input type="radio" asp-for="businessdetails5.TypeofJoointVenture" value="Swazi/Swazi">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Swazi/Foreign
+                                                                <input type="radio" asp-for="businessdetails5.TypeofJoointVenture" value="Swazi/Foreign">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Foreign/Foreign
+                                                                <input type="radio" asp-for="businessdetails5.TypeofJoointVenture" value="Foreign/Foreign">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                    <span asp-validation-for="businessdetails5.TypeofJoointVenture" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label>Telephone No <span class="asterisk">*</span></label>
+                                                    <input class="form-control" placeholder="Please Enter Telephone No" type="text" asp-for="businessdetails5.BusinessTelephone" />
+                                                    <span asp-validation-for="businessdetails5.BusinessTelephone" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label for="fax">Fax</label>
+                                                    <input class="form-control" placeholder="Please Enter fax" type="text" asp-for="businessdetails5.Fax" />
+                                                    <span asp-validation-for="businessdetails5.Fax" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label for="lname">Email address <span class="asterisk">*</span></label>
+                                                    <input class="form-control" placeholder="Please Enter Email address " type="text" asp-for="businessdetails5.Email" />
+                                                    <span asp-validation-for="businessdetails5.Email" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group textarea mb0">
+                                                    <label>Physical Address <span class="asterisk">*</span></label>
+                                                    <textarea asp-for="businessdetails5.Phyaddress" class="form-control" placeholder="Please enter physical address"></textarea>
+                                                    <span asp-validation-for="businessdetails5.Phyaddress" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fieldset">
+                                        <div class="form-fields">
+                                            <div class="title">
+                                                <strong>Authorized Contact Person</strong>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group firstname">
+                                                    <label for="Firstname">First Name <span class="asterisk">*</span></label>
+
+
+                                                    <div class="input-group">
+                                                        <select class="custom-select" id="inputGroupSelect02" asp-for="@Model.businessdetails5.NameType">
+                                                            <option>Choose...</option>
+                                                            <option selected value="Mr">Mr.</option>
+                                                            <option value="Mrs">Mrs.</option>
+                                                            <option value="Mrs">Miss.</option>
+                                                        </select>
+
+
+                                                        @*<span asp-validation-for="@Model.businessdetails5.NameType" class="text-danger"></span>
+                                                            @Html.ValidationMessageFor(m => m.businessdetails5.NameType, "", new { @class = "text-danger" })*@
+                                                        <div class="input-group-append">
+                                                            <input type="text" class="form-control" asp-for="businessdetails5.FirstName" placeholder="Please enter First name" />
+                                                           
+                                                        </div>
+                                                        <div>
+                                                            <span asp-validation-for="businessdetails5.FirstName" class="text-danger"></span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label for="Surname">Surname </label>
+                                                    <input type="text" class="form-control" placeholder="Please enter surname" asp-for="businessdetails5.SurName" />
+                                                    <span asp-validation-for="businessdetails5.SurName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label for="Telephone">Designation <span class="asterisk">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Please enter Designation" asp-for="businessdetails5.Designation" />
+                                                    <span asp-validation-for="businessdetails5.Designation" class="text-danger"></span>
+
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label for="Surname">Telephone No <span class="asterisk">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Please enter Telephone No" asp-for="businessdetails5.Telephone" />
+                                                    <span asp-validation-for="businessdetails5.Telephone" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label for="Faxno">Fax No </label>
+                                                    <input type="text" class="form-control" placeholder="Please enter Fax No" asp-for="businessdetails5.FaxNo" />
+                                                    <span asp-validation-for="businessdetails5.FaxNo" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label for="Mobileno">Mobile No.<span class="asterisk">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Please enter Mobile No." asp-for="businessdetails5.MobileNo" />
+                                                    <span asp-validation-for="businessdetails5.MobileNo" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group mb0">
+                                                    <label for="EmailAddress">Email Address <span class="asterisk">*</span>  </label>
+                                                    <input type="email" class="form-control" placeholder="Please enter Email" asp-for="businessdetails5.BusinessEmail" />
+                                                    <span asp-validation-for="businessdetails5.Email" class="text-danger"></span>
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="fieldset">
+                                        <div class="form-fields">
+                                            <div class="title">
+                                                <strong>Business Registration</strong>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group mb0">
+                                                    <label>Date of Incorporation/Registration <span class="asterisk">*</span></label>
+                                                    <input type="text"  id="datepicker" class="form-control datepicker-control" placeholder="" asp-for="businessdetails5.DateofRegistration" />
+                                                    <span asp-validation-for="businessdetails5.DateofRegistration" class="text-danger"></span>
+
+
+                                                </div>
+
+
+
+                                                <script type="text/javascript">
+                                                    $(function () {
+                                                        $('#datepicker').datepicker({
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "mm/dd/yyyy",
+                                                            language: "tr"
+                                                        });
+                                                    });
+                                                </script>
+                                                <div class="col-lg form-group">
+                                                    <label>Tax Identity No. <span class="asterisk">*</span></label>
+                                                    <input type="text" class="form-control" placeholder="Please enter your tax identity no" asp-for="businessdetails5.TaxIdentityNo" />
+                                                    <span asp-validation-for="businessdetails5.TaxIdentityNo" class="text-danger"></span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col form-group">
+
+
+
+                                                    <div class ="title">
+                                                        <strong>JV Work Discipline Applying for</strong></div>
+                                                    <div class="owner-cateogory">
+
+                                                        <ul>
+                                                            @foreach (var item in Model.Category)
+                                                            {
+                                                                <li>
+                                                                    <label class="custom-radio">
+                                                                        @item.CategoryName
+                                                                        <input type="radio" asp-for="@Model.WorkDiscipline" value="@item.CategoryName" onclick="levelofRegistration(@item.CategoryID);" />
+                                                                        <span class="checkmark"></span>
+
+                                                                    </label>
+
+
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                        </div>
+
+                                                        <span asp-validation-for="@Model.WorkDiscipline" class="text-danger">@ViewBag.WorkDiscipline</span>
+                                                        @*<span asp-validation-for="@Model.Category" class="text-danger"></span>*@
+
+                                                    </div>
+                                                </div>
+                                     
+
+
+                                            <div class="row">
+                                                <div class="col-lg-12 form-group mb0">
+                                                    <label>
+                                                        Level of registration
+                                                        <span class="asterisk">*</span>
+                                                    </label>
+
+
+                                                    @Html.DropDownListFor(x => x.selectedsubcategory, new SelectList(Model.subCategoryModel, "SubCategoryID", "SubCategoryName"), "-- Select --", new { id = "SubCategoryID", @class = "custom-select form-control" })
+                                                    <span asp-validation-for="@Model.selectedsubcategory" class="text-danger"></span>
+                                                </div>
+
+
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                    var values = [];
+                                                    function levelofRegistration(x)
+                                                    {
+
+                                                        $.ajax(
+                                                            {
+                                                                type: 'POST',
+                                                                url: "@(Url.Action("GetSubCategory1", "CicForm5"))",
+                                                                data: { CategoryID: x },
+                                                                success: function (data)
+                                                                {
+                                                                    var items = '';
+                                                                    $("#SubCategoryID").empty();
+                                                                    $.each(data, function (i, subcategory)
+                                                                    {
+                                                                        //    debugger;
+                                                                        items += "<option value='" + subcategory.subCategoryID + "'>" + subcategory.subCategoryName + "</option>";
+                                                                    });
+                                                                    $('#SubCategoryID').html(items);
+
+                                                                    $("#SubCategoryID").removeAttr("multiple");
+
+                                                                },
+                                                                error: function ()
+                                                                {
+
+                                                                }
+                                                            });
+
+
+
+                                                    }
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <ul class="cic-form-action-block">
+                                        <li>
+                                            <button type="submit" class="default-btn btn-preview" asp-route-pre="type" asp-route-name="business">Previous</button>
+                                            <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                                        </li>
+                                        <li>
+                                            <button type="submit" class="btn btn-submit" asp-route-next="finance" asp-route-name="business">Next</button>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="divider"></div>
+                            </div>
+
+                            <div class="tab-pane @ViewBag.fin" role="tabpanel" id="DetailsProject">
+                                <div class="DetailsProject-wrapper">
+                                    <h4 class="text-center">Details of Project</h4>
+                                    <div class="cic-application-wrapper">
+                                        <div class="cic-technoicaldetails-inner">
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong> Particulars of Joint Venture Parties </strong>
+                                                </div>
+                                                @for (int i = 0; i < Model.detailOfProjects.Count; i++)
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-lg-12 ">
+                                                            <div class="table-validation-error">
+                                                                <div class="validationmsg"><span asp-validation-for="detailOfProjects[i].NameofApplicant" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="detailOfProjects[i].CountryOfOrigin" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="detailOfProjects[i].ContactDetails" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="detailOfProjects[i].CICRegistrationNo" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="detailOfProjects[i].Shareholding" class="text-danger"></span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg">
+                                                        <table id="tblDetails" class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Name of Applicant</th>
+                                                                    <th scope="col">Country of Origin</th>
+                                                                    <th scope="col">Contact Details</th>
+                                                                    <th scope="col">CIC Registration No.</th>
+                                                                    <th scope="col">% Shareholding </th>
+                                                                    @*<th scope="col">Attached document</th>*@
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="detailOfProject">
+
+                                                                @for (int i = 0; i < Model.detailOfProjects.Count; i++)
+                                                                {
+
+                                                                    <tr id="@i">
+                                                                        <td class="row-index">
+                                                                            <input class="form-control" type="text" asp-for="detailOfProjects[i].NameofApplicant" />
+                                                                        </td>
+                                                                        <td class="row-index1">
+                                                                            <input class="form-control" type="text" asp-for="detailOfProjects[i].CountryOfOrigin" />
+                                                                        </td>
+                                                                        <td class="row-index2">
+                                                                            <input class="form-control" type="text" asp-for="detailOfProjects[i].ContactDetails" />
+                                                                        </td>
+                                                                        <td class="row-index3">
+                                                                            <input class="form-control" type="text" asp-for="detailOfProjects[i].CICRegistrationNo" />
+                                                                        </td>
+                                                                        <td class="row-index4">
+                                                                            <input type="text" class="form-control" asp-for="detailOfProjects[i].Shareholding" />
+                                                                            <input type="hidden" asp-for="firsGrid" />
+                                                                            <input type="hidden" asp-for="detailOfProjects[i].PartitionKey" />
+                                                                            <input type="hidden" asp-for="detailOfProjects[i].RowKey" />
+                                                                        </td>
+                                                                        @*<td class="row-index5">
+                                                                            <input class="form-control" type="file" asp-for="detailOfProjects[i].AttchedDoc" />
+                                                                        </td>*@
+                                                                        <td>
+
+                                                                            <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                }
+
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="8" class="Addnewrecord-td">
+                                                                        <button class="btnTblRow" id="btndetail" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <script>
+                                                var counter = document.getElementById("firsGrid").value;
+
+                                                $(function () {
+
+                                                    $('#btndetail').click(function () {
+                                                        $(`<tr id="${counter}"><td class="row-index">
+                                                         <input type="text" class="form-control" name="detailOfProjects[${counter}].NameofApplicant" value=""/>
+                                                         </td>
+                                                         <td class="row-index1">
+                                                          <input type="text" class="form-control" name="detailOfProjects[${counter}].CountryOfOrigin" value=""/>
+                                                         </td>
+                                                         <td class="row-index2">
+                                                         <input type="text" class="form-control" name="detailOfProjects[${counter}].ContactDetails" value=" "  />
+                                                         </td>
+                                                         <td class="row-index3">
+                                                         <input type="text" class="form-control" name="detailOfProjects[${counter}].CICRegistrationNo" value="" />
+                                                         </td>
+                                                         <td class="row-index4">
+                                                         <input type="text" class="form-control" name="detailOfProjects[${counter}].Shareholding" value=" "/>
+                                                         </td>
+                                                         
+                                                         <td>
+                                                         <button type="button" class="remove"> <img src="/images/trush.svg" alt="remove row" /></button>
+
+                                                         </td>
+                                                         </tr>`).appendTo('#tblDetails');
+                                                        counter++;
+                                                        document.getElementById("firsGrid").value = counter;
+
+                                                        return false;
+                                                    });
+                                                });
+
+                                                $(document).ready(function () {
+
+                                                    $('#detailOfProject').on('click', '.remove', function () {
+
+                                                        // containing the clicked button
+                                                        var child = $(this).closest('tr').nextAll();
+
+                                                        child.each(function () {
+
+                                                            // Getting <tr> id.
+                                                            var id = $(this).attr('id');
+
+                                                            // Getting the <p> inside the .row-index class.
+                                                            var idx = $(this).children('.row-index').children('input');
+                                                            var idx1 = $(this).children('.row-index1').children('select');
+                                                            var idx2 = $(this).children('.row-index2').children('input');
+                                                            var idx3 = $(this).children('.row-index3').children('input');
+                                                            var idx4 = $(this).children('.row-index4').children('input');
+                                                          /*  var idx5 = $(this).children('.row-index5').children('input');*/
+                                                            /* var idx6 = $(this).children('.row-index6').children('input');*/
+
+                                                            // Gets the row number from <tr> id.
+                                                            var dig = parseInt(id);
+
+                                                            var cnew = dig - 1;
+                                                            // Modifying row index.
+                                                            //idx.html(`Row ${dig - 1}`);
+                                                            idx.attr('name', `detailOfProjects[${cnew}].NameofApplicant`)
+                                                            idx1.attr('name', `detailOfProjects[${cnew}].CountryOfOrigin`)
+                                                            idx2.attr('name', `detailOfProjects[${cnew}].ContactDetails`)
+                                                            idx3.attr('name', `detailOfProjects[${cnew}].CICRegistrationNo`)
+                                                            idx4.attr('name', `detailOfProjects[${cnew}].Shareholding`)
+                                                            idx5.attr('name', `detailOfProjects[${cnew}].AttchedDoc`)
+                                                            /* idx6.attr('name', `Sharelist[${cnew}].DirectorName`)*/
+
+                                                            // Modifying row id.
+                                                            $(this).attr('id', `${dig - 1}`);
+                                                        });
+
+                                                        // Removing the current row.
+                                                        $(this).closest('tr').remove();
+
+                                                        // Decreasing total number of rows by 1.
+                                                        counter--;
+                                                        document.getElementById("firsGrid").value = counter;
+                                                    });
+                                                });
+                                            </script>
+
+
+
+
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong> Sub-Consultants/Specialists to be employed on the Project </strong>
+                                                </div>
+
+                                                @for (int i = 0; i < Model.subConsultantDetail.Count; i++)
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-lg-12 ">
+                                                            <div class="table-validation-error">
+                                                                <div class="validationmsg"><span asp-validation-for="subConsultantDetail[i].NameofConsultant" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="subConsultantDetail[i].CountryyofOrigin" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="subConsultantDetail[i].CICRegistrationNo" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="subConsultantDetail[i].DescriptionOfWork" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="subConsultantDetail[i].ContractValueOfWork" class="text-danger"></span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                }
+
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg">
+                                                        <table id="tblformsubconsult" class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">
+                                                                        Name of
+                                                                        Sub-Consultants/Specialists
+                                                                    </th>
+                                                                    <th scope="col">Country of Origin</th>
+                                                                    <th scope="col">CIC Registration No.</th>
+                                                                    <th scope="col">
+                                                                        Description of Works
+                                                                        to be undertaken
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        Contract Value of Works (E)
+                                                                    </th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="sunconsutant">
+
+                                                                @for (int i = 0; i < Model.subConsultantDetail.Count; i++)
+                                                                {
+
+                                                                    <tr id="@i">
+                                                                        <td class="row-index"><input class="form-control" asp-for="subConsultantDetail[i].NameofConsultant" type="text" /></td>
+                                                                        <td class="row-index1"><input class="form-control" asp-for="subConsultantDetail[i].CountryyofOrigin" type="text" /></td>
+                                                                        <td class="row-index2"><input class="form-control" asp-for="subConsultantDetail[i].CICRegistrationNo" type="text" /></td>
+                                                                        <td class="row-index3"><input class="form-control" asp-for="subConsultantDetail[i].DescriptionOfWork" type="text" /></td>
+                                                                        <td class="row-index4">
+                                                                            <input class="form-control decimal-field" asp-for="subConsultantDetail[i].ContractValueOfWork" type="text" />
+                                                                            <input type="hidden" asp-for="secondGrid" />
+
+                                                                            <input type="hidden" asp-for="subConsultantDetail[i].PartitionKey" />
+                                                                            <input type="hidden" asp-for="subConsultantDetail[i].RowKey" />
+
+                                                                        </td>
+
+                                                                        <td>
+                                                                            @*<button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button>*@
+
+                                                                            <button class="removeConsultant" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="3" class="Addnewrecord-td">
+                                                                        @*<button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record
+                                </button>*@
+                                                                        <button class="btnTblRow" id="btnnew" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+
+                                                                    </td>
+                                                                    <td colspan="4" class="Addnewrecord-td text-right">
+                                                                        <span>
+                                                                            (State the CIC Reference of each Sub-contractor)
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+
+
+
+                                                    <ul class="cic-form-action-block">
+                                                        <li>
+                                                            <button type="submit" asp-route-name="finance" asp-route-pre="business" class="default-btn btn-preview">Previous</button>
+                                                            <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                                                        </li>
+                                                        <li>
+                                                            <button type="submit" asp-route-name="finance" asp-route-next="work" class="btn btn-submit">Next</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        // Function to format decimal value to two decimal places
+                                                        function formatDecimal(value) {
+                                                            //return parseFloat(value).toFixed(2);
+                                                            return (Math.round(value * 100) / 100).toFixed(2);
+                                                        }
+
+                                                        // Attach event listeners to the decimal input fields
+                                                        // This will update the value with decimal places as the user types
+                                                        $('.decimal-field').on('blur', function () {
+                                                            var inputValue = $(this).val();
+                                                            var formattedValue = formatDecimal(inputValue);
+                                                            $(this).val(formattedValue);
+                                                        });
+                                                    });
+                                                </script>
+
+                                                <script>
+                                                    var counter1 = document.getElementById("secondGrid").value;
+                                                    $(function () {
+
+                                                        $('#btnnew').click(function () {
+                                                            $(`<tr id="${counter1}"><td class="row-index">
+                                                             <input type="text" class="form-control" name="subConsultantDetail[${counter1}].NameofConsultant" value=""/>
+                                                             </td>
+                                                             <td class="row-index1">
+                                                              <input type="text" class="form-control" name="subConsultantDetail[${counter1}].CountryyofOrigin" value=""/>
+                                                             </td>
+                                                             <td class="row-index2">
+                                                             <input type="text" class="form-control" name="subConsultantDetail[${counter1}].CICRegistrationNo" value=" "  />
+                                                             </td>
+                                                             <td class="row-index3">
+                                                             <input type="text" class="form-control" name="subConsultantDetail[${counter1}].DescriptionOfWork" value=" " />
+                                                             </td>
+                                                             <td class="row-index4">
+                                                             <input type="text" class="form-control" name="subConsultantDetail[${counter1}].ContractValueOfWork" value=" "/>
+                                                             </td>
+
+
+                                                             <td>
+                                                             <button type="button" class="removeConsultant"><img src="/images/trush.svg" alt="remove row" /></button>
+                                                             </td>
+                                                             </tr>`).appendTo('#tblformsubconsult');
+                                                            counter1++;
+                                                            document.getElementById("secondGrid").value = counter1;
+
+                                                            return false;
+                                                        });
+                                                    });
+
+                                                    $(document).ready(function () {
+
+                                                        $('#sunconsutant').on('click', '.removeConsultant', function () {
+
+                                                            // containing the clicked button
+                                                            var child = $(this).closest('tr').nextAll();
+
+                                                            child.each(function () {
+
+                                                                // Getting <tr> id.
+                                                                var id = $(this).attr('id');
+
+                                                                // Getting the <p> inside the .row-index class.
+                                                                var idx = $(this).children('.row-index').children('input');
+                                                                var idx1 = $(this).children('.row-index1').children('select');
+                                                                var idx2 = $(this).children('.row-index2').children('input');
+                                                                var idx3 = $(this).children('.row-index3').children('input');
+                                                                var idx4 = $(this).children('.row-index4').children('input');
+
+
+                                                                // Gets the row number from <tr> id.
+                                                                var dig = parseInt(id);
+
+                                                                var cnew = dig - 1;
+                                                                // Modifying row index.
+                                                                //idx.html(`Row ${dig - 1}`);
+                                                                idx.attr('name', `subConsultantDetail[${cnew}].NameofConsultant`)
+                                                                idx1.attr('name', `subConsultantDetail[${cnew}].CountryyofOrigin`)
+                                                                idx2.attr('name', `subConsultantDetail[${cnew}].CICRegistrationNo`)
+                                                                idx3.attr('name', `subConsultantDetail[${cnew}].DescriptionOfWork`)
+                                                                idx4.attr('name', `subConsultantDetail[${cnew}].ContractValueOfWork`)
+
+
+
+                                                                // Modifying row id.
+                                                                $(this).attr('id', `${dig - 1}`);
+                                                            });
+
+                                                            // Removing the current row.
+                                                            $(this).closest('tr').remove();
+
+                                                            // Decreasing total number of rows by 1.
+                                                            counter1--;
+                                                            document.getElementById("secondGrid").value = counter1;
+                                                        });
+                                                    });
+                                                </script>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.work" role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="uploadDocument-wrapper">
+                                        <div class="title">
+                                            <h3>Business Particulars</h3>
+                                        </div>
+                                        <div class="document-upload">
+                                            <div class="document-upload-fieldset">
+                                                <ul class="uploadItem">
+                                                    <li>Certified copies of individual company CIC Registration Certificates</li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input type="file" asp-for="@Model.doc5.BusineesParticularsfile1" id="upload1">
+                                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+
+
+                                                        </div>
+                                                        @if (Model.BusineesParticularsfile1 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.BusineesParticularsfile1">@Model.BusineesParticularsfile1</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.BusineesParticularsfile1</label>
+                                                            }
+                                                        }
+                                                        <span asp-validation-for="@Model.doc5.BusineesParticularsfile1" class="text-danger"></span>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Valid Joint Venture Agreement (highly important).
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input type="file" asp-for="@Model.doc5.BusineesParticularsfile2" id="upload2">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+
+                                                        </div>
+                                                        @if (Model.BusineesParticularsfile2 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.BusineesParticularsfile2">@Model.BusineesParticularsfile2</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.BusineesParticularsfile2</label>
+                                                            }
+                                                        }
+
+
+                                                        <span asp-validation-for="@Model.doc5.BusineesParticularsfile2" class="text-danger"></span>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="DocumentUpload-wrapper">
+                                    <partial name="~/Views/Shared/_Decl5.cshtml" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

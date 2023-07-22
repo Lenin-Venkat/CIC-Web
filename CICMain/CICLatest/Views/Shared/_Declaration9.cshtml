@@ -1,0 +1,231 @@
+﻿@model Form9ViewModel
+<div class="cic-application-wrapper">
+
+
+    <div class="Declaration-wrapper Undertakingsection">
+        <div class="title">
+            <strong>Undertaking <span class="asterisk">*</span></strong>
+            @*<p>
+               
+            </p>*@
+        </div>
+        <div class="Declaration-fielset-block">
+            <div class="fielset-inner">
+                <div class="row">
+
+
+                    <div class="col diclaration-agr">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" asp-for="RepresentativeName">I/We</span>
+
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.App.RepresentativeName" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.App.RepresentativeName" class="text-danger"></span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" asp-for="CompName">representing</span>
+
+                            </div>
+                            <div class="form-control-div">
+                                <input type="text" asp-for="@Model.App.CompName" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.App.CompName" class="text-danger"></span>
+
+                            </div>
+                            </div>
+
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" asp-for="Position">herein in my capacity as</span>
+
+                            </div>
+                            <div class="form-control-div">
+                                <input type="text" class="form-control" asp-for="@Model.App.Position" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.App.Position" class="text-danger"></span>
+                            </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">, do hereby certify that I am duly authorized to </span>
+                                </div>
+
+                            </div>
+                            <p>sign this application for Project Registration and further bind the company/myself to the conditions thereof. </p>
+
+
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" asp-for="Place">Signed at</span><br>
+
+                                </div>
+                                <div class="form-control-div">
+                                    <input type="text" class="form-control" asp-for="@Model.App.Place" aria-label="Amount (to the nearest dollar)">
+                                    <span asp-validation-for="@Model.App.Place" class="text-danger"></span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">on this day</span>
+
+                                </div>
+                                <div class="form-control-div">
+                                    <input type="text" class="form-control week" asp-for="@Model.App.Day" aria-label="Amount (to the nearest dollar)">
+                                    <span asp-validation-for="@Model.App.Day" class="text-danger"></span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text">of</span>
+                                </div>
+                                <div class="form-control-div">
+                                    <input type="text" class="form-control month" asp-for="@Model.App.Month" aria-label="Amount (to the nearest dollar)">
+                                    <span asp-validation-for="@Model.App.Month" class="text-danger"></span>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" asp-for="Year">20</span>
+
+                                </div>
+
+                                <div class="form-control-div">
+                                    <input type="text" asp-for="@Model.App.Year" class="form-control year" aria-label="Amount (to the nearest dollar)">
+                                    <span asp-validation-for="@Model.App.Year" class="text-danger"></span>
+                                </div>
+                                </div>
+
+                            </div>
+                </div>
+                <div class="row">
+                  
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Signature <span class="asterisk">*</span></label>
+                        <div class="fileAttachment">
+                            <input id="signatur9" type="file" asp-for="@Model.App.Signature">
+
+                            <label for="signatur9" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                @*Browse*@
+                            </label>
+
+
+                        </div>
+
+                        @if (Model.App.SignatureImage != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.App.SignatureImage">@Model.App.SignatureImage</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.App.SignatureImage</label>
+                            }
+                        }
+                        <span asp-validation-for="@Model.App.Signature" class="text-danger"></span>
+
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <ul class="cic-form-action-block">
+                <li>
+
+                    <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                </li>
+                <li>
+
+                    <button type="button" class="btn default-btn btn-preview" onclick="Preview();">Preview</button>
+                    <button type="submit" asp-route-name="final" class="btn btn-submit">Finish</button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+</div>
+<div id='myModal' class='modal fade modalpreview'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="~/images/cancel.svg" alt="close modal" />
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="termsconditionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CIC Business terms & conditions agreement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-submit">I Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    //function tickTerms() {
+    //    document.getElementById('docs_TermsAndConditions').checked = true;
+    //    $("#docs_TermsAndConditions").prop("checked", true);
+    //    }
+
+
+    function Preview()
+    {
+
+        var jsonData = $('#form9').serialize();// @Html.Raw(Json.Serialize(Model));
+            var options = { "backdrop": "static", keyboard: true };
+
+
+         $.ajax({
+            type: 'POST',
+             url: "@(Url.Action("Preview", "ViewForm9"))",
+             data: $('#form9').serialize(),
+             success: function (data)
+             {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             } ,
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+</script>

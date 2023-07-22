@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Construction firms registration form - cicf 1";
+}
+@model CICForm1Model
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-controller="Home" asp-action="Index">Home</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">@ViewBag.FormTitle</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+        <div class="">
+            <div class="">
+                <h1>@ViewBag.FormTitle</h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="@ViewBag.type">
+                                <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="false">Type of Application</a>
+                            </li>
+
+                            <li role="presentation" class="@ViewBag.business">
+                                <a href="#BusinessDetails" data-toggle="tab" aria-controls="BusinessDetails" role="tab" aria-expanded="false"> Business Details</a>
+                            </li>
+
+                            <li role="presentation" class="@ViewBag.fin">
+                                <a href="#FinancialCapability" data-toggle="tab" aria-controls="FinancialCapability" role="tab"> Financial Capability</a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.work">
+                                <a href="#WorksCapability" data-toggle="tab" aria-controls="WorksCapability" role="tab">Works Capability</a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.doc">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" id="form1">
+                        @*<input type="hidden" value="@ViewBag.FormTitle" asp-for="formval"/>*@
+                        <div class="tab-content">
+                            <div class="tab-pane @ViewBag.type" role="tabpanel" id="TypeofApplication">
+                                <div class="TypeofApplication-wrapper">
+                                    @Html.Partial("_TypeofApplication", @Model)
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.business" role="tabpanel" id="BusinessDetails">
+                                @Html.Partial("_BusinessDetails", @Model)
+                            </div>
+                            <div class="tab-pane @ViewBag.fin" role="tabpanel" id="FinancialCapability">
+                                @Html.Partial("_FinancialCapability", @Model)
+                            </div>
+                            <div class="tab-pane @ViewBag.work" role="tabpanel" id="WorksCapability">
+                                <div class="WorksCapability-wrapper">
+                                    @Html.Partial("_WorksCapability", @Model)
+                                </div>
+                            </div>
+
+                            <div class="tab-pane @ViewBag.doc" role="tabpanel" id="DocumentUpload">
+                                <div class="DocumentUpload-wrapper">
+                                    @Html.Partial("_DocumentUpload", @Model)
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*<a href="javascript:void(0);" class=" formonesignature" id="signatureToggle">
+    <span><img src="/images/signature-icon.svg" alt=""> Create signature</span>
+</a>*@
+
+@*<style>
+
+    .formonesignature {
+        font-size: 14px;
+        position: fixed;
+        top: 50%;
+        z-index: 99;
+        right: 0;
+        border: 1px solid #a77e06;
+        padding: 12px 20px;
+        border-radius: 100px;
+        background-color: #ffc107;
+        color: #000;
+        font-weight: 500;
+        transform: rotate(90deg);
+    }
+</style>*@
+
+<script>
+    jQuery(document).ready(function () {
+
+        if (window.localStorage.getItem('selectedCompanyLogo') != null) {
+            $('#selectedCompanyLogo').css("display", 'inline-block');
+
+            $('#selectedCompanyLogo').attr("src", window.localStorage.getItem('selectedCompanyLogo'));
+
+            $('#selectedCompanyLogo').siblings("p").hide();
+        }
+    });
+</script>

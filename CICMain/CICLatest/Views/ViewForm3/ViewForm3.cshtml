@@ -1,0 +1,450 @@
+﻿@{
+    ViewData["Title"] = "JOINT VENTURE CONSTRUCTION FIRMS AND SPECIALIST WORKS CONTRACTORS REGISTRATION FORM - CICF3";
+}
+@model Form3Model
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<form method="post" asp-controller="ViewForm3" asp-action="ViewForm3">
+    <section class="Cic-form-wrapper">
+        <div class="cic-breadcurm">
+            <ul>
+                <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+
+                <li><strong class="current-item">Form details</strong></li>
+            </ul>
+        </div>
+        <div class="Cic-form-content saveasdraft" id="printarea">
+
+            <div class="">
+                <div class="">
+                    <h1> Joint venture construction firms and specialist works contractors registration form - CICF3</h1>
+                    <div class="product-number-blk">
+                        <h5>Form Registration Number - <span class="vals">@Model.FormRegistrationNo</span></h5>
+                    </div>
+                    <div class="wizard">
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="false">Type of Application & Business Details</a>
+                                </li>
+
+                                <li role="presentation">
+                                    <a href="#JoinVentureDetails" data-toggle="tab" aria-controls="JoinVentureDetails" role="tab" aria-expanded="false">Joint Venture details</a>
+                                </li>
+
+                                <li role="presentation">
+                                    <a href="#TechnicalEmployeeDetails" data-toggle="tab" aria-controls="TechnicalEmployeeDetails" role="tab">
+                                        Technical Staff
+                                        & Labour details
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#ProjectDetails" data-toggle="tab" aria-controls="WorksCapability" role="tab">Project details</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Documents</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content saveasdraft-content">
+                            <div class="tab-pane active" role="tabpanel" id="TypeofApplication">
+
+                                <div class="fieldset">
+                                    <div class="row">
+                                        <div class="col-lg form-group">Type of Application</div>
+                                        <div class="col-lg form-group"><strong>@Model.AppType</strong></div>
+                                    </div>
+
+                                </div>
+                                <div class="fieldset">
+                                    <div class="title"> <h5>Section B - Business Details</h5></div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Name of Joint Venture</div>
+                                        <div class="col-lg form-group"><strong>@Model.NameOFJoinVenture</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Type of Joint Venture</div>
+                                        <div class="col-lg form-group"><strong>@Model.TypeofJoointVenture</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Telephone No</div>
+                                        <div class="col-lg form-group"><strong>@Model.Telephone</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Fax No</div>
+                                        <div class="col-lg form-group"><strong>@Model.Fax</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Email Address</div>
+                                        <div class="col-lg form-group"><label id="Email"><strong>@Model.Email</strong></label></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Physical Address</div>
+                                        <div class="col-lg form-group"><strong>@Model.Phyaddress</strong></div>
+                                    </div>
+                                </div>
+
+                                <div class="fieldset bordered">
+                                    <div>
+                                        <h5>Authorized Contact Person</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">First Name</div>
+                                        <div class="col-lg form-group"><strong>@Model.FirstName</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Surname</div>
+                                        <div class="col-lg form-group"><strong>@Model.SurName</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Designation </div>
+                                        <div class="col-lg form-group"><strong>@Model.Designation</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Telephone No</div>
+                                        <div class="col-lg form-group"><strong>@Model.BusinessTelephone</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Fax No</div>
+                                        <div class="col-lg form-group"><strong>@Model.FaxNo</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Mobile No</div>
+                                        <div class="col-lg form-group"><strong>@Model.MobileNo</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Email Address</div>
+                                        <div class="col-lg form-group"><strong>@Model.BusinessEmail</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="JoinVentureDetails">
+                                @if (ViewBag.Category != null)
+                                {
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Joint Venture Discipline Applying for </div>
+                                        <div class="col-lg form-group">@ViewBag.Category</div>
+                                    </div>
+                                }
+                                @if (ViewBag.SubCategory != null)
+                                {
+                                    <div class="row">
+                                        <div class="col-lg form-group">Specialist Categories</div>
+                                        <div class="col-lg form-group">@ViewBag.SubCategory</div>
+                                    </div>
+                                }
+
+
+
+                                @if (Model.JointVenturePartiesModel.Count != 0)
+                                {
+                                    <h5>
+                                        Particulars of Joint Venture Parties
+                                    </h5>
+                                    <div class="table-fieldset">
+                                        <div class="table-responsive-lg" style="overflow-x:auto;">
+                                            <table class="table table-bordered" id="tblbank">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Name of Applicants</th>
+                                                        <th scope="col">Country of Origin</th>
+                                                        <th scope="col">Contact Details</th>
+                                                        <th scope="col">CIC Registration No.</th>
+                                                        <th scope="col">% Shareholding</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody">
+                                                    @for (int i = 0; i < Model.JointVenturePartiesModel.Count; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>@Model.JointVenturePartiesModel[i].NameofApplicant</td>
+                                                            <td>@Model.JointVenturePartiesModel[i].CountryOfOrigin</td>
+                                                            <td>@Model.JointVenturePartiesModel[i].ContactDetails</td>
+                                                            <td>@Model.JointVenturePartiesModel[i].CICRegistrationNo</td>
+                                                            <td>@Model.JointVenturePartiesModel[i].Shareholding</td>
+
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+
+
+
+                            </div>
+
+                            <div class="tab-pane" role="tabpanel" id="TechnicalEmployeeDetails">
+                                <div class="fieldset">
+                                    <div class="title">
+                                        <strong> Technical and Administrative Staff to be deployed on the Project </strong>
+                                    </div>
+                                    @if (Model.TechnicalAdministrativeStaffModel.Count != 0)
+                                    {
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" colspan="2">Category</th>
+                                                            <th scope="col">Number</th>
+                                                            <th scope="col">Sum of Years of Experience</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < Model.TechnicalAdministrativeStaffModel.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="2">@Model.TechnicalAdministrativeStaffModel[i].Category</td>
+                                                                <td>@Model.TechnicalAdministrativeStaffModel[i].Number</td>
+                                                                <td>@Model.TechnicalAdministrativeStaffModel[i].YearsofExperience</td>
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model.LabourForceModel.Count != 0)
+                                    {
+                                        <div class="title">
+                                            <strong> Labour Force (skilled labour includes Equipment Operators, Craftsman, Masons, Plumbers, etc.) </strong>
+                                        </div>
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" rowspan="2" style="vertical-align:middle; text-align:center;">Gender</th>
+                                                            <th scope="col" colspan="2">Number of Skilled Labourers</th>
+                                                            <th scope="col" colspan="2">Number of Unskilled Labourers</th>
+                                                            <th scope="col" rowspan="2" style="vertical-align:middle; text-align:center;">Total</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Swazi </th>
+                                                            <th>Foreign</th>
+                                                            <th>Swazi </th>
+                                                            <th>Foreign</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < Model.LabourForceModel.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td style="vertical-align:middle">@Model.LabourForceModel[i].Gender</td>
+                                                                <td>@Model.LabourForceModel[i].Swazi1</td>
+                                                                <td>@Model.LabourForceModel[i].Foreign1</td>
+                                                                <td>@Model.LabourForceModel[i].Swazi2</td>
+                                                                <td>@Model.LabourForceModel[i].Foreign2</td>
+                                                                <td>@Model.LabourForceModel[i].Total</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    @if (Model.SubContractorModel.Count != 0)
+                                    {
+                                        <div class="title">
+                                            <strong> Sub-contractors to be employed on the Project </strong>
+                                        </div>
+
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name of Sub-contractors</th>
+                                                            <th scope="col">Country of Origin</th>
+                                                            <th scope="col">CIC Registration No.</th>
+                                                            <th scope="col">Description of Works to be undertaken</th>
+                                                            <th scope="col">Contract Value of Works (E)
+                                                            <th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < Model.SubContractorModel.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.SubContractorModel[i].NameofContractor</td>
+                                                                <td>@Model.SubContractorModel[i].CountryyofOrigin</td>
+                                                                <td>@Model.SubContractorModel[i].CICRegistrationNo</td>
+                                                                <td>@Model.SubContractorModel[i].DescriptionOfWork</td>
+                                                                <td>@Model.SubContractorModel[i].ContractValueOfWork</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="ProjectDetails">
+                                <div class="fieldset">
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Joint Venture Project Details Bid Reference</div>
+                                        <div class="col-lg form-group">@Model.BidReferenceNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Project Title</div>
+                                        <div class="col-lg form-group">@Model.ProjectTitle</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Date of Award</div>
+                                        <div class="col-lg form-group">@Model.DateofAward</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Proposed Commencement Date</div>
+                                        <div class="col-lg form-group">@Model.CommencementDate</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Proposed Completion Date</div>
+                                        <div class="col-lg form-group">@Model.CompletionDate</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Brief Description of Project</div>
+                                        <div class="col-lg form-group">@Model.DescriptionofProject</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Client’s Name and Contact Details</div>
+                                        <div class="col-lg form-group">@Model.ClientName</div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Contract Value (E)</div>
+                                        <div class="col-lg form-group">@Model.ContractValue</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                <div class="fieldset">
+                                    @if (Model.BusineesParticularsfile1Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\BusineesParticularsfile1_" + Model.BusineesParticularsfile1Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="row">
+                                            <div class="col-lg form-group">Certified copies of individual company CIC Registration Certificates</div>
+                                            <div class="col-lg form-group vals">
+                                                <a href="//@path" asp-for="@Model.BusineesParticularsfile1Name" target="_blank">@Model.BusineesParticularsfile1Name</a>
+
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.BusineesParticularsfile2Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\BusineesParticularsfile2_" + Model.BusineesParticularsfile2Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="row">
+                                            <div class="col-lg form-group">Valid Joint Venture Agreement (highly important)</div>
+                                            <div class="col-lg form-group vals">
+                                                <a href="//@path" asp-for="@Model.BusineesParticularsfile2Name" target="_blank">@Model.BusineesParticularsfile2Name</a>
+
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="fieldset">
+
+                                    <div class="row">
+                                        <div class="col-lg form-group">Signature  </div>
+                                        <div class="col-lg form-group vals">
+                                            @if (Model.SignatureName != null)
+                                            {
+                                                string path = Model.ImagePath + @"\Signature_" + Model.SignatureName;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <a href="//@path" asp-for="@Model.SignatureName" target="_blank">@Model.SignatureName</a>
+                                            }
+                                        </div>
+                                    </div>
+
+
+                                    @if (Model.Signature2Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\Signature1_" + Model.Signature2Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="row">
+                                            <div class="col-lg form-group">Signature  </div>
+                                            <div class="col-lg form-group vals">
+
+
+                                                <a href="//@path" asp-for="@Model.Signature2Name" target="_blank">@Model.Signature2Name</a>
+
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Joint Venture grade applying for:  </div>
+                                    <div class="col-lg form-group vals"><input type="text" @ViewBag.grade class="form-control" value="@ViewBag.SelectedGrade" name="JVGrade" id="JVGrade" readonly /></div>
+                                    
+                                    @Html.ValidationMessage("JVGrade", "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Comment:</label> &nbsp; <label id="GFG"></label>
+                                    <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                                </div>
+                                <ul class="cic-form-action-block">
+                                    <li>
+                                        <button type="submit" class="btn btn-submit">Approve</button>
+                                        <button type="button" class="btn btn-reject" onclick="submitForm('Reject');">Reject</button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</form>
+<script type="text/javascript">
+    function submitForm(x) {
+        var label = $('#Email');
+        var email = label.text();
+        var RepresentativeName = $('#RepresentativeName').text();
+        var comment = document.getElementById('comment').value;
+
+        if (comment) {
+            $.ajax({
+                type: 'POST',
+                url: "@(Url.Action("RejectForm", "ViewForm3"))",
+                data: { "value": x, "emailId": email, "RepresentativeName": RepresentativeName, "comment": comment },
+                success: function (result) {
+                    window.location.href = '/ReviewerDashboard/ReviewerDashboard';
+                },
+                error: function () {
+                    console.log('Failed ');
+                }
+            })
+        }
+        else {
+            document.getElementById('GFG').innerHTML = "Please enter comment";
+            document.getElementById('GFG').style.color = "red";
+        }
+    }
+
+
+</script>

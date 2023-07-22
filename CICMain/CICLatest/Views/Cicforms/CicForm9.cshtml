@@ -1,0 +1,291 @@
+﻿@{ ViewData["Title"] = "Bulk Projects And Levy Assessment Registration Form – CICF 9"; }
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li>
+                <strong class="current-item">
+                    Bulk Projects And Levy Assessment Registration Form – CICF 9
+                </strong>
+            </li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+        <h1>Registration Of Construction Projects – CICF 9 </h1>
+        <div class="cic_bulk_prj_cont">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Company or Institution <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter Company or Institution" />
+                </div>
+                <div class="col-lg form-group">
+                    <label>Name of Institution Focal Person <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter Name of Institution Focal Person" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group textarea">
+                    <label>Postal address <span class="asterisk">*</span></label>
+                    <textarea type="text" class="form-control" placeholder="Please enter  postal address"></textarea>
+                </div>
+                <div class="col-lg form-group textarea">
+                    <label>Physical Address <span class="asterisk">*</span></label>
+                    <textarea type="text" class="form-control" placeholder="Please enter physical address"></textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Email Address <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter email address" />
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Tel. No <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter telephone no" />
+                </div>
+                <div class="col-lg form-group">
+                    <label>Fax No <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter fax no" />
+                </div>
+            </div>
+
+        </div>
+        <div class="Construction-list">
+            <div class="title">
+                <h3>List of Construction projects to be undertaken</h3>
+            </div>
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <strong>Building Works Projects</strong>
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Project Name</th>
+                                    <th scope="col">
+                                        Name Of
+                                        Responsible Contractor
+                                    </th>
+                                    <th scope="col">Est. Project Cost</th>
+                                    <th scope="col">
+                                        Proposed
+                                        Commencement Date
+                                    </th>
+                                    <th scope="col">
+                                        Proposed
+                                        Completion Date
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="Addnewrecord-td">
+                                        <button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <strong>Civils Works Projects</strong>
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Project Name</th>
+                                    <th scope="col">
+                                        Name Of
+                                        Responsible Contractor
+                                    </th>
+                                    <th scope="col">Est. Project Cost</th>
+                                    <th scope="col">
+                                        Proposed
+                                        Commencement Date
+                                    </th>
+                                    <th scope="col">
+                                        Proposed
+                                        Completion Date
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="Addnewrecord-td">
+                                        <button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <strong>Mechanical Works Projects</strong>
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Project Name</th>
+                                    <th scope="col">
+                                        Name Of
+                                        Responsible Contractor
+                                    </th>
+                                    <th scope="col">Est. Project Cost</th>
+                                    <th scope="col">
+                                        Proposed
+                                        Commencement Date
+                                    </th>
+                                    <th scope="col">
+                                        Proposed
+                                        Completion Date
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><input class="form-control" type="text" /></td>
+                                    <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="Addnewrecord-td">
+                                        <button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="DocumentUpload-wrapper">
+                <div class="uploadDocument-wrapper">
+                 
+                    <div class="document-upload">
+                        <div class="document-upload-fieldset">
+                            <ul class="uploadItem">
+                                <li>Purchase orders </li>
+                                <li>
+                                    <div class="fileAttachment">
+                                        <input type="file" id="PurchaseOrders">
+                                        <label for="PurchaseOrders" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                            Upload
+                                        </label>
+
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <ul class="uploadItem">
+                                <li>
+                                    Invoices
+                                </li>
+                                <li>
+                                    <div class="fileAttachment">
+                                        <input type="file" id="Invoices">
+                                        <label for="Invoices" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                            Upload
+                                        </label>
+
+                                    </div>
+
+                                </li>
+                            </ul>
+
+                            <ul class="uploadItem">
+                                <li>
+                                 Summary bill of quantities
+                                </li>
+                                <li>
+                                    <div class="fileAttachment">
+                                        <input type="file" id="SummaryBill">
+                                        <label for="SummaryBill" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                            Upload
+                                        </label>
+
+                                    </div>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <partial name="~/Views/Shared/_Declaration9.cshtml" />
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script type="text/javascript">
+    $('#Reviseddate').hide();
+
+    function handleClick(myProject) {
+
+        var projectType = myProject.value;
+
+        if (projectType == 'Ongoingproject') {
+            $('#Reviseddate').show();
+        }
+        else {
+            $('#Reviseddate').hide();
+        }
+    }
+</script>
+

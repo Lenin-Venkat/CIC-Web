@@ -1,0 +1,184 @@
+﻿@{ ViewData["Title"] = "Construction projects and levy assessment registration form – CICF 8"; }
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li>
+                <strong class="current-item">
+                    Details of contractor liable for registering project and remitting construction levy
+                </strong>
+            </li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+
+        <div class="">
+            <div class="">
+                <h1>Construction projects and levy assessment registration form – CICF 8 </h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#Contractorliable" data-toggle="tab" aria-controls="Contractorliable" role="tab" aria-expanded="true">
+                                    Details of contractor liable
+                                </a>
+                            </li>
+
+                            <li role="presentation" class="disabled">
+                                <a href="#Workdiscipline" data-toggle="tab" aria-controls="Workdiscipline" role="tab">
+                                    Details of owner/client & Work discipline
+                                </a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#SubconstractorsDetails" data-toggle="tab" aria-controls="SubconstractorsDetails" role="tab">
+                                    Details of all sub-contractors & Details of All Suppliers
+                                </a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#Projectlevypayment" data-toggle="tab" aria-controls="Projectlevypayment" role="tab">
+                                    Details of project & Levy payment options
+                                </a>
+                            </li>
+                           
+                            <li role="presentation" class="disabled">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form role="form" action="index.html" class="login-box">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane active" role="tabpanel" id="Contractorliable">
+
+                                <div class="DetailsConstraction-wrapper">
+                                    <partial name="~/Views/Shared/_Contractorliable.cshtml" />
+                                </div>
+                              
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="Workdiscipline">
+                                <div class="Workdiscipline-wrapper">
+                                    <partial name="~/Views/Shared/_Workdiscipline.cshtml" />
+                                </div>
+                               
+                            </div>
+
+                            <div class="tab-pane" role="tabpanel" id="SubconstractorsDetails">
+                                <div class="SubconstractorsDetails-wrapper">
+                                    <partial name="~/Views/Shared/_SubconstractorsDetails.cshtml" />
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="Projectlevypayment">
+                                <div class="DetailsProject-wrapper">
+
+                                    <div class="DetailsProjectLevy-wrapper">
+                                        <partial name="~/Views/Shared/_DetailsProjectnLevy.cshtml" />
+                                    </div>                                  
+                                 
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="uploadDocument-wrapper">
+                                        <div class="title">
+                                            <h3>Mandatory Documents</h3>
+                                        </div>
+                                        <div class="document-upload">
+                                            <div class="document-upload-fieldset">
+                                                <ul class="uploadItem">
+                                                    <li>Contract Bill of Quantities/Works Order (summary page)</li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload1" type="file" name="upload">
+                                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Letter of Contract Award from Project Owner
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload2" type="file" name="upload">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Letter indicating payment schedule
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload2" type="file" name="upload">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Signed letter of agreement in the event that the Main Contractor and Project Owner
+                                                        have agreed that the levy will be remitted to the Council by the Project Owner
+
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload2" type="file" name="upload">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="DocumentUpload-wrapper">
+                                    <partial name="~/Views/Shared/_Declaration8.cshtml" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $('#Reviseddate').hide();
+
+    function handleClick(myProject) {
+
+        var projectType = myProject.value;
+
+        if (projectType == 'Ongoingproject') {
+            $('#Reviseddate').show();
+        }
+        else {
+            $('#Reviseddate').hide();
+        }
+    }
+</script>
+

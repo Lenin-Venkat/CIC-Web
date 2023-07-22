@@ -1,0 +1,70 @@
+﻿
+@model List<FileModel>
+
+<style>
+    .lnkbutton1 {
+        background: url(/images/payment-icon.svg) no-repeat center center;
+        width: 26px;
+        height: 26px;
+        font-size: 0;
+        display: inline-block;
+    }
+</style>
+<style>
+    .lnkbutton2 {
+        background: url(/images/certificate-icon.svg) no-repeat center center;
+        width: 26px;
+        height: 26px;
+        font-size: 0;
+        display:inline-block;
+    }
+</style>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a href="/Home/Index">Home</a> <span class="delimiter"><img src="/images/dark-right-arrow.svg"></span></li>
+            <li><strong class="current-item">Invoice Details</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content invoice-table">
+
+        
+        <div class="table-responsive-lg ">
+            @if (Model.Count != 0)
+            {
+                <h1><img src="~/images/invoice.svg" alt="" /> Invoice Details</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="60%">File Name</th>
+                            <th width="10%" class="text-center">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (FileModel file in Model)
+                        {
+                            string path = file.path.Replace("https://", "");
+                            path = path.Replace("\\", "/");
+                            path = path;// + file.CustNo;
+                            <tr>
+                                <td width="90%"><a href="//@path" asp-for="@file.FileName" target="_blank">@file.FileName</a></td>
+                                <td width="10%" class="text-center">
+                                    @*@Html.ActionLink("Download", "DownloadFile", new { fileName = file.FileName, cust=file.CustNo }, new { @class = "DownloadFile-btn", data_toggle = "tooltip", data_placement="top", @title= "Download" })*@
+                                    @Html.ActionLink("Upload Payment Proof", "Index", "Payment", new { userId = file.CustNo , invoiceNo = file.FileName}, new { @class = "Payment-btn", data_toggle = "tooltip", data_placement = "top", @title = "Upload Payment Proof" })
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h1 style="color: blue;padding-left: 287px;"> No Invoice Available</h1>
+            }
+        </div>
+    </div>
+</section>
+
+

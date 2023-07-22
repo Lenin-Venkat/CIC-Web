@@ -1,0 +1,83 @@
+﻿@model List<CertificateModel>
+
+<style>
+    .lnkbutton1 {
+        background: url(/images/payment-icon.svg) no-repeat center center;
+        width: 26px;
+        height: 26px;
+        font-size: 0;
+        display: inline-block;
+    }
+</style>
+<style>
+    .lnkbutton2 {
+        background: url(/images/certificate-icon.svg) no-repeat center center;
+        width: 26px;
+        height: 26px;
+        font-size: 0;
+        display: inline-block;
+    }
+</style>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+
+        </ul>
+    </div>
+    <div class="Cic-form-content invoice-table">
+        <form asp-controller="GenerateCertificate" asp-action="Index" method="post">
+
+            <div class="table-responsive-lg ">
+                @if (Model.Count != 0)
+                {
+                    <h1> Certificate Details</h1>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="30%">Certificate No</th>
+                                @*<th width="10%" class="text-center">Action</th>*@
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                string path = Model[i].FilePath;
+                                path = path.Replace("https:\\", "");
+                                path = path.Replace("\\", "/");
+                                <tr>
+
+                                    <td width="10%">
+                                        <a href="//@path" target="_blank">@Model[i].FileName</a>
+                                        <input type="hidden" asp-for="@Model[i].grade" />
+                                        <input type="hidden" asp-for="@Model[i].emailTo" />
+                                        <input type="hidden" asp-for="@Model[i].FilePath" />
+                                        <input type="hidden" asp-for="@Model[i].FileName" />
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <h1 style="color: blue;padding-left: 287px;"> No Certificate Available</h1>
+                }
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment:</label> &nbsp; <label style="color:red">@ViewBag.commenterr</label>
+                <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-submit">Release Certificate</button>
+                <button type="submit" class="btn btn-reject" asp-controller="GenerateCertificate" asp-action="RejectCert">Reject Certificate</button>
+                <button type="submit" class="btn btn-disabled" asp-controller="GenerateCertificate" asp-action="RemoveCert">Cancel</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+

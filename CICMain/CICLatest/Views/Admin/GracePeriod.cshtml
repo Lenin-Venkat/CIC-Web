@@ -1,0 +1,61 @@
+﻿@model GracePeriodModel
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Admin" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Set Grace Period</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content invoice-table">
+        <div class="grace-period-fieldset">
+            <form method="post" asp-controller="Admin" asp-action="SetGracePeriod" enctype="multipart/form-data">
+                <div class="row row-height">
+                    <div class="col-12 form-group">
+                        <label>Grace Period: <span class="asterisk">*</span></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 form-group row-height">
+                        <input type="text" id="datepicker" class="form-control datepicker-control text-width" placeholder="" asp-for="@Model.allowedDate" />
+
+                        @*<input asp-for="@Model." type="text" class="form-control text-width" placeholder="Please Enter Number Of Days" />*@
+                        @*<span asp-validation-for="@Model.NumberOfDays" class="text-danger"></span>*@
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datepicker').datepicker({
+                            changeMonth: true,
+                            changeYear: true,
+                            format: "mm-dd-yyyy",
+                            language: "tr"
+                        });
+                    });
+                </script>
+                <div class ="row row-height">
+                    @Html.ValidationMessageFor(m => m.allowedDate, "", new { @class = "text-danger" })
+                </div>
+                
+                <script type="text/javascript">
+                    $(function () {
+
+                    })
+                </script>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <button type="submit" class="btn btn-submit" asp-controller="Admin" asp-action="SetGracePeriod">Submit</button>
+                    </div>
+                </div>
+                <div class ="row row-height">
+                    <span class="text-success">@ViewBag.StatusMessage</span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    </script>
+</section>
+

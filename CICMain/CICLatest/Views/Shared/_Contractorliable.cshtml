@@ -1,0 +1,304 @@
+﻿@model CICLatest.Models.MainViewModel
+
+<h4 class="text-center">
+    Details of contractor liable for registering
+    project and remitting construction levy
+</h4>
+<div class="cic-application-wrapper">
+    <div class="cic-form-block">
+        <div class="cic-logo-upload">
+            <div class="col-ting">
+                <div class="control-group file-upload" id="file-upload1">
+                    <div class="image-box text-center">
+                        <p>Company<br />Logo</p>
+                        <img src="" alt="">
+                    </div>
+                    <div class="controls" style="display: none;">
+                        <input type="file" name="contact_image_1" />
+                    </div>
+                </div>
+            </div>
+            <h3>My Company</h3>
+        </div>
+    </div>
+    <div class="cic-fielset-inner">
+        <div class="fieldset">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Contractor/Individual Artisan/Company/Organization <span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter Contractor/Individual Artisan/Company/Organization" asp-for="tabb1.Oraganization" id="Oraganization" />
+                    <span asp-validation-for="tabb1.Oraganization" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group mb0">
+                    <div class="input-group">
+                        <label>Contractor Category and Grade <span class="asterisk">*</span></label>
+                        @*<select asp-for="SelectedCategory" class="custom-select" id="CategoryID" asp-items="@(new SelectList(@ViewBag.ListofCategory, "CategoryID", "CategoryName"))"></select>*@
+                        <select asp-for="SelectedCategory" class="custom-select" id="CategoryName" asp-items="@(new SelectList(@ViewBag.ListofCategory, "CategoryName", "CategoryName"))"></select>
+
+                        <span asp-validation-for="@Model.SelectedCategory" class="text-danger">@ViewBag.SelectedCategory</span>
+                        @Html.ValidationMessageFor(m => m.SelectedCategory, "", new { @class = "text-danger" })
+                    </div>
+
+
+
+                </div>
+                <div class="col-lg form-group mb0">
+                    <label>Certificate No <span class="asterisk">*</span></label>
+                    @*<input asp-for="tabb1.CertificateNo" type="text" class="form-control" id="txtName" placeholder="Please enter certificate no" />*@
+                    <select asp-for="tabb1.CertificateNo" class="custom-select form-control" id="tabb1CertificateNo" asp-items="@(new SelectList(@Model.ListOfCertificates, "CertificateNoValue", "CertificateNoText"))" onchange="certificateChange(this.options[this.selectedIndex].value)">
+                        <option selected>Select</option>
+                    </select>
+                    <span asp-validation-for="tabb1.CertificateNo" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="fieldset Grade-fielset">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Grade Registered for <span class="asterisk">*</span></label>
+                    <input asp-for="tabb1.Grade" type="text" readonly id="GradeValue" class="form-control" placeholder="Grade" />
+                    <span asp-validation-for="tabb1.Grade" class="text-danger"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="fieldset">
+            <div class="form-fields">
+                <div class="title">
+                    <strong>Authorized Contact Person</strong>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group firstname">
+                        <label for="Firstname">First Name <span class="asterisk">*</span></label>
+
+
+                        <div class="input-group">
+                            <select asp-for="tabb1.TypeGender" class="custom-select" id="inputGroupSelect02">
+                                <option>Choose...</option>
+                                @*<option selected value="1">Mr.</option>
+                                <option value="2">Mrs.</option>
+                                <option value="3">Ms.</option>*@
+                                <option selected value="Mr">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+
+                            </select>
+                            <div class="input-group-append">
+                                <input asp-for="tabb1.FirstName" type="text" id="FirstName" class="form-control" placeholder="Please enter First name" />
+                            </div>
+                        </div>
+                        <span asp-validation-for="tabb1.TypeGender" class="text-danger"></span>
+                        <span asp-validation-for="tabb1.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg form-group">
+                        <label for="Surname">Surname </label>
+                        <input asp-for="tabb1.Surname" type="text" id="Surname" class="form-control" placeholder="Please enter surname" />
+                        <span asp-validation-for="tabb1.Surname" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="Telephone">Designation <span class="asterisk">*</span></label>
+                        <input asp-for="tabb1.Designation" type="text" id="Designation" class="form-control" placeholder="Please enter Designation" />
+                        <span asp-validation-for="tabb1.Designation" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-lg form-group">
+                        <label for="Surname">Telephone No <span class="asterisk">*</span></label>
+                        <input type="text" asp-for="tabb1.Telephone" id="Telephone" class="form-control" placeholder="Please enter Telephone No" />
+                        <span asp-validation-for="tabb1.Telephone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="Faxno">Fax No </label>
+                        <input asp-for="tabb1.FaxNo" type="text" id="FaxNo" class="form-control" placeholder="Please enter Fax No" />
+
+                        @if (Model.formval == "Edit")
+                        {
+                            <input type="hidden" asp-for="@Model.formval" />
+                            <input type="hidden" asp-for="@Model.FormRegistrationNo" />
+                            <input type="hidden" asp-for="@Model.PartitionKey" />
+                            <input type="hidden" asp-for="@Model.RowKey" />
+                            <input type="hidden" asp-for="@Model.FormStatus" />
+                            <input type="hidden" asp-for="@Model.RowKey" />
+                            <input type="hidden" asp-for="@Model.FormStatus" />
+
+                        }
+                    </div>
+
+
+
+                    <div class="col-lg form-group">
+                        <label for="Mobileno">Mobile No.<span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" asp-for="tabb1.MobileNo" id="MobileNo" placeholder="Please enter Mobile No." />
+                        <span asp-validation-for="tabb1.MobileNo" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="EmailAddress">Email Address <span class="asterisk">*</span>  </label>
+                        <input type="email" asp-for="tabb1.EmailAddress" id="EmailAddress" class="form-control" placeholder="Please enter Email" />
+                        <span asp-validation-for="tabb1.EmailAddress" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group mb0">
+                        <label for="Form1PostalAddress">Postal Address <span class="asterisk">*</span>  </label>
+                        <input type="text" asp-for="tabb1.Form1PostalAddress" id="Form1PostalAddress" class="form-control" placeholder="Please enter Postal Address" />
+                        <span asp-validation-for="tabb1.Form1PostalAddress" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <ul class="cic-form-action-block">
+            <li>
+                <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+
+            </li>
+            <li>
+
+                <button type="submit" class="btn btn-submit" asp-route-next="business" asp-route-name="type">Next</button>
+
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<script>
+    // Get all input fields and error message elements
+    const inputFields = document.querySelectorAll('input[data-val="true"]');
+    const errorMessages = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+    // Add event listeners to all input fields to hide their respective error messages when the input value changes
+    inputFields.forEach(function (inputField) {
+        const errorMessage = getErrorMessageElement(inputField);
+        inputField.addEventListener('input', function () {
+            errorMessage.style.display = 'none';
+        });
+    });
+
+    // Helper function to get the corresponding error message element for an input field
+    function getErrorMessageElement(inputField) {
+        const fieldName = inputField.getAttribute('name');
+        const errorMessage = Array.from(errorMessages).find(function (element) {
+            return element.getAttribute('data-valmsg-for') === fieldName;
+        });
+        return errorMessage;
+    }
+</script>
+
+
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    //$(function ()
+    //{
+    //$("[id$=txtName]").on('change', function ()
+    //$("[id$=tabb1CertificateNo]").on('change', function () {
+    function certificateChange(selectedValue) {
+        $.ajax(
+            {
+                type: 'GET',
+                url: "@(Url.Action("GetData", "Form8"))",
+                data: { "name": selectedValue },
+                dataType: "json",
+                success: function (data) {
+                    const data1 = data;
+
+                    var myObj = JSON.parse(data1);
+                    //clearing all fields before filling
+                    document.getElementById('GradeValue').value = "";
+                    document.getElementById('FirstName').value = "";
+                    document.getElementById('Surname').value = "";
+                    document.getElementById('Designation').value = "";
+                    document.getElementById('FaxNo').value = "";
+                    document.getElementById('MobileNo').value = "";
+                    document.getElementById('EmailAddress').value = "";
+                    document.getElementById('Telephone').value = "";
+                    document.getElementById('Form1PostalAddress').value = "";
+
+                    for (var i = 0; i < myObj.value.length; i++) {
+                        var eachObj = myObj.value[i];
+                        for (var key in eachObj) {
+                            var businessRepresentativeName = myObj.value[i].BusinessRepresentativeName;
+                            var nameSpaceIndex = businessRepresentativeName.indexOf(" ");
+
+                            if (key == 'Grade') {
+                                document.getElementById('GradeValue').value = myObj.value[i].Grade;
+                            }
+                            if (key == 'BusinessRepresentativeName') {
+                                if (nameSpaceIndex == -1) {
+                                    document.getElementById('FirstName').value = businessRepresentativeName;
+                                }
+                                else
+                                    document.getElementById('FirstName').value = businessRepresentativeName.substring(0, nameSpaceIndex);
+                            }
+                            if (key == 'BusinessRepresentativeName') {
+                                if (nameSpaceIndex != -1) {
+                                    document.getElementById('Surname').value = businessRepresentativeName.substring(nameSpaceIndex + 1);
+                                }
+                            }
+                            if (key == 'BusinessRepresentativePositionNumber') {
+                                document.getElementById('Designation').value = myObj.value[i].BusinessRepresentativePositionNumber;
+                            }
+                            if (key == 'BusinessRepresentativeFax') {
+                                document.getElementById('FaxNo').value = myObj.value[i].BusinessRepresentativeFax;
+                            }
+                            if (key == 'BusinessRepresentativeCellNo') {
+                                document.getElementById('MobileNo').value = myObj.value[i].BusinessRepresentativeCellNo;
+                            }
+                            if (key == 'BusinessRepresentativeEmail') {
+                                document.getElementById('EmailAddress').value = myObj.value[i].BusinessRepresentativeEmail;
+                            }
+                            if (key == 'TelephoneNumber') {
+                                document.getElementById('Telephone').value = myObj.value[i].TelephoneNumber;
+                            }
+
+                            if (key == 'BusinessName') {
+                                document.getElementById('Oraganization').value = myObj.value[i].BusinessName;
+                            }
+                            if (key == 'Category') {
+                                document.getElementById('CategoryName').value = myObj.value[i].Category;
+                            }
+                            if (key == 'PostalAddress') {
+                                document.getElementById('Form1PostalAddress').value = myObj.value[i].PostalAddress;
+                            }
+                            hideErrorMessages();
+                        }
+                    }
+                },
+                error: function () {
+                    console.log('Failed ');
+                }
+            })
+       
+    }
+
+    function hideErrorMessages() {
+        const autoFilledFields = ['FirstName', 'Surname', 'Designation', 'FaxNo', 'MobileNo', 'EmailAddress', 'Telephone', 'Form1PostalAddress'];
+        autoFilledFields.forEach(function (fieldName) {
+            const errorMessage = getErrorMessageElement(document.getElementById(fieldName));
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        });
+    }
+            //});
+</script>

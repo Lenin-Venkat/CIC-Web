@@ -1,0 +1,67 @@
+﻿@model LoginViewModel
+
+<style type="text/css">
+    header, footer {
+        display: none;
+    }
+
+    main {
+        padding-bottom: 0 !important;
+    }
+</style>
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="login-block">
+            <div class="returning-wrapper">
+                <div class="log-header">
+                    <div class="log-logo">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <img src="~/images/CiC-logo.png" alt="CiC Logo" width="174" height="111" />
+                        </a>
+                    </div>
+
+                </div>
+                <div class="divider">
+                    <img src="~/images/Shadow.svg" alt="divider line" />
+                </div>
+                <div class="text-center">
+                    <h4>Welcome  to the Construction Industry Council Portal</h4>
+                    <p class="mb-10">You are now entering a secure enviroment, where you can manage your account & your system</p>
+                </div>
+                <div class="fieldset">
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        @Html.ValidationMessage("CustomError", new { @style = "color: red" })
+                        <div class="form-group">
+                            <div class="input-field">
+                                <img src="~/images/avator-icon.svg" width="13" height="14" />
+                                <input asp-for="UserName" class="form-control" placeholder="Enter Email address" />
+                            </div>
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-field">
+
+                                <div class="inputs-group">
+                                    <img src="~/images/Password-icon.svg" width="14" height="17" />
+                                    <input asp-for="Password" class="form-control" id="psw" aria-hidden="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter password" />
+                                    <i class="pwdhidenshow eye-close" aria-hidden="true" id="pwdhideshow"></i>
+                                </div>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group login-submit">
+                            <input type="submit" class="btn btn-submit" value="Login" id="btnCicLogin" />
+                            <a href="Account/ForgotPassword">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="new-wrapper register-block">
+                <a asp-action="Registration" asp-controller="Account" class="create-link">Create new registration  <img src="~/images/right-arrow.svg" width="4" height="8" /></a>
+            </div>
+
+
+        </div>
+    </div>
+</div>

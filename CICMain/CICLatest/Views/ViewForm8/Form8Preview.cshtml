@@ -1,0 +1,446 @@
+﻿@model CICLatest.Models.MainViewModel
+
+@{ ViewData["Title"] = "Construction projects and levy assessment registration form – CICF 8"; }
+
+
+<section class="Cic-form-wrapper">
+
+    <div class="Cic-form-content" id="printarea">
+
+        <div class="">
+            <div class="">
+             <h1>Construction projects and levy assessment registration form – CICF 8</h1>
+
+                <div id="previewmain">
+
+                    <div class="accordion" id="Previewmaindetails">
+                        <div class="card">
+                            <div class="card-header" id="prevhead1">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget1"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION A - Details Of contractor liable</a>
+                            </div>
+
+                              <div id="prevtarget1" class="collapse show" aria-labelledby="prevhead1" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Contractor/Individual Artisan/Company/Organization</div>
+                                            <div class="col-lg form-group">@Model.tabb1.Oraganization</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Category </div>
+                                            <div class="col-lg form-group">@Model.SelectedCategory</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Grade </div>
+                                            <div class="col-lg form-group">@Model.tabb1.Grade</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Certificate No</div>
+                                            <div class="col-lg form-group">@Model.tabb1.CertificateNo</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">First Name</div>
+                                            <div class="col-lg form-group">@Model.tabb1.FirstName</div>
+                                        </div>
+                                       
+                                        <div class="row">
+                                            <div class="col-lg form-group">Surname</div>
+                                            <div class="col-lg form-group">@Model.tabb1.Surname</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Designation</div>
+                                            <div class="col-lg form-group">@Model.tabb1.Designation</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Telephone No</div>
+                                            <div class="col-lg form-group">@Model.tabb1.Telephone</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax No</div>
+                                            <div class="col-lg form-group">@Model.tabb1.FaxNo</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Mobile No.</div>
+                                            <div class="col-lg form-group">@Model.tabb1.MobileNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email Address</div>
+                                            <div class="col-lg form-group">@Model.tabb1.EmailAddress</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="prevhead2">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget2"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION B - Details Of owner/client & Work discipline</a>
+                            </div>
+
+                            <div id="prevtarget2" class="collapse show" aria-labelledby="prevhead2" data-parent="#Previewmaindetails">
+                                    <div class="card-body">
+                                        <div class="fieldset">
+                                            <div class="row">
+                                                <div class="col-lg form-group">Name</div>
+                                                <div class="col-lg form-group">@Model.tab2.Name</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">ID No. (if Swazi Individual) </div>
+                                                <div class="col-lg form-group">@Model.tab2.IDNO</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group"> Passport No. (if non-Swazi Individual) </div>
+                                                <div class="col-lg form-group">@Model.tab2.PassportNo</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">Postal Address </div>
+                                                <div class="col-lg form-group">@Model.tab2.PostalAddress</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">Physical Address</div>
+                                                <div class="col-lg form-group">@Model.tab2.PhysicalAddress</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Telephone No</div>
+                                                <div class="col-lg form-group">@Model.tab2.Telephone</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Fax No</div>
+                                                <div class="col-lg form-group">@Model.tab2.FaxNo</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Email Address</div>
+                                                <div class="col-lg form-group">@Model.tab2.EmailAdress</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Owner/Client Category</div>
+                                                <div class="col-lg form-group">@Model.OwnerCategory</div>
+                                            </div>
+
+                                            @if (Model.OwnerCategory == "Other")
+                                            {
+                                                <div  class="row">
+                                                    <div class="col-lg form-group">Other (please specify)</div>
+                                                    <div class="col-lg form-group">@Model.tab2.Other</div>
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                <div style="display:none" class="row">
+                                                    <div class="col-lg form-group">Other (please specify)</div>
+                                                    <div class="col-lg form-group">@Model.tab2.Other</div>
+                                                </div>
+
+                                            }
+
+
+
+                                        <div class="fieldset bordered">
+                                            <div>
+                                                <h5>Authorized Contact Person</h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">First Name.</div>
+                                                <div class="col-lg form-group">@Model.tab2.AuthrisedFirstName</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Surname</div>
+                                                <div class="col-lg form-group">@Model.tab2.AuthorisedSurname</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Designation</div>
+                                                <div class="col-lg form-group">@Model.tab2.Designation</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Telephone No</div>
+                                                <div class="col-lg form-group">@Model.tab2.TelePhoneNo</div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Fax No</div>
+                                                <div class="col-lg form-group">@Model.tab2.AuthorisedFaxNo</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Mobile No.</div>
+                                                <div class="col-lg form-group">@Model.tab2.AuthorisedMobile</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">Email Address</div>
+                                                <div class="col-lg form-group">@Model.tab2.AuthorisedEmail</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg form-group">work discipline</div>
+                                                <div class="col-lg form-group">@Model.WorkDiscipline</div>
+                                            </div>
+                                            @if (ViewBag.SubCategory != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-lg form-group">Specialist Category:</div>
+                                                    <div class="col-lg form-group">@ViewBag.SubCategory</div>
+                                                </div>
+                                            }
+
+
+                                        </div>
+
+                                        </div>
+                                    </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header" id="prevhead3">
+                                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#prevtarget3"
+                                   aria-expanded="true" aria-controls="prevtarget3">
+                                    SECTION C - Details Of all sub-contractors & Details of All Suppliers
+                                </a>
+                            </div>
+                            <div id="prevtarget3" class="collapse" aria-labelledby="prevhead3" data-parent="#prevhead3">
+                                <div class="card-body">
+
+                                    <div class="fieldset bordered">
+                                        @if (Model.Tab3MainSection != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblShare">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="fixed-side" scope="col">Profession</th>
+                                                                <th scope="col" class="secendcolumn">Name of Consultancy Firm</th>
+                                                                <th scope="col">Country of Origin</th>
+                                                                <th scope="col">Contact Details</th>
+                                                                <th scope="col">CIC Registration No.</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.Tab3MainSection.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.Tab3MainSection[i].Profession</td>
+                                                                    <td>@Model.Tab3MainSection[i].NameofConsultancyFirm</td>
+                                                                    <td>@Model.Tab3MainSection[i].CountryofOrigin</td>
+                                                                    <td>@Model.Tab3MainSection[i].Contact</td>
+                                                                    <td>@Model.Tab3MainSection[i].CicRegistrationNo</td>
+
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="fieldset bordered">
+                                        @if (Model.tab3SecSection != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblShare">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name of Sub-Contractors</th>
+                                                                <th scope="col">Country of Origin</th>
+                                                                <th scope="col">Scope of Work</th>
+                                                                <th scope="col">Contact Details </th>
+                                                                <th scope="col">CIC Registration No.</th>
+                                                                <th scope="col"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.tab3SecSection.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.tab3SecSection[i].NameofSubContractors</td>
+                                                                    <td>@Model.tab3SecSection[i].CountryofOrigin</td>
+                                                                    <td>@Model.tab3SecSection[i].ScopeofWork</td>
+                                                                    <td>@Model.tab3SecSection[i].ContactDetails</td>
+                                                                    <td>@Model.tab3SecSection[i].RegistrationNo</td>
+
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="fieldset bordered">
+                                        @if (Model.tab3ThirdSection != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblShare">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name of Supplier </th>
+                                                                <th scope="col">Country of Origin</th>
+                                                                <th scope="col">Scope of Work/Supply </th>
+                                                                <th scope="col">Contact Details </th>
+                                                                <th scope="col">CIC Registration No.</th>
+                                                                <th scope="col"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.tab3ThirdSection.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.tab3ThirdSection[i].Supplier</td>
+                                                                    <td>@Model.tab3ThirdSection[i].CountryofOrigin</td>
+                                                                    <td>@Model.tab3ThirdSection[i].ScopeofWork</td>
+                                                                    <td>@Model.tab3ThirdSection[i].ContactDetails</td>
+                                                                    <td>@Model.tab3ThirdSection[i].RegistrationNo</td>
+
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="prevhead4">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget4"
+                                   aria-expanded="true" aria-controls="prevtarget1">
+                                    SECTION D - Details of project & Levy payment options
+                                </a>
+                            </div>
+
+                            <div id="prevtarget4" class="collapse show" aria-labelledby="prevhead4" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">details of project</div>
+                                            <div class="col-lg form-group">@Model.tab4.ProjectType</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Bid Reference </div>
+                                            <div class="col-lg form-group">@Model.tab4.BidReference</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group"> Project Title </div>
+                                            <div class="col-lg form-group">@Model.tab4.ProjectTite</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Project Funder</div>
+                                            <div class="col-lg form-group">@Model.tab4.ProjectorFunder</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Project Location</div>
+                                            <div class="col-lg form-group">@Model.tab4.ProjectLocation</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Town/Inkhundla</div>
+                                            <div class="col-lg form-group">@Model.tab4.TownInkhundla</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Region</div>
+                                            <div class="col-lg form-group">@Model.tab4.Region</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">GPS Co-ordinates</div>
+                                            <div class="col-lg form-group">@Model.tab4.GPSCo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Date of Award</div>
+                                            <div class="col-lg form-group">@Model.tab4.DateofAward</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Brief Description of Project</div>
+                                            <div class="col-lg form-group">@Model.tab4.BriefDescriptionofProject</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Proposed Commencement Date</div>
+                                            <div class="col-lg form-group">@Model.tab4.ProposedCommencmentDate</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Proposed Completion Date</div>
+                                            <div class="col-lg form-group">@Model.tab4.ProposedCompleteDate</div>
+                                        </div>
+
+                                        @if (Model.tab4.ProjectType == "Ongoingproject")
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg form-group">Revised Completion Date</div>
+                                                <div class="col-lg form-group">@Model.tab4.RevisedDate</div>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            <div style="display:none" class="row">
+                                                <div class="col-lg form-group">Revised Completion Date</div>
+                                                <div class="col-lg form-group">@Model.tab4.RevisedDate</div>
+                                            </div>
+
+                                        }
+
+
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Contract Value Excluding Levy (E)</div>
+                                            <div class="col-lg form-group">@Model.tab4.ContractVAlue</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Percentage Levy Payable</div>
+                                            <div class="col-lg form-group">@Model.tab4.LevyPaybale</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Total Project Cost</div>
+                                            <div class="col-lg form-group">@Model.tab4.TotalProjectCost</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Total Project Cost Including Levy (E)</div>
+                                            <div class="col-lg form-group">@Model.tab4.TotalProjectCostIncludingLevy</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Levy payment options</div>
+                                            <div class="col-lg form-group">@Model.tab4.LevyPaymentOptions</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Time frame for payment of levy</div>
+                                            <div class="col-lg form-group">@Model.tab4.TimeFrameoption</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+
+    
+
+</section>

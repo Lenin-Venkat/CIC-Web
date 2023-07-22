@@ -1,0 +1,178 @@
+﻿@{ ViewData["Title"] = "Personal Details"; }
+@*<h1>@ViewData["Title"]</h1>*@
+
+
+<h4 class="text-center"> Personal Details </h4>
+
+<div class="cic-application-wrapper">
+   
+    <form method="post">
+        <div class="cic-fielset-inner">
+            <div class="PersonalDetails-content">
+
+                <div class="fieldset">
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Name(s) <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter name" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Surname <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Surname" />
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">ID No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter ID No" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Nationality <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Nationality" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Home Area <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Home Area" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Chief <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Chief" />
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Indvuna <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Indvuna" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Temporal Residence Permit No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter Permit No" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Work Permit No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter Work Permit No" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Cellphone No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter Cellphone No" />
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Email address <span class="asterisk">*</span></label>
+                            <input class="form-control" type="email" placeholder="Please enter email" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Fax No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter Fax No" />
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group ">
+                            <label for="fname" class="required">Residential Address  <span class="asterisk">*</span></label>
+                            <textarea class="form-control textarea" cols="10" rows="10" placeholder="Please enter residential address"></textarea>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Next of Kin <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter next of kin" />
+
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Relationship <span class="asterisk">*</span></label>
+                            <input class="form-control" type="text" placeholder="Please enter Relationship" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group mb0">
+                            <label for="fname" class="required">Contact No <span class="asterisk">*</span></label>
+                            <input class="form-control" type="number" placeholder="Please enter next of kin" />
+
+                        </div>
+                        <div class="col-lg form-group mb0">
+                            <label class="required" for="lname">Nature of Trade/Expertise <span class="asterisk">*</span></label>
+
+                            <div class="inputs-group Expertise-grp">
+                                <input class="form-control" type="text" placeholder="Please enter Nature of Trade/Expertise" />
+                                <div class="fileAttachment">
+                                    <input id="Expertise" type="file" name="upload">
+                                    <label for="Expertise" data-input-value="" data-select-text="Attachment" data-remove-text="Remove file" data-drag-text="Choose file">
+                                        Attachment
+                                    </label>
+
+                                    @if (Model.NatureofTradeUpload != null)
+                                    {
+                                        if (Model.formval == "Edit")
+                                        {
+                                            <a href="" asp-for="@Model.NatureofTradeUpload">@Model.NatureofTradeUpload</a>
+                                        }
+                                        else
+                                        {
+                                            <label style="color:darkblue;">@Model.NatureofTradeUpload</label>
+                                        }
+                                    }
+                                </div>
+                               
+
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <ul class="cic-form-action-block">
+                    <li>
+                        <button type="button" class="default-btn btn-preview prev-step">Previous</button>
+                        <button type="button" class="default-btn btn-draft">Save as Draft</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-submit next-step" id="submit">Next</button>
+
+                    </li>
+                </ul>
+
+            </div>
+
+         
+        </div>
+
+        
+    </form>
+
+</div>
+
+
+
+
+

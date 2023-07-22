@@ -1,0 +1,222 @@
+﻿@model CICLatest.Models.Cicf7Model
+<div class="cic-application-wrapper">
+
+
+    <div class="Declaration-wrapper">
+        <div class="title">
+            <strong>Declaration</strong>
+        </div>
+        <div class="Declaration-content">
+
+            <p>I/We declare that all the particulars and information provided in this application are complete, correct and true and we agree that in the event that any of the particulars or information provided is found to be untrue or fraudulent, my/our registration as a contractor with the Construction Industry Council may be revoked.</p>
+            <p></p>
+            <p>I/We also declare that all the documentation that was submitted to the Council for registration is correct and true.</p>
+            <p></p>
+            <p>I/We agree that in the event of revocation of registration, any registration fees paid to the Construction Industry Council shall be forfeited.</p>
+            <p></p>
+            <p>I/We declare that in the event that the nature of my/our business changes and/or I/we no longer carry out operations in terms of our registration I/we will notify the Construction Industry Council in which case my/our registration may be revoked or my/our classification and categorization may be revised.</p>
+        </div>
+        <div class="TermsAndConditions">
+            <label class="custom-checkbox" for="termsconditions" id="certify">
+                The customer / entity hereby agrees to <a href="#" data-toggle="modal" data-target="#termsconditionsModal">CIC Business terms & conditions agreement</a>
+                <input id="docs_TermsAndConditions" type="checkbox" asp-for="@Model.declarationForm7.TermsAndConditions" value="true" />
+                <input type="hidden" value="false" asp-for="@Model.declarationForm7.TermsAndConditions" />
+                <span class="checkmark"></span>
+
+            </label>
+            <span asp-validation-for="@Model.declarationForm7.TermsAndConditions" class="text-danger"></span>
+        </div>
+        <div class="Declaration-fielset-block">
+            <div class="fielset-inner">
+                <div class="row">
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Name <span class="asterisk">*</span></label>
+                        <input class="form-control" placeholder="Please enter name" type="text" asp-for="@Model.declarationForm7.Namee" />
+                        <span asp-validation-for="declarationForm7.Namee" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Signature <span class="asterisk">*</span></label>
+                        <div class="fileAttachment">
+                            @*<input asp-for="declarationForm7.Signature" id="Signature" type="file" name="Browse">*@
+
+                            <input id="Signature" type="file" asp-for="@Model.declarationForm7.Signature" accept="image/*">
+
+
+                            <label for="Signature" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Browse
+                            </label>
+                        </div>
+                        @if (Model.Signature != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.Signature">@Model.Signature</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.Signature</label>
+                            }
+                        }
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                        <div>
+                            <span asp-validation-for="declarationForm7.Signature" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Title/Designation <span class="asterisk">*</span></label>
+                        <input asp-for="declarationForm7.TitleDesignation" class="form-control" placeholder="Please enter Title/Designation" type="text" />
+                        <span asp-validation-for="declarationForm7.TitleDesignation" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+                <div class="title">
+                    <strong>Witnessed by</strong>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Name</label>
+                        <input class="form-control" placeholder="Please enter Name" type="text" asp-for="documentsUpload.WitnessedName" />
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Signature </label>
+                        <div class="fileAttachment">
+                            @*<input id="Signature1" type="file" name="Browse" asp-for="documentsUpload.Signature2">*@
+                            <input id="Signature1" type="file" asp-for="@Model.documentsUpload.Signature2" accept="image/*">
+
+                            <label for="Signature1" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Browse
+                            </label>
+                        </div>
+
+                        @if (Model.Signature2 != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.Signature2">@Model.Signature2</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.Signature2</label>
+                            }
+                        }
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Title/Designation </label>
+                        <input class="form-control" placeholder="Please enter Title/Designation" type="text" asp-for="documentsUpload.WitnessedTitle" />
+                    </div>
+                </div>
+
+
+            </div>
+            <ul class="cic-form-action-block">
+                <li>
+                    <button type="button" class="default-btn btn-preview prev-step">Previous</button>
+                    <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                    
+                </li>
+                <li>
+                    @*<button type="button" class="btn default-btn btn-preview" id="Previewbtn">Preview</button>*@
+                    <button type="button" class="btn default-btn btn-preview" onclick="Preview();">Preview</button>
+                    @*<button type="button" class="btn btn-submit">Finish</button>*@
+                    <button type="submit" class="btn btn-submit" asp-route-name="final">Finish</button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+<div id='myModal' class='modal fade modalpreview'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="~/images/cancel.svg" alt="close modal" />
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="termsconditionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CIC Business terms & conditions agreement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>I/We declare that all the particulars and information provided in this application are complete, correct and true and we agree that in the event that any of the particulars or information provided is found to be untrue or fraudulent, my/our registration as a contractor with the Construction Industry Council may be revoked.</p>
+                <p></p>
+                <p>I/We also declare that all the documentation that was submitted to the Council for registration is correct and true.</p>
+                <p></p>
+                <p>I/We agree that in the event of revocation of registration, any registration fees paid to the Construction Industry Council shall be forfeited.</p>
+                <p></p>
+                <p>I/We declare that in the event that the nature of my/our business changes and/or I/we no longer carry out operations in terms of our registration I/we will notify the Construction Industry Council in which case my/our registration may be revoked or my/our classification and categorization may be revised.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button  type="button" onclick="tickTerms();" class="btn btn-submit" data-dismiss="modal" >I Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function tickTerms()
+    {
+
+        document.getElementById('docs_TermsAndConditions').checked = true;
+        $("#docs_TermsAndConditions").prop("checked", true);
+    }
+     function Preview()
+      {
+
+        var jsonData = $('#form7').serialize();// @Html.Raw(Json.Serialize(Model));
+            var options = { "backdrop": "static", keyboard: true };
+
+
+         $.ajax({
+            type: 'POST',
+             url: "@(Url.Action("Preview", "ViewForm7"))",
+             data: $('#form7').serialize(),
+             success: function (data)
+             {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             } ,
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+</script>

@@ -1,0 +1,870 @@
+﻿@model CICForm1Model
+
+
+
+<h4 class="text-center"> Document upload </h4>
+<div class="cic-application-wrapper">
+
+    <div class="uploadDocument-wrapper">
+        <div class="title">
+            <h3>Business Particulars</h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+
+                <ul class="uploadItem" id="Newsection1">
+                    <li>Certified copy of company registration</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input asp-for="@Model.docs.BusinessFile1" type="file" id="upload1" enctype="multipart/form-data" />
+                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file" >
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile1Name">@Model.docs.BusinessFile1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile1Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile1Name" class="text-danger"></span>
+                        </div>
+
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="Newsection2">
+                    <li>Certified copies of share certificates </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload2" asp-for="docs.BusinessFile2" type="file">
+                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile2Name">@Model.docs.BusinessFile2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile2Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile2Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="Newsection3">
+                    <li>Proof of registration with the Eswatini Contractors Association </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload3" type="file" asp-for="@Model.docs.BusinessFile3">
+                            <label for="upload3" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile3Name">@Model.docs.BusinessFile3Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile3Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile3Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="Newsection4">
+                    <li>Certified Form C </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload4" type="file" asp-for="@Model.docs.BusinessFile4">
+                            <label for="upload4" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile4Name">@Model.docs.BusinessFile4Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile4Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile4Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="Newsection5">
+                    <li>Certified Form J  </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload5" type="file" asp-for="@Model.docs.BusinessFile5">
+                            <label for="upload5" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile5Name">@Model.docs.BusinessFile5Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile5Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile5Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="Newsection6">
+                    <li>Certified copy of current trading license, must be relevant to scope of work  </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload6" type="file" asp-for="@Model.docs.BusinessFile6">
+                            <label for="upload6" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.BusinessFile6Name">@Model.docs.BusinessFile6Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.BusinessFile6Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.BusinessFile6Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="uploadDocument-wrapper">
+        <div class="title">
+            <h3>Company Shareholders/Directors/Technical Staff Particulars</h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem" id="share1">
+                    <li>Certified copies of identity documents of shareholders (All companies).</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload7" type="file" asp-for="@Model.docs.ShareholdersFile1">
+                            <label for="upload7" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.ShareholdersFile1Name">@Model.docs.ShareholdersFile1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.ShareholdersFile1Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.ShareholdersFile1Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="share2">
+                    <li>Certified copies of academic qualifications of core directors </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload8" type="file" asp-for="@Model.docs.ShareholdersFile2">
+                            <label for="upload8" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.ShareholdersFile2Name">@Model.docs.ShareholdersFile2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.ShareholdersFile2Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.ShareholdersFile2Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem" id="share3">
+                    <li>Academic qualifications and curriculum vitae of technical staff or technical person/s in charge </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload9" type="file" asp-for="@Model.docs.ShareholdersFile3">
+                            <label for="upload9" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.ShareholdersFile3Name">@Model.docs.ShareholdersFile3Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.ShareholdersFile3Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.ShareholdersFile3Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="uploadDocument-wrapper" id="findoc">
+        <div class="title">
+            <h3>Financial Requirements</h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem">
+                    <li>Audited Financial Statements for the three years immediately preceding the application for Grades 1 and 2</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload10" type="file" asp-for="@Model.docs.FinancialFile1">
+                            <label for="upload10" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.FinancialFile1Name">@Model.docs.FinancialFile1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.FinancialFile1Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.FinancialFile1Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>Financial Statements for the three years immediately preceding the application Grades 3 to 5 </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload11" type="file" asp-for="@Model.docs.FinancialFile2">
+                            <label for="upload11" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.FinancialFile2Name">@Model.docs.FinancialFile2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.FinancialFile2Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.FinancialFile2Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>
+                        Proof of financial sponsorship (if any)
+                    </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload12" type="file" asp-for="@Model.docs.FinancialFile3">
+                            <label for="upload12" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.FinancialFile3Name">@Model.docs.FinancialFile3Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.FinancialFile3Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.FinancialFile3Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="uploadDocument-wrapper" id="trackdoc">
+        <div class="title">
+            <h3>Track Record </h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem">
+                    <li>Sub-Contract Agreement for sub-contracting works on Projects Done if applicable</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload13" type="file" asp-for="@Model.docs.TrackRecordFile1">
+                            <label for="upload13" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.TrackRecordFile1Name">@Model.docs.TrackRecordFile1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.TrackRecordFile1Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.TrackRecordFile1Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>Certificates or letter of Completion for Projects Done </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload14" type="file" asp-for="@Model.docs.TrackRecordFile2">
+                            <label for="upload14" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.TrackRecordFile2Name">@Model.docs.TrackRecordFile2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.TrackRecordFile2Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.TrackRecordFile2Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>
+                        Final Certificate of Payment for Projects Done
+                    </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload15" type="file" asp-for="@Model.docs.TrackRecordFile3">
+                            <label for="upload15" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.TrackRecordFile3Name">@Model.docs.TrackRecordFile3Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.TrackRecordFile3Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.TrackRecordFile3Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="uploadDocument-wrapper" id="jointdoc">
+        <div class="title">
+            <h3>NB: For works done through a joint venture initiative the following shall be submitted </h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem">
+                    <li>A joint venture agreement of the works done and completed </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload16" type="file" asp-for="@Model.docs.JointVentureFile1">
+                            <label for="upload16" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.JointVentureFile1Name">@Model.docs.JointVentureFile1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.JointVentureFile1Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.JointVentureFile1Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>Completion certificates of the joint venture works </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload17" type="file" asp-for="@Model.docs.JointVentureFile2">
+                            <label for="upload17" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.JointVentureFile2Name">@Model.docs.JointVentureFile2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.JointVentureFile2Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.JointVentureFile2Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>
+                        Letter from project manager to provide proof that the parties involved in the joint venture
+                        participated fully in their responsibilities
+                    </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload18" type="file" asp-for="@Model.docs.JointVentureFile3">
+                            <label for="upload18" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.JointVentureFile3Name">@Model.docs.JointVentureFile3Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.JointVentureFile3Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.JointVentureFile3Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>
+                        Letter from client to provide proof that the parties involved in the joint venture
+                        participated fully in their responsibilities
+                    </li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload19" type="file" asp-for="@Model.docs.JointVentureFile4">
+                            <label for="upload19" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.JointVentureFile4Name">@Model.docs.JointVentureFile4Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.JointVentureFile4Name</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.JointVentureFile4Name" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="uploadDocument-wrapper" id="doc1">
+        <div class="title">
+            <h3></h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem">
+                    <li>Proof of compliance with tax laws</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload20" type="file" asp-for="@Model.docs.TaxLaw">
+                            <label for="upload20" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.TaxLawName">@Model.docs.TaxLawName</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.TaxLawName</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.TaxLawName" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="uploadItem">
+                    <li>Evidence of previous completed projects</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload21" type="file" asp-for="@Model.docs.Evidence">
+                            <label for="upload21" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.EvidenceName">@Model.docs.EvidenceName</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.EvidenceName</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.EvidenceName" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="uploadDocument-wrapper" id="compliance">
+        <div class="title">
+            <h3>Compliance</h3>
+        </div>
+        <div class="document-upload">
+            <div class="document-upload-fieldset">
+                <ul class="uploadItem">
+                    <li>Proof of compliance with the provisions of section 41 of the CIC Act No. 14 of 2013.</li>
+                    <li>
+                        <div class="fileAttachment">
+                            <input id="upload22" type="file" asp-for="@Model.docs.Compliance">
+                            <label for="upload22" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Upload
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.ComplianceName">@Model.docs.ComplianceName</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.ComplianceName</label>
+                            }
+                        }
+                        <div>
+                            <span asp-validation-for="@Model.docs.ComplianceName" class="text-danger"></span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="Declaration-wrapper">
+        <div class="title">
+            <strong>Declaration</strong>
+        </div>
+        <div class="Declaration-content">
+
+            <p>I/We declare that all the particulars and information provided in this application are complete, correct and true and we agree that in the event that any of the particulars or information provided is found to be untrue or fraudulent, my/our registration as a contractor with the Construction Industry Council may be revoked.</p>
+            <p></p>
+            <p>I/We also declare that all the documentation that was submitted to the Council for registration is correct and true.</p>
+            <p></p>
+            <p>I/We agree that in the event of revocation of registration, any registration fees paid to the Construction Industry Council shall be forfeited.</p>
+            <p></p>
+            <p>I/We declare that in the event that the nature of my/our business changes and/or I/we no longer carry out operations in terms of our registration I/we will notify the Construction Industry Council in which case my/our registration may be revoked or my/our classification and categorization may be revised.</p>
+        </div>
+        <div class="TermsAndConditions">
+            <label class="custom-checkbox" for="termsconditions" id="certify">
+                The customer / entity hereby agrees to <a href="#" data-toggle="modal" data-target="#termsconditionsModal">CIC Business terms & conditions agreement</a>
+                <input type="checkbox" value="true" asp-for="@Model.docs.TermsAndConditions"/>
+                <input type="hidden" value="false" asp-for="@Model.docs.TermsAndConditions" />
+                <span class="checkmark"></span>
+
+            </label>
+            <span asp-validation-for="@Model.docs.TermsAndConditions" class="text-danger"></span>
+        </div>
+
+
+        <div class="Declaration-fielset-block">
+            <div class="fielset-inner">
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Name <span class="asterisk">*</span></label>
+                        <input class="form-control" placeholder="Please enter Name" type="text" asp-for="@Model.docs.Name" />
+                    </div>
+                    <div class="col form-group">
+                        <label>Signature <span class="asterisk">*</span></label>
+                        <div class="fileAttachment">
+                            <input id="Signature" type="file" asp-for="@Model.docs.Signature1" accept="image/*">
+                            <label for="Signature" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Browse
+                            </label>
+
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.Signature1Name">@Model.docs.Signature1Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.Signature1Name</label>
+                            }
+                        }
+                        <span asp-validation-for="@Model.docs.Signature1Name" class="text-danger"></span>
+                        <div class="formonesignature">
+                            If you don't have Signature, Please click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col form-group">
+                        <label>Title/Designation <span class="asterisk">*</span></label>
+                        <input class="form-control" placeholder="Please enter Title/Designation" type="text" asp-for="@Model.docs.Title" />
+                    </div>
+                </div>
+                <div class="title">
+                    <strong>Witnessed by</strong>
+                </div>
+                <div class="row">
+                    <div class="col form-group mb0">
+                        <label>Name</label>
+                        <input class="form-control" placeholder="Please enter Name" type="text" asp-for="@Model.docs.WitnessedName" />
+                    </div>
+                    <div class="col form-group mb0">
+                        <label>Signature </label>
+                        <div class="fileAttachment">
+                            <input id="Signature1" type="file" asp-for="@Model.docs.Signature2" accept="image/*">
+                            <label for="Signature1" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                Browse
+                            </label>
+                        </div>
+                        @if (Model.docs != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.docs.Signature2Name">@Model.docs.Signature2Name</a>
+                            }
+                            else
+                            {
+                                <label class="uploadeddoc" style="color:darkblue;">@Model.docs.Signature2Name</label>
+                            }
+                        }
+                        <span asp-validation-for="@Model.docs.Signature2Name" class="text-danger"></span>
+                        <div class="formonesignature">
+                            If you don't have Signature, Please click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col form-group mb0">
+                        <label>Title/Designation </label>
+                        <input class="form-control" placeholder="Please enter Title/Designation" type="text" asp-for="@Model.docs.WitnessedTitle" />
+                    </div>
+                </div>
+
+
+            </div>
+            <ul class="cic-form-action-block">
+                <li>
+                    <button type="submit" class="default-btn btn-preview" asp-route-pre="work" asp-route-name="doc">Previous</button>
+                    <button type="submit" class="default-btn btn-draft" asp-route-name="draft">Save as Draft</button>
+                </li>
+                <li>
+                    <button type="button" class="btn default-btn btn-preview" onclick="Preview();">Preview</button>
+                    <button type="submit" class="btn btn-submit" asp-route-next="final" asp-route-name="final" onclick="return confirm('Are you sure want to submit?')">Finish</button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+<div id='myModal' class='modal fade modalpreview'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="~/images/cancel.svg" alt="close modal" />
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="termsconditionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CIC Business terms & conditions agreement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>I/We declare that all the particulars and information provided in this application are complete, correct and true and we agree that in the event that any of the particulars or information provided is found to be untrue or fraudulent, my/our registration as a contractor with the Construction Industry Council may be revoked.</p>
+                <p></p>
+                <p>I/We also declare that all the documentation that was submitted to the Council for registration is correct and true.</p>
+                <p></p>
+                <p>I/We agree that in the event of revocation of registration, any registration fees paid to the Construction Industry Council shall be forfeited.</p>
+                <p></p>
+                <p>I/We declare that in the event that the nature of my/our business changes and/or I/we no longer carry out operations in terms of our registration I/we will notify the Construction Industry Council in which case my/our registration may be revoked or my/our classification and categorization may be revised.</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-submit" onclick="tickTerms();" data-dismiss="modal">I Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    function tickTerms() {
+        document.getElementById('docs_TermsAndConditions').checked = true;
+        $("#docs_TermsAndConditions").prop("checked", true);
+        }
+
+
+        function Preview() {
+            var jsonData = $('#form1').serialize();// @Html.Raw(Json.Serialize(Model));
+            var options = { "backdrop": "static", keyboard: true };
+
+
+         $.ajax({
+            type: 'POST',
+             url: "@(Url.Action("Preview", "ViewForm1"))",
+             data: $('#form1').serialize(),
+             success: function (data) {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             } ,
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+</script>
+

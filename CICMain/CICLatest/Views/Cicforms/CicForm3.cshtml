@@ -1,0 +1,774 @@
+﻿@{ ViewData["Title"] = "Join venture construction firms and specialist works contractors registration form -  CICF3"; }
+
+
+
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Join venture construction firms and specialist works contractors registration form -  CICF3</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+
+        <div class="">
+            <div class="">
+                <h1>Join venture construction firms and specialist works contractors registration form -  CICF3 </h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="true">
+                                    Type of Application
+                                    & Business Details
+                                </a>
+                            </li>
+
+                            <li role="presentation" class="disabled">
+                                <a href="#JoinVentureDetails" data-toggle="tab" aria-controls="JoinVentureDetails" role="tab">
+                                    Join Venture details
+                                </a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#TechnicalLabourdetails" data-toggle="tab" aria-controls="TechnicalLabourdetails" role="tab">
+                                    Technical Staff
+                                    & Labour details
+                                </a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#ProjectDetails" data-toggle="tab" aria-controls="ProjectDetails" role="tab">
+                                    Project details
+                                </a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form role="form" action="index.html" class="login-box">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane active" role="tabpanel" id="TypeofApplication">
+                                <div class="TypeofApplication-business-wrapper">
+                                    <div class="cic-fielset-inner">
+                                        <div class="TypeofApplication-fielset">
+                                            <h4 class="text-center">Type of Application & Business Details</h4>
+                                            <div class="fieldset">
+                                                <div class="title">
+                                                    <strong>Section A - Type of Application <span class="asterisk">*</span></strong>
+                                                </div>
+                                                <div class="form-fields">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                New Application for Registration
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Registration Renewal
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="divider"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="Businessdetals-fielset">
+                                            <div class="fieldset">
+                                                <div class="title">
+                                                    <strong>Section B - Business Details <span class="asterisk">*</span></strong>
+                                                </div>
+                                                <div class="form-fields">
+                                                    <div class="row">
+                                                        <div class="col-12 form-group">
+                                                            <label>Name of Joint Venture *</label>
+                                                            <input class="form-control" placeholder="Please enter join venture" type="text" />
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col form-group">
+                                                            <div class="title">
+                                                                <strong>Type of Joint Venture *</strong>
+                                                            </div>
+
+                                                            <ul class="typeofjoinventure">
+                                                                <li>
+                                                                    <label class="custom-radio">
+                                                                        Swazi/Swazi
+                                                                        <input type="radio" checked="checked" name="radio">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </li>
+                                                                <li>
+                                                                    <label class="custom-radio">
+                                                                        Swazi/Foreign
+                                                                        <input type="radio" checked="checked" name="radio">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </li>
+
+                                                                <li>
+                                                                    <label class="custom-radio">
+                                                                        Foreign/Foreign
+                                                                        <input type="radio" checked="checked" name="radio">
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        <div class="col-lg form-group">
+                                                            <label for="Telephone">Telephone No <span class="asterisk">*</span></label>
+                                                            <input type="number" class="form-control" placeholder="Please enter Telephone No." />
+
+                                                        </div>
+
+                                                        <div class="col-lg form-group">
+                                                            <label for="Fax No ">Fax No </label>
+                                                            <input type="number" class="form-control" placeholder="Please enter Fax No." />
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6 form-group">
+                                                            <label for="Email">Email Address <span class="asterisk">*</span></label>
+                                                            <input type="email" class="form-control" placeholder="Please enter email address" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 form-group textarea">
+                                                            <label for="Physical Address">Physical Address  <span class="asterisk">*</span></label>
+                                                            <textarea class="form-control" placeholder="Please enter email address"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="divider"></div>
+                                            </div>
+                                            <div class="fieldset">
+                                                <div class="form-fields">
+                                                    <div class="title">
+                                                        <strong>Authorized Contact Person</strong>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg form-group firstname">
+                                                            <label for="Firstname">First Name <span class="asterisk">*</span></label>
+
+
+                                                            <div class="input-group">
+                                                                <select class="custom-select" id="inputGroupSelect02">
+                                                                    <option>Choose...</option>
+                                                                    <option selected value="1">Mr.</option>
+                                                                    <option value="2">Mrs.</option>
+
+                                                                </select>
+                                                                <div class="input-group-append">
+                                                                    <input type="text" class="form-control" name="firstname" placeholder="Please enter First name" />
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-lg form-group">
+                                                            <label for="Surname">Surname </label>
+                                                            <input type="text" class="form-control" placeholder="Please enter surname" />
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg form-group">
+                                                            <label for="Telephone">Designation <span class="asterisk">*</span></label>
+                                                            <input type="text" class="form-control" placeholder="Please enter Designation" />
+                                                        </div>
+
+                                                        <div class="col-lg form-group">
+                                                            <label for="Surname">Telephone No <span class="asterisk">*</span></label>
+                                                            <input type="number" class="form-control" placeholder="Please enter Telephone No" />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg form-group">
+                                                            <label for="Faxno">Fax No </label>
+                                                            <input type="number" class="form-control" placeholder="Please enter Fax No" />
+                                                        </div>
+
+                                                        <div class="col-lg form-group">
+                                                            <label for="Mobileno">Mobile No.<span class="asterisk">*</span></label>
+                                                            <input type="number" class="form-control" placeholder="Please enter Mobile No." />
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-6 form-group">
+                                                            <label for="EmailAddress">Email Address <span class="asterisk">*</span>  </label>
+                                                            <input type="email" name="EmailAddress" class="form-control" placeholder="Please enter Fax No" />
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                            <ul class="cic-form-action-block">
+                                                <li>
+                                                    <button type="button" class="default-btn btn-draft">Save as Draft</button>
+
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-submit next-step">Next</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="JoinVentureDetails">
+                                <div class="JoinVentureDetails-wrapper">
+                                    <h4 class="text-center">Join Venture details</h4>
+                                    <div class="fieldset">
+
+                                        <div class="JoinVentureDetails-inner">
+                                            <div class="title">
+                                                <strong>Joint Venture Discipline Applying for <span class="asterisk">*</span></strong>
+                                            </div>
+                                            <div class="form-fields">
+
+                                                <div class="">
+                                                    <ul>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                General Buildings
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                General Civils
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                General Electrical
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                General Mechanical
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Buildings Specialist Works
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Civils Specialist Works
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Electrical Specialist Works
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+
+                                                        <li>
+                                                            <label class="custom-radio">
+                                                                Mechanical Specialist Works
+                                                                <input type="radio" checked="checked" name="radio">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 form-group">
+                                                    <label>Specialist Categories</label>
+                                                    <select class="custom-select">
+                                                        <option>Choose...</option>
+                                                        <option selected value="1">ESa - Security, Safety and Surveillance System Works</option>
+                                                        <option value="2">
+                                                            ESb - ICT and Electronic System Installations Works
+                                                        </option>
+                                                        <option value="3">
+                                                            ESc – Renewable Energy Efficiency Technologies Works
+                                                        </option>
+                                                        <option value="4">
+                                                            ESd – Sound System Works
+                                                        </option>
+                                                        <option value="5">
+                                                            ESe – External Telecommunications Works
+                                                        </option>
+                                                        <option value="6">
+                                                            ESf - High Voltage Installation Works
+                                                        </option>
+                                                        <option value="6">
+                                                            ESf - High Voltage Installation Works
+                                                        </option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="divider"></div>
+
+
+                                    <div class="cic-table-wrapper">
+                                        <div class="title">
+                                            <strong>
+                                                Particulars of Joint Venture Parties
+                                            </strong>
+                                        </div>
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name of Applicants</th>
+                                                            <th scope="col">Country of Origin</th>
+                                                            <th scope="col">Contact Details</th>
+                                                            <th scope="col">CIC Registration No.</th>
+                                                            <th scope="col">% Shareholding </th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input class="form-control" type="text" /></td>
+                                                            <td>
+                                                                <select class="custom-select" id="countrylist">
+                                                                    <option selected>Choose...</option>
+                                                                    <option value="1">South africa</option>
+                                                                    <option value="2">India</option>
+                                                                    <option value="3">USA</option>
+                                                                    <option value="4">Astralia</option>
+                                                                    <option value="5">Sweden</option>
+                                                                </select>
+                                                            </td>
+                                                            <td><input class="form-control" type="text" /></td>
+                                                            <td><input class="form-control" type="text" /></td>
+                                                            <td><input class="form-control" type="text" /></td>
+                                                            <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                                                        </tr>
+
+
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="3" class="Addnewrecord-td">
+                                                                <button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                                            </td>
+                                                            <td colspan="4" class="Addnewrecord-td text-right">
+                                                                <span>(Copy of Joint Venture Agreement Shall be submitted)</span>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+
+                                                </table>
+                                            </div>
+
+
+                                            <ul class="cic-form-action-block">
+                                                <li>
+                                                    <button type="button" class="default-btn btn-preview prev-step">Previous</button>
+                                                    <button type="button" class="default-btn btn-draft">Save as Draft</button>
+                                                </li>
+                                                <li>
+                                                    <button type="button" class="btn btn-submit next-step">Next</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="TechnicalLabourdetails">
+                                <div class="TechnicalDataClient-wrapper">
+                                    <h4 class="text-center">Technical Staff  &  Labour details</h4>
+                                    <div class="cic-application-wrapper">
+                                        <div class="cic-technoicaldetails-inner">
+                                            <div class="title"><strong>Technical and Administrative Staff to be deployed on the Project</strong></div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" colspan="2">Category</th>
+                                                            <th scope="col">Number</th>
+                                                            <th scope="col">Sum of Years of Experience</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="2" valign="middle">Technical/Supervisory Staff (Diploma Holder)</td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" valign="middle">Non-Qualified/Technical/Supervisory Staff</td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" valign="middle">Administrative Staff</td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" valign="middle">Occupational Safety and Health Officers</td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" valign="middle">Competent Person for Scaffolding Supervision</td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                            <td><input class="form-control" type="number" placeholder="Please enter number" /></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong> Project Staff (submit certified copies of qualifications and CV where applicable)</strong>
+                                                </div>
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Position</th>
+                                                                    <th scope="col">Qualification</th>
+                                                                    <th scope="col">Years of Experience</th>
+                                                                    <th scope="col">Nationality </th>
+                                                                    <th scope="col">ID/Passport No.  </th>
+                                                                    <th scope="col">Activity Responsible for</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="8" class="Addnewrecord-td">
+                                                                        <button class="Addnewrecord" type="button"><span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong>
+                                                        Labour Force (skilled labour includes Equipment Operators, Craftsman, Masons, Plumbers, etc.)
+                                                    </strong>
+                                                </div>
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col" rowspan="2" style="vertical-align:middle; text-align:center;">Gender</th>
+                                                                    <th scope="col" colspan="2">Number of Skilled Labourers</th>
+                                                                    <th scope="col" colspan="2">Number of Unskilled Labourers</th>
+                                                                    <th scope="col" rowspan="2" style="vertical-align:middle; text-align:center;">Total</th>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <th>Swazi </th>
+                                                                    <th>Foreign</th>
+                                                                    <th>Swazi </th>
+                                                                    <th>Foreign</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="vertical-align:middle">Male</td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td style="vertical-align:middle">Female</td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td style="vertical-align:middle">Total</td>
+                                                                    <td>&nbsp;</td>
+                                                                    <td>&nbsp;</td>
+                                                                    <td>&nbsp;</td>
+                                                                    <td>&nbsp;</td>
+                                                                    <td>&nbsp;</td>
+
+                                                                </tr>
+                                                            </tbody>
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong> Sub-contractors to be employed on the Project </strong>
+                                                </div>
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Name of Sub-contractors</th>
+                                                                    <th scope="col">Country of Origin</th>
+                                                                    <th scope="col">CIC Registration No.</th>
+                                                                    <th scope="col">
+                                                                        Description of Works
+                                                                        to be undertaken
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        Contract Value of Works (E)
+                                                                    </th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+                                                                    <td><input class="form-control" type="text" /></td>
+
+                                                                    <td><button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="3" class="Addnewrecord-td">
+                                                                        <button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                                                    </td>
+                                                                    <td colspan="4" class="Addnewrecord-td text-right">
+                                                                        <span>
+                                                                            (State the CIC Reference of each Sub-contractor)
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                    <ul class="cic-form-action-block">
+                                                        <li>
+                                                            <button type="button" class="default-btn btn-preview prev-step">Previous</button>
+                                                            <button type="button" class="default-btn btn-draft">Save as Draft</button>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" class="btn btn-submit next-step">Next</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="ProjectDetails">
+                                <div class="ProjectDetails-wrapper">
+                                    <h4 class="text-center">Project Details </h4>
+                                    <div class="cic-projectdetails-inner">
+                                        <div class="fieldset">
+                                            <div class="row">
+                                                <div class="col-lg-12 form-group">
+                                                    <label class="required">Joint Venture Project Details Bid Reference  <span class="asterisk">*</span></label>
+                                                    <input class="form-control" placeholder="Please enter project detail bid reference" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label class="required">Project Title   <span class="asterisk">*</span></label>
+                                                    <input class="form-control" placeholder="Please enter project detail bid reference" />
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label class="">Date of Award </label>
+                                                    <input class="form-control" type="date" placeholder="Please enter date of award" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group">
+                                                    <label class="required">Proposed Commencement Date   <span class="asterisk">*</span></label>
+                                                    <input class="form-control" type="date" placeholder="Please enter Proposed Commencement Date" />
+                                                </div>
+
+                                                <div class="col-lg form-group">
+                                                    <label class="">Proposed Completion Date </label>
+                                                    <input class="form-control" type="date" placeholder="Please enter Proposed Completion Date" id="Proposeddate" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg form-group textarea">
+                                                    <label class="required">Brief Description of Project   <span class="asterisk">*</span></label>
+                                                    <textarea class="form-control" placeholder="Please enter your description"></textarea>
+                                                </div>
+
+                                                <div class="col-lg form-group textarea">
+                                                    <label class="">Client’s Name and Contact Details </label>
+                                                    <textarea class="form-control" placeholder="Please enter client name & contact details"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-lg-12 form-group textarea">
+                                                    <label class="">Contract Value (E) </label>
+                                                    <input class="form-control" placeholder="Please enter contract value" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="cic-form-action-block">
+                                            <li>
+                                                <button type="button" class="default-btn btn-preview prev-step">Previous</button>
+                                                <button type="button" class="default-btn btn-draft">Save as Draft</button>
+                                            </li>
+                                            <li>
+                                                <button type="button" class="btn btn-submit next-step">Next</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="ProjectDetails">
+                                <div class="ProjectDetails-wrapper">
+                                    @*<partial name="~/Views/Shared/_ProjectDetails.cshtml" />*@
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="uploadDocument-wrapper">
+                                        <div class="title">
+                                            <h3>Business Particulars</h3>
+                                        </div>
+                                        <div class="document-upload">
+                                            <div class="document-upload-fieldset">
+                                                <ul class="uploadItem">
+                                                    <li>Certified copies of individual company CIC Registration Certificates</li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload1" type="file" name="upload">
+                                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>
+                                                        Valid Joint Venture Agreement (highly important)
+                                                    </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input id="upload2" type="file" name="upload">
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                </ul>                                            
+
+                                            </div>
+                                        </div>
+                                    </div>                                 
+
+                                  
+                                </div>
+                                <div class="DocumentUpload-wrapper">
+                                    <partial name="~/Views/Shared/_Declaration.cshtml" />
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

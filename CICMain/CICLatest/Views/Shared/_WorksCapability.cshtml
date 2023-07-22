@@ -1,0 +1,365 @@
+﻿<h4 class="text-center">Determining Works Capability</h4>
+<div class="cic-application-wrapper">
+    @model CICForm1Model
+
+
+    <div class="cic-note">
+
+        <h5>Track Record (list principal projects executed in the last 3 years and submit certificates of completion for each project)</h5>
+        <strong>* NB: </strong>
+
+
+        <ul>
+            <li>Provide details of the largest construction works contracts completed during the 3 years immediately preceding the application. Attach copies of Letter of Award, Certificates of Completion and Final Payment Certificates indicating the contract values.</li>
+            <li>Attach a Joint Venture Agreement if track record involved construction works under a joint venture.</li>
+            <li>If sub-contract, attach sub-contract agreement and proof of payment in the form of bank statements </li>
+        </ul>
+
+    </div>
+
+    <div class="cic-table-wrapper">
+        @for (int i = 0; i < Model.worksCapability.Count; i++)
+        {
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="table-validation-error">
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].ProjectName" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].Location" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].RegistationNo" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].CompletionDate" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].ContractSum" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="worksCapability[i].TelephoneNo" class="text-danger"></span></div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="table-fieldset">
+            <div class="table-responsive-lg" style="overflow-x:auto;">
+                <table class="table table-bordered" id="tblWork">
+                    <thead>
+                        <tr>
+                            <th scope="col">Project Name</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Registation no.<span class="asterisk">*</span></th>
+                            <th scope="col">Completion Date</th>
+                            <th scope="col">Contract Sum</th>
+                            <th scope="col">
+                                Client and
+                                Telephone no.
+                            </th>
+                            <th scope="col">
+                                Type of
+                                involvement <img src="~/images/info-icon.svg" alt="" data-toggle="tooltip" data-placement="top" title="Type of involvement (e.g. main contractor, sub-contractor) and total percentage value of shares of the contract if applicable" />
+                            </th>
+                            <th scope="col">
+
+                            </th>
+                            @*<th scope="col"></th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody2">
+                        @for (int i = 0; i < Model.worksCapability.Count; i++)
+                        {
+                            <tr id="@i">
+                                <td class="row1"><input class="form-control" type="text" asp-for="worksCapability[i].ProjectName" id="title_@i"/></td>
+                                <td class="row2"><input class="form-control" type="text" asp-for="worksCapability[i].Location" id="loc_@i"/></td>
+                                <td class="row3"><input class="form-control" type="text" style="cursor:pointer" placeholder="" asp-for="worksCapability[i].RegistationNo" id="Work_@i" data-toggle="modal" data-target="#registrationnumber" data-id="Work_@i" /></td>
+                                <td class="row4"><input class="form-control datepicker" type="text" asp-for="worksCapability[i].CompletionDate" id="workdate_@i"/></td>
+                                <td class="row5"><input class="form-control decimal-field" type="text" asp-for="worksCapability[i].ContractSum" id="sum_@i" /></td>
+                                <td class="row6"><input class="form-control" type="text" asp-for="worksCapability[i].TelephoneNo" id="no_@i"/></td>
+                                <td class="row7"><input class="form-control" type="text" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i"/><input type="hidden" asp-for="cWork" /></td>
+                                @*<td class="row8">
+                                        <div class="browse-box">
+                                            <input type="file" asp-for="worksCapability[i]." id="Browsebox" class="inputfile inputfile-1" />
+                                            <label for="Browsebox"><span>Browse </span></label>
+
+                                        </div>
+                                    </td>*@
+                                <td><button class="removeWork" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                            </tr>
+
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="Addnewrecord-td">
+                                <button class="btnTblRow" id="btnAddWork" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+            <div class="Addnewrecord">
+            </div>
+            <script>
+                var counter2 = document.getElementById("cWork").value;
+                $(function () {
+
+                    $('#btnAddWork').click(function () {
+                        $(`<tr id="${counter2}"><td class="row1">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].ProjectName" value=""  id="title_${counter2}"/>
+                                                                            </td>
+                                                                            <td class="row2">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].Location" value=" "   id="loc_${counter2}"/>
+                                                                            </td>
+                                                                            <td class="row3">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].RegistationNo" id="Work_${counter2}" style="cursor:pointer" data-toggle="modal" data-target="#registrationnumber" data-id="Work_${counter2}"/>
+                                                                            </td>
+                                                                            <td class="row4">
+                                                                            <input type="text" class="form-control datepicker" id="workdate_${counter2}" name="worksCapability[${counter2}].CompletionDate" value=" " />
+                                                                            </td>
+                                                                            <td class="row5">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].ContractSum" value="0" id="sum_${counter2}" />
+                                                                            </td>
+                                                                            <td class="row6">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].TelephoneNo" value="0" id="no_${counter2}" />
+                                                                            </td>
+                                                                            <td class="row7">
+                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].TypeofInvolvement" value="0"  id="type_${counter2}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                            <button type="button" class="removeWork"><img src="/images/trush.svg" alt="remove row" /></button>
+                                                                            </td>
+                                                                            </tr>`).appendTo('#tblWork');
+                        counter2++;
+                        document.getElementById("cWork").value = counter2;
+                        $(".datepicker").datepicker(datePickerOptions);
+                        return false;
+                    });
+                });
+
+                $(document).ready(function () {
+
+                    $('#tbody2').on('click', '.removeWork', function () {
+
+                        // containing the clicked button
+                        var child = $(this).closest('tr').nextAll();
+
+                        child.each(function () {
+
+                            // Getting <tr> id.
+                            var id = $(this).attr('id');
+
+                            // Getting the <p> inside the .row-index class.
+                            var idx = $(this).children('.row').children('input');
+                            var idx1 = $(this).children('.row2').children('input');
+                            var idx2 = $(this).children('.row3').children('input');
+                            var idx3 = $(this).children('.row4').children('input');
+                            var idx4 = $(this).children('.row5').children('input');
+                            var idx5 = $(this).children('.row6').children('input');
+                            var idx6 = $(this).children('.row7').children('input');
+
+                            // Gets the row number from <tr> id.
+                            var dig = parseInt(id);
+
+                            var cnew = dig - 1;
+                            // Modifying row index.
+                            //idx.html(`Row ${dig - 1}`);
+                            idx.attr('name', `worksCapability[${cnew}].ProjectName`)
+                            idx1.attr('name', `worksCapability[${cnew}].Location`)
+                            idx2.attr('name', `worksCapability[${cnew}].RegistationNo`)
+                            idx3.attr('name', `worksCapability[${cnew}].CompletionDate`)
+                            idx4.attr('name', `worksCapability[${cnew}].ContractSum`)
+                            idx5.attr('name', `worksCapability[${cnew}].TelephoneNo`)
+                            idx6.attr('name', `worksCapability[${cnew}].TypeofInvolvement`)
+
+                            // Modifying row id.
+                            $(this).attr('id', `${dig - 1}`);
+                        });
+
+                        // Removing the current row.
+                        $(this).closest('tr').remove();
+
+                        // Decreasing total number of rows by 1.
+                        counter2--;
+                        document.getElementById("cWork").value = counter2;
+                    });
+                });
+            </script>
+            <script type="text/javascript">
+                var datePickerOptions = {
+                    format: "mm/dd/yyyy",
+                    firstDay: 1,
+                    changeMonth: true,
+                    changeYear: true,
+                    language: "en"
+                }
+                $(function () {
+                    $('#workdate').datepicker({
+
+                        changeMonth: true,
+                        changeYear: true,
+                        format: "mm/dd/yyyy",
+                        language: "en"
+                    });
+                });
+
+                $(function () {
+                    $("[id*=Tanggal]").attr("ReadOnly", true)
+                    $("[id*=Tgl_Rawat]").datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: "yy/mm/dd"
+                    });
+                });
+
+                $(document).ready(function () {
+                    $(".datepicker").datepicker(datePickerOptions);
+                });
+            </script>
+            <div class="noted-info">
+                <p>
+                    *NB: Application will be deemed non-compliant if financial statements are not compiled by a qualified  accounting officer or auditing firm
+                </p>
+            </div>
+
+                <ul class="cic-form-action-block">
+                    <li>
+                        <button type="submit" class="default-btn btn-preview" asp-route-pre="finance" asp-route-name="work">Previous</button>
+                        <button type="submit" class="default-btn btn-draft" asp-route-name="draft">Save as Draft</button>
+                    </li>
+                    <li>
+                        <button type="submit" class="btn btn-submit" asp-route-next="doc" asp-route-name="work">Next</button>
+                    </li>
+                </ul>
+            </div>
+
+
+    </div>
+
+
+
+</div>
+
+<div class="modal fade" id="registrationnumber" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registation check</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Please enter your registation number <span class="asterisk">*</span></label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="RegistationNo" placeholder="Please enter your registation number" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="btnGet" data-dismiss="modal">GO</button>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="cicor">
+                    <strong>or</strong>
+                </div>
+
+                <div class="rediract-link">
+                    If you are not register click here <a href="#" asp-controller="Cicform3" asp-action="CicForms"> Construction projects and levy assessment registration form - CICF-8</a>
+                </div>*@
+            </div>
+          
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var globalId, globalTitle, globalLoc, globalDate,globalSum, globalType, globalNo;
+    $(function () {
+
+        $('#registrationnumber').on('show.bs.modal', function (e) {
+            var currentId = event.target.id;
+            var matches = currentId.match(/(\d+)/);
+            $("#RegistationNo").val('');
+            $(this).find('#RegistationNo').focus();
+
+            if (matches) {
+                globalTitle = "title_" + matches[0];
+                globalLoc = "loc_" + matches[0];
+                globalDate = "workdate_" + matches[0];
+                globalSum = "sum_" + matches[0];
+                globalNo = "no_" + matches[0];
+                globalType = "type_" + matches[0];
+                globalId = "Work_" + matches[0];
+            }
+            //alert(globalTitle);
+            globalId = $(e.relatedTarget).data('id');
+        })
+
+        $("#btnGet").click(function (e) {
+            $.ajax({
+                type: "POST",
+                url: "/Form1/IsProjectNumberExist",
+                data: { "projectNo": $("#RegistationNo").val() },
+                success: function (response) {
+
+                    if (response != "") {
+                        var nameArr = response.split(',');
+                        document.getElementById(globalId).value = nameArr[6];
+                        document.getElementById(globalTitle).value = nameArr[0];
+                        document.getElementById(globalLoc).value = nameArr[1];
+                        document.getElementById(globalDate).value = nameArr[2];
+                        document.getElementById(globalSum).value = nameArr[3];
+                        document.getElementById(globalNo).value = nameArr[4];
+                        document.getElementById(globalType).value = nameArr[5];
+                    }
+                    else {
+                        if (confirm("Project is not registered with CIC. Please click on Ok for registration")) {
+                            //redirect to form 8
+                            form8Redirect();
+                            
+                        }
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+
+         function form8Redirect() {
+            var jsonData = $('#form1').serialize();// @Html.Raw(Json.Serialize(Model));
+            var options = { "backdrop": "static", keyboard: true };
+
+
+         $.ajax({
+            type: 'POST',
+             url: "@(Url.Action("Form8Registration", "Form1"))",
+             data: $('#form1').serialize(),
+             success: function () {
+                 window.location.href = '/Form8/CicForm8';
+             } ,
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Function to format decimal value to two decimal places
+        function formatDecimal(value) {
+            //return parseFloat(value).toFixed(2);
+            return (Math.round(value * 100) / 100).toFixed(2);
+        }
+
+        // Attach event listeners to the decimal input fields
+        // This will update the value with decimal places as the user types
+        $('.decimal-field').on('blur', function () {
+            var inputValue = $(this).val();
+            var formattedValue = formatDecimal(inputValue);
+            $(this).val(formattedValue);
+        });
+    });
+</script>
+

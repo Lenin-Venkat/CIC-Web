@@ -1,0 +1,118 @@
+﻿@model IEnumerable<CICLatest.Models.ReviewerModel>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Admin" asp-action="AdminDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Admin Dashboard</strong></li>
+        </ul>
+
+    </div>
+    <div class="Cic-form-content reviewerdashboard-table">
+        <div class="row">
+            <div class="col-12">
+                <h1><img src="~/images/dashboard.svg" alt="" /> Admin Dashboard</h1>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Search Type: </label>
+                        <select id="DropDownList1" class="form-control">
+                            <option value="">Please select one</option>
+                            <option value="RowKey">Application Number</option>
+                            <option value="AssignedTo">Assigned To</option>
+                            <option value="Timestamp">Assigned Date</option>
+                        </select>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Search Value: </label>
+                        <input id="SearchValue" type="text" class="form-control" placeholder="Please Enter Value" />
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>&nbsp;</label>
+                        <div class="col-lg form-group">
+                            <input type="button" class="default-btn btn-draft" value="Search" onclick="SearchDashboard()">
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <div class="card-body table-responsive-lg p-0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="40%">
+                                        @Html.DisplayName("Form Name")
+                                    </th>
+                                    <th width="40%">
+                                        @Html.DisplayName("Application Number")
+                                    </th>
+                                    <th width="10%">
+                                        @Html.DisplayName("Queue")
+                                    </th>
+                                    <th width="15%">
+                                        @Html.DisplayName("Assigned Date / Lock Date")
+                                    </th>
+                                    <th width="10%">
+                                        @Html.DisplayName("Assigned To")
+                                    </th>
+                                    <th width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int i = 1;}
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td width="40%">
+                                            @Html.DisplayFor(modelItem => item.FormDesc)
+                                        </td>
+                                        <td width="40%">
+                                            @Html.DisplayFor(modelItem => item.AppNo)
+                                        </td>
+                                        <td width="10%">
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td width="15%">
+                                            @Html.DisplayFor(modelItem => item.FormDate)
+                                        </td>
+                                        <td width="10%">
+                                            @Html.DisplayFor(modelItem => item.comment)
+                                        </td>
+                                        <td width="10%" class="text-center">
+                                            <div class="tblactionbtn">
+                                                @Html.ActionLink("Remove Lock", "RemoveLock", new { rowkey = item.RowKey, partitioKey = item.PartitionKey }, new { @class = "lnkbutton", data_toggle = "tooltip", data_placement = "top", @title = "Release Record" })
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+
+                                    i++;
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            
+            function SearchDashboard() {
+                var DropDownList1 = document.getElementById("DropDownList1");
+                var selectedText = DropDownList1.options[DropDownList1.selectedIndex].innerHTML;
+                var selectedValue = DropDownList1.value;
+                var SearchValue = document.getElementById("SearchValue");
+
+                window.location.href = '/Admin/SearchFilter?id=' + selectedValue + '&Val=' + SearchValue.value;
+
+            }
+        </script>
+
+
+    </div>
+    
+</section>
+

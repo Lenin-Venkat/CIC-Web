@@ -1,0 +1,366 @@
+﻿@model MainViewModel
+<h4 class="text-center"> Details of project &  Levy payment options </h4>
+<div class="DetailsProjectLevy-fielset">
+    <div class="fieldset">
+
+        <div class="row">
+            <div class="col form-group">
+                <div class="title">
+                    <strong>Section G – details of project</strong>
+                    @Html.ValidationMessageFor(m => m.tab4.ProjectType, "", new { @class = "text-danger" })
+
+                </div>
+                <ul class="projectTypepattern">
+                    <li>
+                        <label class="custom-radio">
+                            New Project
+                            <input asp-for="@Model.tab4.ProjectType" checked="checked" type="radio" value="Newproject" onclick="handleClick(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            Ongoing Project
+                            <input asp-for="@Model.tab4.ProjectType" type="radio" value="Ongoingproject" onclick="handleClick(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Bid Reference</label>
+                <input asp-for="@Model.tab4.BidReference" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.BidReference" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Project Title</label>
+                <input asp-for="@Model.tab4.ProjectTite" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.ProjectTite" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Project Funder</label>
+                <input asp-for="@Model.tab4.ProjectorFunder" type="text" class="form-control" placeholder="" />
+                <small> (please state appropriate source of funding for the Project)</small>
+                <span asp-validation-for="@Model.tab4.ProjectorFunder" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Project Location</label>
+                <input asp-for="@Model.tab4.ProjectLocation" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.ProjectLocation" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Town/Inkhundla</label>
+                <input asp-for="@Model.tab4.TownInkhundla" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.TownInkhundla" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Region</label>
+                <input asp-for="@Model.tab4.Region" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.Region" class="text-danger"></span>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>GPS Co-ordinates</label>
+                <input asp-for="@Model.tab4.GPSCo" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.GPSCo" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Date of Award</label>
+                <input asp-for="@Model.tab4.DateofAward" type="date" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.DateofAward" class="text-danger"></span>
+            </div>
+
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $('.datepickers').datepicker({
+
+                    changeMonth: true,
+                    changeYear: true,
+                    format: "mm/dd/yyyy",
+                    language: "tr"
+                });
+            });
+        </script>
+
+        <div class="row">
+            <div class="col-lg form-group textarea">
+                <label>Brief Description of Project</label>
+                <textarea asp-for="@Model.tab4.BriefDescriptionofProject" class="form-control" placeholder=""></textarea>
+                <span asp-validation-for="@Model.tab4.BriefDescriptionofProject" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Proposed Commencement Date</label>
+                <input asp-for="@Model.tab4.ProposedCommencmentDate" type="date" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.ProposedCommencmentDate" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Proposed Completion Date</label>
+                <input asp-for="@Model.tab4.ProposedCompleteDate" type="date" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.ProposedCompleteDate" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row" id="Reviseddate">
+            <div class="col-lg form-group">
+                <label>Revised Completion Date</label>
+                <input asp-for="@Model.tab4.RevisedDate" type="date" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.RevisedDate" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Contract Value Excluding Levy (E)</label>
+                <input asp-for="@Model.tab4.ContractVAlue" id="ContractVAlue" type="text" class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.ContractVAlue" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>Percentage Levy Payable</label>
+                <input asp-for="@Model.tab4.LevyPaybale" id="LevyPaybale" type="text" class="form-control" readonly />
+                <span asp-validation-for="@Model.tab4.LevyPaybale" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <label>Levy Amount Payable</label>
+                <input asp-for="@Model.tab4.TotalProjectCost" id="TotalProjectCost" type="text" class="form-control" readonly />
+                <span asp-validation-for="@Model.tab4.TotalProjectCost" class="text-danger"></span>
+            </div>
+            <div class="col-lg form-group">
+                <label>
+                    Total Project Cost Including Levy (E)
+                </label>
+                <input asp-for="@Model.tab4.TotalProjectCostIncludingLevy" id="TotalProjectCostIncludingLevy" type="text" readonly class="form-control" placeholder="" />
+                <span asp-validation-for="@Model.tab4.TotalProjectCostIncludingLevy" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <p>
+            (Mandatory Copies of Project Documentation shall be submitted, i.e. bill of quantities summary page, letter of award or tender sanction or works order)
+        </p>
+
+
+
+    </div>
+
+    <div class="fieldset">
+
+        <div class="row">
+            <div class="col form-group">
+                <div class="title">
+                    <strong>Section H – Levy payment options</strong>
+
+
+                </div>
+                <p>A Main Contractor shall remit to the Council the levy as determined in accordance with the schedule in the gazette in respect of each of project undertaken. The Project Owner may pay the levy directly to the Council on behalf of the Main Contractor on agreement between both parties. </p>
+
+                <ul class="projectType">
+                    <li>
+                        <label class="custom-radio">
+                            PAID by Contractor
+                            <input type="radio" value="PAID by Contractor" asp-for="@Model.tab4.LevyPaymentOptions" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            PAID by the Owner of the Project
+                            <input type="radio" value="Paid by Owner of the Project" asp-for="@Model.tab4.LevyPaymentOptions" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                </ul>
+                @Html.ValidationMessageFor(m => m.tab4.LevyPaymentOptions, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg form-group">
+                <p>
+                    Highly important - (In the event that the Owner of the Project is liable to pay the levy, it is mandatory that a written agreement by both parties is signed
+                    and submitted together with this application form.)
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col form-group mb0">
+                <div class="title">
+                    <strong>Time frame for payment of levy</strong>
+
+
+                </div>
+                <ul class="projectType">
+                    <li>
+                        <label class="custom-radio">
+                            Once -  Off Payment
+                            <input type="radio" value=" Once -Off Payment" asp-for="@Model.tab4.TimeFrameoption" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="custom-radio">
+                            Per monthly certification
+                            <input type="radio" value="Per monthly certification" asp-for="@Model.tab4.TimeFrameoption" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </li>
+                </ul>
+                @Html.ValidationMessageFor(m => m.tab4.TimeFrameoption, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <ul class="cic-form-action-block">
+        <li>
+            <button type="submit" asp-route-name="work" asp-route-pre="finance" class="default-btn btn-preview">Previous</button>
+            <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+
+        </li>
+        <li>
+
+            <button type="submit" class="btn btn-submit" asp-route-next="doc" asp-route-name="work">Next</button>
+        </li>
+    </ul>
+    <script>
+        // Get all input fields and error message elements
+        // Get all input fields and error message elements
+        const inputFields4 = document.querySelectorAll('input[data-val="true"]');
+        const errorMessages4 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        // Add event listeners to all input fields to hide their respective error messages when the input value changes
+        inputFields4.forEach(function (inputField) {
+            const errorMessage = getErrorMessageElement(inputField);
+            inputField.addEventListener('input', function () {
+                if (inputField.value.trim() !== '') {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+
+        // Helper function to get the corresponding error message element for an input field
+        function getErrorMessageElement(inputField) {
+            const fieldName = inputField.getAttribute('name');
+            const errorMessage = Array.from(errorMessages4).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorMessage;
+        }
+    </script>
+
+    <script>
+        const textareaInputs1 = document.querySelectorAll('textarea[data-val="true"]');
+        const errorElements1 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        textareaInputs1.forEach(function (textareaInput) {
+            const errorElement = getErrorMessageElement(textareaInput);
+            textareaInput.addEventListener('input', function () {
+                if (textareaInput.value.trim() !== '') {
+                    errorElement.style.display = 'none';
+                }
+            });
+        });
+
+        function getErrorMessageElement(textareaInput) {
+            const fieldName = textareaInput.getAttribute('name');
+            const errorElement = Array.from(errorElements1).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorElement;
+        }
+    </script>
+</div>
+
+
+
+
+<script>
+    
+
+    function PercentageLevy(ContractVAlue, LevyValue) {
+        //var ContractVAlue = document.getElementById('ContractVAlue').value;
+        //var LevyValue = document.getElementById('LevyPaybale').value;
+        ContractVAlue = Math.round(ContractVAlue);
+        var Percentage = ContractVAlue * (LevyValue / 100);
+        document.getElementById('TotalProjectCost').value = Percentage;
+
+        var TotalProjectCostIncludingLevy = parseInt(ContractVAlue) + parseInt(Percentage);
+        document.getElementById('TotalProjectCostIncludingLevy').value = TotalProjectCostIncludingLevy;
+    }
+
+</script>
+
+
+
+<script type="text/javascript">
+    $(function ()
+    {
+        var c;
+        $("[id$=ContractVAlue]").on('change', function ()
+        {
+            c = this.value;
+            $.ajax(
+                {
+                type: 'POST',
+                url: "@(Url.Action("getLevyPercentage", "Form8"))",
+                    data: { "value": this.value },
+                 success: function (data) {
+                     // alert(c);
+                     var response = data.split(",");
+                     
+
+                     document.getElementById('LevyPaybale').value = response[0];
+                    // var CVAlue = Math.round(c);
+                    // var Percentage = CVAlue * (data / 100);
+                     document.getElementById('TotalProjectCost').value = response[1];
+
+                     //var TotalProjectCostIncludingLevy = parseInt(CVAlue) + parseInt(Percentage);
+                     document.getElementById('TotalProjectCostIncludingLevy').value = response[2];
+                 },
+                error: function () {
+                    console.log('Failed ');
+                }
+            })
+
+        });
+        hideErrorMessages();
+    });
+    function hideErrorMessages() {
+        const autoFilledFields = ['LevyPaybale','TotalProjectCost', 'TotalProjectCostIncludingLevy'];
+        autoFilledFields.forEach(function (fieldName) {
+            const errorMessage = getErrorMessageElement(document.getElementById(fieldName));
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        });
+    }
+</script>

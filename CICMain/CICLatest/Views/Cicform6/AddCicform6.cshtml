@@ -1,0 +1,259 @@
+﻿
+@{ ViewData["Title"] = "Individual artisans registration form – CICF 6"; }
+@model CICLatest.Models.Cicf6Model
+@{
+
+}
+
+<script src="~/js/jquery.min.js"></script>
+
+<section class="Cic-form-wrapper cic-form-6">
+    <div class="cic-breadcurm">
+        <ul>
+
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Individual artisans registration form – CICF 6</strong></li>
+        </ul>
+    </div>
+
+    <div class="Cic-form-content">
+        <h1>@ViewBag.FormTitle</h1>
+        <div class="">
+            <div class="">
+                <h1>Individual artisans registration form – CICF 6 </h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="@ViewBag.type">
+                                <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="true">Type of Application</a>
+                            </li>
+                            <li role="presentation" class=" @ViewBag.business">
+                                <a href="#PersonalDetails" data-toggle="tab" aria-controls="PersonalDetails" role="tab" aria-expanded="false"> Personal Details</a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.fin">
+                                <a href="#EducationReferences" data-toggle="tab" aria-controls="EducationReferences" role="tab">
+                                    Education Background & References
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.work">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form id="form6" method="post" enctype="multipart/form-data">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane @ViewBag.type" role="tabpanel" id="TypeofApplication">
+                                <div class="TypeofApplication-wrapper">
+                                    @*<partial name="~/Views/Shared/_TypeofApplication.cshtml" />*@
+                                    @Html.Partial("_TypeofApplication6", @Model)
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane @ViewBag.business" role="tabpanel" id="PersonalDetails">
+                                <div class="PersonalDetails-wrapper">
+                                    @*<partial name="~/Views/Shared/_PersonalDetails.cshtml" />*@
+                                    @Html.Partial("_PersonalDetails6", @Model)
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.fin" role="tabpanel" id="EducationReferences">
+                                <div class="FinancialCapability-wrapper">
+                                    @*<partial name="~/Views/Shared/_EducationReferences.cshtml" />*@
+                                    @Html.Partial("_EducationReferencess6", @Model)
+
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.work" role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="uploadDocument-wrapper">
+                                        <div class="title">
+                                            <h3>Individual Artisan Particulars</h3>
+                                        </div>
+                                        <div id="newreg" class="document-upload">
+                                            <div class="document-upload-fieldset">
+
+                                                <ul class="uploadItem">
+                                                    <li>Certified copy of qualifications / letter of testimony from project owner for previously completed projects</li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+
+
+                                                            <input asp-for="@Model.documentUpload.fileupload1" id="upload1" type="file">
+                                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                        @if (Model.fileupload1 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.fileupload1">@Model.fileupload1</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.fileupload1</label>
+                                                            }
+                                                        }
+
+
+
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="uploadItem">
+                                                    <li>Certified copy of Identity document </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input asp-for="@Model.documentUpload.fileupload2" id="upload2" type="file">
+
+                                                            <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                        @if (Model.fileupload2 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.fileupload2">@Model.fileupload2</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.fileupload2</label>
+                                                            }
+                                                        }
+
+
+                                                    </li>
+                                                </ul>
+                                                <ul class="uploadItem">
+                                                    <li>Proof of registration with the Eswatini Contractors Association </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input asp-for="@Model.documentUpload.fileupload3" type="file" id="upload3">
+                                                            <label for="upload3" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                        @if (Model.fileupload3 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.fileupload3">@Model.fileupload3</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.fileupload3</label>
+                                                            }
+                                                        }
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                        @if (Model.formval == "Edit")
+                                        {
+                                            <input type="hidden" asp-for="@Model.formval" />
+                                            <input type="hidden" asp-for="@Model.FormRegistrationNo" />
+                                            <input type="hidden" asp-for="@Model.PartitionKey" />
+                                            <input type="hidden" asp-for="@Model.RowKey" />
+                                            <input type="hidden" asp-for="@Model.FormStatus" />
+                                        }
+                                        <div id="rereg" class="document-upload">
+
+                                            <div class="document-upload-fieldset">
+                                                <ul class="uploadItem">
+                                                    <li>Proof of registration with the Eswatini Contractors Association </li>
+                                                    <li>
+                                                        <div class="fileAttachment">
+                                                            <input asp-for="@Model.documentUpload.fileupload4" type="file" id="upload4">
+                                                            <label for="upload4" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                Upload
+                                                            </label>
+                                                        </div>
+                                                        @if (Model.fileupload4 != null)
+                                                        {
+                                                            if (Model.formval == "Edit")
+                                                            {
+                                                                <a href="" asp-for="@Model.fileupload4">@Model.fileupload4</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label style="color:darkblue;">@Model.fileupload4</label>
+                                                            }
+                                                        }
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="DocumentUpload-wrapper">
+                                        @*<partial name="~/Views/Shared/_Declaration.cshtml" />*@
+                                        @Html.Partial("_Declarationn6", @Model)
+
+
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<script type="text/javascript">
+    $(window).on('load', function ()
+    {
+       // alert('onload function');
+
+   });
+
+
+    //$(window).load(function ()
+    //{
+    //    alert('onload function');
+
+
+    //});
+</script>
+<script type="text/javascript">
+
+    $('#rereg').hide();
+    function handleClick(myRadio) {
+        var value = myRadio.value;
+
+
+
+        if (value == 'Renewal') {
+
+            $('#rereg').show();
+            $('#newreg').hide();
+            window.location.href = '/Cicform6/GetData?apptype=' + value;
+        }
+        else {
+
+            $('#rereg').hide();
+            $('#newreg').show();
+        }
+    }
+
+
+
+</script>
+
+

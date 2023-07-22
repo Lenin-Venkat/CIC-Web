@@ -1,0 +1,280 @@
+﻿
+@model SaveModelForm9
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<style>
+    .GFG {
+        background-color: white;
+        //border: 2px solid black;
+        color: green;
+        padding: 5px 10px;
+        text-align: center;
+        display: inline-block;
+        font-size: 20px;
+        margin: 10px 0px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+<form method="post" asp-controller="ViewForm9" asp-action="ViewForm9">
+    <section class="Cic-form-wrapper">
+        <div class="cic-breadcurm">
+            <ul>
+                <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+                @*  <li><strong class="current-item">@ViewBag.FormTitle</strong></li>*@
+            </ul>
+        </div>
+        <div class="Cic-form-content" id="printarea">
+
+            <div class="">
+                <div class="">
+                    <h1>REGISTRATION OF CONSTRUCTION PROJECTS – CICF 9</h1><h5>Registration Number - @Model.FormRegistrationNo</h5>
+                    <div class="wizard">                        
+                        <div class="tab-content" style="background-color:white;padding:20px 20px 20px 20px">
+                            <div class="fieldset">
+                                <div class="row">
+                                    <div class="col-lg form-group">Company or Institution</div>
+                                    <div class="col-lg form-group">@Model.CompanyName</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Name of Institution Focal Person</div>
+                                    <div class="col-lg form-group" id="RepresentativeName">@Model.InstitutionFocalPerson</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Postal address</div>
+                                    <div class="col-lg form-group">@Model.PostalAddress</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Physical address</div>
+                                    <div class="col-lg form-group">@Model.PhysicalAddress</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Email Address</div>
+                                    <div class="col-lg form-group"><label id="Email">@Model.Email</label> </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Tel. No</div>
+                                    <div class="col-lg form-group">@Model.TelephoneNumber</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg form-group">Fax No</div>
+                                    <div class="col-lg form-group">@Model.FaxNo</div>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <h3>List of Construction projects to be undertaken</h3>
+                            </div>
+                            <div class="title">
+                                <strong>Building Works Projects</strong>
+                            </div><br />
+                            <div class="table-fieldset">
+                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                    <table class="table table-bordered" id="tblShare">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Project Name</th>
+                                                <th scope="col">Name Of Responsible Contractor</th>
+                                                <th scope="col">Est. Project Cost</th>
+                                                <th scope="col">Proposed Commencement Date</th>
+                                                <th scope="col">Proposed Completion Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            @for (int i = 0; i < Model.buildingWorkForProject.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@Model.buildingWorkForProject[i].ProjectName</td>
+                                                    <td>@Model.buildingWorkForProject[i].NameOfResponsibleContractor</td>
+                                                    <td>@Model.buildingWorkForProject[i].EstProjectCost</td>
+                                                    <td>@Model.buildingWorkForProject[i].ProposedCommencementDate</td>
+                                                    <td>@Model.buildingWorkForProject[i].ProposedCompletionDate</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <strong>Civils Works Projects</strong>
+                            </div><br />
+                            <div class="table-fieldset">
+                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                    <table class="table table-bordered" id="tblShare">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Project Name</th>
+                                                <th scope="col">Name Of Responsible Contractor</th>
+                                                <th scope="col">Est. Project Cost</th>
+                                                <th scope="col">Proposed Commencement Date</th>
+                                                <th scope="col">Proposed Completion Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            @for (int i = 0; i < Model.civilsWorksProjects.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@Model.civilsWorksProjects[i].ProjectName</td>
+                                                    <td>@Model.civilsWorksProjects[i].NameOfResponsibleContractor</td>
+                                                    <td>@Model.civilsWorksProjects[i].EstProjectCost</td>
+                                                    <td>@Model.civilsWorksProjects[i].ProposedCommencementDate</td>
+                                                    <td>@Model.civilsWorksProjects[i].ProposedCompletionDate</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="title">
+                                <strong>Mechanical Works Projects</strong>
+                            </div><br />
+                            <div class="table-fieldset">
+                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                    <table class="table table-bordered" id="tblShare">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Project Name</th>
+                                                <th scope="col">Name Of Responsible Contractor</th>
+                                                <th scope="col">Est. Project Cost</th>
+                                                <th scope="col">Proposed Commencement Date</th>
+                                                <th scope="col">Proposed Completion Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            @for (int i = 0; i < Model.mechanicalWorksProjects.Count; i++)
+                                            {
+                                                <tr>
+                                                    <td>@Model.mechanicalWorksProjects[i].ProjectName</td>
+                                                    <td>@Model.mechanicalWorksProjects[i].NameOfResponsibleContractor</td>
+                                                    <td>@Model.mechanicalWorksProjects[i].EstProjectCost</td>
+                                                    <td>@Model.mechanicalWorksProjects[i].ProposedCommencementDate</td>
+                                                    <td>@Model.mechanicalWorksProjects[i].ProposedCompletionDate</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="fieldset">
+                                <div class="row">
+                                    @if (Model.PurchaseordersFileName != null)
+                                    {
+                                        string path = Model.path + @"\PurchaseordersFile_" + Model.PurchaseordersFileName;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Purchase orders
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.PurchaseordersFileName</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.InvoicesFileName != null)
+                                    {
+                                        string path = Model.path + @"\InvoicesFile_" + Model.InvoicesFileName;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Invoices
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.InvoicesFileName</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.SummarybillofquantitiesFileName != null)
+                                    {
+                                        string path = Model.path + @"\SummarybillofquantitiesFile_" + Model.SummarybillofquantitiesFileName;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Summary bill of quantities
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.SummarybillofquantitiesFileName</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.SignatureName != null)
+                                    {
+                                        string path = Model.path + @"\Signature_" + Model.SignatureName;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Signature
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.SignatureName</a>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment">Comment:</label>&nbsp; <label id="GFG"></label>
+                                <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                            </div>
+                            <ul class="cic-form-action-block">
+                                <li>
+                                    @*<a href="#" data-toggle="modal" data-target="#acceptForm" class="btn btn-submit">Approve Form</a>*@
+                                    <button type="submit" class="btn btn-submit">Approve</button>
+                                    <button type="button" class="btn btn-reject" onclick="submitForm('Reject');">Reject</button>
+                                    @*<a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard"> Back to Dashboard</a>*@
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+</form>
+<script type="text/javascript">
+    function submitForm(x) {
+        var label = $('#Email');
+        var email = label.text();
+        var RepresentativeName = $('#RepresentativeName').text();
+        var comment = document.getElementById('comment').value;
+        if (comment) {
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("RejectForm", "ViewForm9"))",
+            data: { "value": x, "emailId": email, "RepresentativeName": RepresentativeName, "comment": comment},
+            success: function (result) {
+                window.location.href = '/ReviewerDashboard/ReviewerDashboard';
+            },
+            error: function () {
+                console.log('Failed ');
+            }
+        })
+        }
+        else {
+            document.getElementById('GFG').innerHTML = "Please enter comment";
+            document.getElementById('GFG').style.color = "red";
+        }
+    }
+
+    function download() {
+         $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("DownloadFile", "ViewForm9"))",
+            success: function (result) {
+                alert('Successfully downloaded files to C:\CICFiles');
+              },
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+
+</script>

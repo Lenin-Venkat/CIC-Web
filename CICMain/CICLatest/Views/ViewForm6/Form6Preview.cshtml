@@ -1,0 +1,246 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model Cicf6Model
+
+<style>
+    .GFG {
+        background-color: white;
+        //border: 2px solid black;
+        color: green;
+        padding: 5px 10px;
+        text-align: center;
+        display: inline-block;
+        font-size: 20px;
+        margin: 10px 0px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+
+<section class="Cic-form-wrapper">
+
+    <div class="Cic-form-content" id="printarea">
+
+        <div class="">
+            <div class="">
+                <h1>Individual artisans registration form – CICF 6</h1>
+
+                <div id="previewmain">
+
+
+                       <div class="accordion" id="Previewmaindetails">
+                        <div class="card">
+                            <div class="card-header" id="prevhead1">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget1"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION A - Type of Application</a>
+                            </div>
+                            <div id="prevtarget1" class="collapse show" aria-labelledby="prevhead1" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Type of Application</div>
+                                            <div class="col-lg form-group">@Model.App.AppType</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Categories for registration</div>
+                                            <div class="col-lg form-group">@Model.App.Categories</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Association Name</div>
+                                            <div class="col-lg form-group">@Model.App.AssociationName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name of Authorised Officer</div>
+                                            <div class="col-lg form-group">@Model.App.AuthorisedOfficerName</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                           <div class="card">
+                            <div class="card-header" id="prevhead2">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget2"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION B - Personel Details</a>
+                            </div>
+                            <div id="prevtarget2" class="collapse show" aria-labelledby="prevhead2" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name</div>
+                                            <div class="col-lg form-group vals" id="Name">@Model.personelDetails.Name</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Surname</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.Surname</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">ID No</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.IDNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Nationality</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.Nationality</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Home Area</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.HomeArea</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Chief</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.Chief</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Indvuna</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.Indvuna</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Temporal Residence Permit No</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.TemporalResidencePermitNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Work Permit No</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.WorkPermitNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Cellphone No</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.CellphoneNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email address</div>
+                                            <div class="col-lg form-group vals"><label id="Email">@Model.personelDetails.Emailaddress</label></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax No</div>
+                                            <div class="col-lg form-group vals">@Model.documentUpload.FaxNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Residential Address</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.ResidentialAddress</div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-lg form-group">Next of Kin</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.NextofKin</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Relationship</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.Relationship</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Contact No</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.ContactNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Nature of Trade/Expertise</div>
+                                            <div class="col-lg form-group vals">@Model.personelDetails.NatureofTradeExpertise</div>
+                                        </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <div class="card">
+                            <div class="card-header" id="prevhead3">
+                                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#prevtarget3"
+                                   aria-expanded="true" aria-controls="prevtarget3">
+                                    SECTION C - Education Background & References
+
+                                </a>
+                            </div>
+                              <div id="prevtarget3" class="collapse" aria-labelledby="prevhead3" data-parent="#prevhead3">
+                                <div class="card-body">
+
+                                    <div class="fieldset">
+
+                                        <div class="fieldset bordered">
+
+                                            <div>
+                                                <strong>SECTION C - Education Background</strong>
+
+                                            </div>
+                                            @if (Model.educationBackground != null)
+                                            {
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                        <table class="table table-bordered" id="tblproject">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Highest Education Level</th>
+                                                                    <th scope="col">Qualifications Attained</th>
+                                                                    <th scope="col">Education Institution</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbody">
+                                                                @for (int i = 0; i < Model.educationBackground.Count; i++)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@Model.educationBackground[i].HighestEducationLevel</td>
+                                                                        <td>@Model.educationBackground[i].QualificationsAttained</td>
+                                                                        <td>@Model.educationBackground[i].EducationInstitution</td>
+
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="fieldset bordered">
+                                            <div>
+                                                <strong>SECTION D - References</strong>
+                                            </div>
+                                            @if (Model.backGroundetails != null)
+                                            {
+                                                <div class="table-fieldset">
+                                                    <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                        <table class="table table-bordered" id="tblwork">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Names and Surname</th>
+                                                                    <th scope="col">Type of Work Performed</th>
+                                                                    <th scope="col">Telephone/Cellphone No.</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="tbody">
+                                                                @for (int i = 0; i < Model.backGroundetails.Count; i++)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@Model.backGroundetails[i].NamesandSurname</td>
+                                                                        <td>@Model.backGroundetails[i].TypeofWorkPerformed</td>
+                                                                        <td>@Model.backGroundetails[i].TelephoneNo</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            }
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                      
+                           </div>
+
+
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+  
+
+</section>

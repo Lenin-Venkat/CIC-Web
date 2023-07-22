@@ -1,0 +1,347 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model SaveModelForm5
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<form method="post" asp-controller="ViewForm5" asp-action="ViewForm5">
+    <section class="Cic-form-wrapper">
+        <div class="cic-breadcurm">
+            <ul>
+                <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+                @*  <li><strong class="current-item">@ViewBag.FormTitle</strong></li>*@
+                <li><strong class="current-item">Form details</strong></li>
+            </ul>
+        </div>
+        <div class="Cic-form-content saveasdraft" id="printarea">
+
+            <div class="">
+                <div class="">
+                    <h1>JOINT VENTURE CONSULTANCY PRACTICES REGISTRATION FORM – CICF 5</h1>
+
+                    <div class="product-number-blk">
+                        <h5>Project Number - <span class="vals">@Model.FormRegistrationNo</span></h5>
+                    </div>
+                    <div class="wizard">
+
+                        <div class="wizard-inner">
+                            <div class="connecting-line"></div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="false">Type of Application</a>
+                                </li>
+
+                                <li role="presentation">
+                                    <a href="#BusinessDetails" data-toggle="tab" aria-controls="BusinessDetails" role="tab" aria-expanded="false">Business Details</a>
+                                </li>
+
+                                <li role="presentation">
+                                    <a href="#FinancialCapability" data-toggle="tab" aria-controls="FinancialCapability" role="tab">Details Of Project</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Documents</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content saveasdraft-content">
+                            <div class="tab-pane active" role="tabpanel" id="TypeofApplication">
+                                <div class="fieldset">
+                                    <div class="row">
+                                        <div class="col-lg form-group">Type of Application</div>
+                                        <div class="col-lg form-group vals">@Model.AppType</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="BusinessDetails">
+                                <div class="fieldset">
+                                    <div class="row">
+                                        <div class="col-lg form-group">Name of Joint Venture</div>
+                                        <div class="col-lg form-group vals">@Model.NameOFJoinVenture</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Type of Joint Venture</div>
+                                        <div class="col-lg form-group vals">@Model.TypeofJoointVenture</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Telephone No</div>
+                                        <div class="col-lg form-group vals">@Model.Telephone</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Fax</div>
+                                        <div class="col-lg form-group vals">@Model.Fax</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Email address</div>
+                                        <div class="col-lg form-group vals">@Model.Email</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Physical Address</div>
+                                        <div class="col-lg form-group vals">@Model.Phyaddress</div>
+                                    </div><br />
+                                    <div>
+                                        <h5>Authorized Contact Person</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">First Name</div>
+                                        <div class="col-lg form-group vals" id="RepresentativeName">@Model.FirstName</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Surname</div>
+                                        <div class="col-lg form-group vals">@Model.SurName</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Designation</div>
+                                        <div class="col-lg form-group vals">@Model.Designation</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Telephone No</div>
+                                        <div class="col-lg form-group vals">@Model.BusinessTelephone</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Fax</div>
+                                        <div class="col-lg form-group vals">@Model.FaxNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Mobile No</div>
+                                        <div class="col-lg form-group vals">@Model.MobileNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Email Address</div>
+                                        <div class="col-lg form-group vals"><label id="Email">@Model.BusinessEmail</label></div>
+                                    </div><br />
+                                    <div>
+                                        <h5>Business Registration</h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Date of Incorporation/Registration</div>
+                                        <div class="col-lg form-group vals">@Model.DateofRegistration</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Tax Identity No</div>
+                                        <div class="col-lg form-group vals">@Model.TaxIdentityNo</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">JV Work Discipline Applying for</div>
+                                        <div class="col-lg form-group vals">@Model.Category</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg form-group">Level of registration</div>
+                                        <div class="col-lg form-group vals">@ViewBag.SubCategory</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="FinancialCapability">
+                                <div class="fieldset">
+                                    <div>
+                                        <h5>Particulars of Joint Venture Parties</h5>
+                                    </div>
+                                    @if (Model.detailOfProjects != null)
+                                    {
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                <table class="table table-bordered" id="tblShare">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name of Applicant</th>
+                                                            <th scope="col">Country of Origin</th>
+                                                            <th scope="col">Contact Details</th>
+                                                            <th scope="col">CIC Registration No.</th>
+                                                            <th scope="col">% Shareholding </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+                                                        @for (int i = 0; i < Model.detailOfProjects.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.detailOfProjects[i].NameofApplicant</td>
+                                                                <td>@Model.detailOfProjects[i].CountryOfOrigin</td>
+                                                                <td>@Model.detailOfProjects[i].ContactDetails</td>
+                                                                <td>@Model.detailOfProjects[i].CICRegistrationNo</td>
+                                                                <td>@Model.detailOfProjects[i].Shareholding</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                    <br />
+                                    <div>
+                                        <h5>Sub-Consultants/Specialists to be employed on the Project</h5>
+                                    </div>
+                                    @if (Model.subConsultantDetail != null)
+                                    {
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                <table class="table table-bordered" id="tblShare">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name of Sub-Consultants/Specialists</th>
+                                                            <th scope="col">Country of Origin</th>
+                                                            <th scope="col">CIC Registration No.</th>
+                                                            <th scope="col">Description of Works to be undertaken</th>
+                                                            <th scope="col">Contract Value of Works (E)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+                                                        @for (int i = 0; i < Model.subConsultantDetail.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.subConsultantDetail[i].NameofConsultant</td>
+                                                                <td>@Model.subConsultantDetail[i].CountryyofOrigin</td>
+                                                                <td>@Model.subConsultantDetail[i].CICRegistrationNo</td>
+                                                                <td>@Model.subConsultantDetail[i].DescriptionOfWork</td>
+                                                                <td>@Model.subConsultantDetail[i].ContractValueOfWork</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                <div class="row">
+                                    @if (Model.BusineesParticularsfile1Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\BusineesParticularsfile1_" + Model.BusineesParticularsfile1Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Certified copies of individual company CIC Registration Certificates
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.BusineesParticularsfile1Name</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.BusineesParticularsfile2Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\BusineesParticularsfile2_" + Model.BusineesParticularsfile2Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Valid Joint Venture Agreement (highly important)
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.BusineesParticularsfile2Name</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.SignatureName != null)
+                                    {
+                                        string path = Model.ImagePath + @"\Signature_" + Model.SignatureName;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Signature
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.SignatureName</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="row">
+                                    @if (Model.Signature2Name != null)
+                                    {
+                                        string path = Model.ImagePath + @"\Signature1_" + Model.Signature2Name;
+                                        path = path.Replace("https:\\", "");
+                                        path = path.Replace("\\", "/");
+                                        <div class="col-lg form-group">
+                                            Witnessed Signature
+                                        </div>
+                                        <div class="col-lg form-group vals">
+                                            <a href="//@path" target="_blank">@Model.Signature2Name</a>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="comment">Comment:</label>&nbsp; <label id="GFG"></label>
+                                    <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                                </div>
+                                <ul class="cic-form-action-block">
+                                    <li>
+                                        @*<a href="#" data-toggle="modal" data-target="#acceptForm" class="btn btn-submit">Approve Form</a>*@
+                                        <button type="submit" class="btn btn-submit">Approve</button>
+                                        <button type="button" class="btn btn-reject" onclick="submitForm('Reject');">Reject</button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        @*<div class="backbtn">
+                            <a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard"><img src="/images/right-arrow.svg" alt="arrow" /> Back to Dashboard</a>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="modal fade" id="acceptForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body">
+                    <p>Do you want to approve Form?</p>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-submit" data-dismiss="modal">Approve</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    function submitForm(x) {
+        var label = $('#Email');
+        var email = label.text();
+        var RepresentativeName = $('#RepresentativeName').text();
+        var comment = document.getElementById('comment').value;
+        if (comment) {
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("RejectForm", "ViewForm5"))",
+            data: { "value": x, "emailId": email, "RepresentativeName": RepresentativeName, "comment": comment},
+            success: function (result) {
+                window.location.href = '/ReviewerDashboard/ReviewerDashboard';
+            },
+            error: function () {
+                console.log('Failed ');
+            }
+        })
+        }
+        else {
+            document.getElementById('GFG').innerHTML = "Please enter comment";
+            document.getElementById('GFG').style.color = "red";
+        }
+    }
+
+    function download() {
+         $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("DownloadFile", "ViewForm5"))",
+             success: function (result) {
+                 alert(result);
+                alert('Successfully downloaded files to C:\CICFiles');
+              },
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+
+</script>

@@ -1,0 +1,191 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model CICForm4Model
+
+<section class="Cic-form-wrapper">
+
+    <div class="Cic-form-content" id="printarea">
+
+        <div class="">
+            <div class="">
+                <h1>@Model.formval</h1>
+
+                <div id="previewmain">
+
+                    <div class="accordion" id="Previewmaindetails">
+                        <div class="card">
+                            <div class="card-header" id="prevhead1">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget1"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION A - Type of Application</a>
+                            </div>
+
+                            <div id="prevtarget1" class="collapse show" aria-labelledby="prevhead1" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Type of Application</div>
+                                            <div class="col-lg form-group">@Model.App.AppType</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Association Name</div>
+                                            <div class="col-lg form-group">@Model.App.AssociationName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name of Authorised Officer</div>
+                                            <div class="col-lg form-group">@Model.App.AuthorisedOfficerName</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="prevhead2">
+                                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#prevtarget2"
+                                   aria-expanded="true" aria-controls="prevtarget2">SECTION B - Business Details</a>
+                            </div>
+
+                            <div id="prevtarget2" class="collapse" aria-labelledby="prevhead2" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Business Names</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Trading Style</div>
+                                            <div class="col-lg form-group">@Model.businessModel.TradingStyle</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">BusinessType</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessType</div>
+                                        </div>
+                                        @if (ViewBag.other)
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg form-group">Other (please specify)</div>
+                                                <div class="col-lg form-group">@Model.businessModel.Other</div>
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="col-lg form-group">Date of Registration of Company</div>
+                                            <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationDate</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Place of Registration of Company</div>
+                                            <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationPlace</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Company Registration Number</div>
+                                            <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Physical Address in Eswatini</div>
+                                            <div class="col-lg form-group">@Model.businessModel.PhysicalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Company Head Office Physical Address</div>
+                                            <div class="col-lg form-group">@Model.businessModel.CompanyHOPhysicalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Postal Address</div>
+                                            <div class="col-lg form-group">@Model.businessModel.PostalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Telephone No</div>
+                                            <div class="col-lg form-group">@Model.businessModel.TelephoneNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax</div>
+                                            <div class="col-lg form-group">@Model.businessModel.FaxNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email</div>
+                                            <div class="col-lg form-group"><label id="Email">@Model.businessModel.Email</label></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Category of Works Applying for</div>
+                                            <div class="col-lg form-group">@Model.businessModel.SelectedCategoryValue</div>
+                                        </div>
+                                        @if (ViewBag.SubCategory != null)
+                                        {
+                                        <div class="row">
+                                            <div class="col-lg form-group">Level of Registration:</div>
+                                            <div class="col-lg form-group">@ViewBag.SubCategory</div>
+                                        </div>
+                                        }
+                                    </div>
+                                    <div class="fieldset bordered">
+                                        <div>
+                                            <h5>Business Representative</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name</div>
+                                            <div class="col-lg form-group" id="RepresentativeName">@Model.businessModel.BusinessRepresentativeName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Position</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativePositionNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Cell No</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeCellNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeFax</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email</div>
+                                            <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeEmail</div>
+                                        </div>
+                                    </div>
+                                    <div class="fieldset bordered">
+                                        @if (Model.Sharelist != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblShare">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name of Director(s)/Partners</th>
+                                                                <th scope="col">Nationality</th>
+                                                                <th scope="col">ID/Passport No.</th>
+                                                                <th scope="col">Country of Residence</th>
+                                                                <th scope="col">Cellphone No.</th>
+                                                                <th scope="col">% Shares</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.Sharelist.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.Sharelist[i].DirectorName</td>
+                                                                    <td>@Model.Sharelist[i].Nationnality</td>
+                                                                    <td>@Model.Sharelist[i].IdNO</td>
+                                                                    <td>@Model.Sharelist[i].Country</td>
+                                                                    <td>@Model.Sharelist[i].CellphoneNo</td>
+                                                                    <td>@Model.Sharelist[i].SharePercent</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

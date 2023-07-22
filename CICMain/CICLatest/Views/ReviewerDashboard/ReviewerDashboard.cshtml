@@ -1,0 +1,243 @@
+﻿@model IEnumerable<CICLatest.Models.ReviewerModel>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+
+        @if (User.IsInRole("NormalUser"))
+        {
+            <ul>
+                <li><a href="/Home/Index">Home</a> <span class="delimiter"><img src="/images/dark-right-arrow.svg"></span></li>
+                @*<li><strong class="current-item">Reviewer Dashboard</strong></li>*@
+            </ul>
+        }
+    </div>
+    <div class="Cic-form-content reviewerdashboard-table">
+        <div class="row">
+            <div class="col-12">
+                <h1><img src="~/images/dashboard.svg" alt="" /> @ViewBag.Role Dashboard</h1>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Search Type: </label>
+                        <select id="DropDownList1" class="form-control">
+                            <option value="">Please select one</option>
+                            <option value="RowKey">Registration No/ProjectNo</option>
+                            <option value="AppType">Application Type</option>
+                            <option value="CreatedDate">Submitted Date</option>
+                        </select>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Search Value: </label>
+                        <input id="SearchValue" type="text" class="form-control" placeholder="Please Enter Value" />
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>&nbsp;</label>
+                        <div class="col-lg form-group">
+                            <input type="button" class="default-btn btn-draft" value="Search" onclick="SearchDashboard()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="card-body table-responsive-lg p-0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="40%">
+                                        @Html.DisplayName("Form Name")
+                                    </th>
+                                    <th width="15%">
+                                        @Html.DisplayName("Registration No/ProjectNo")
+                                    </th>
+                                    <th width="15%">
+                                        @Html.DisplayName("Application Type")
+                                    </th>
+                                    <th width="10%">
+                                        @Html.DisplayName("Submitted Date")
+                                    </th>
+                                    <th width="10%">
+                                        @Html.DisplayName("Status")
+                                    </th>
+                                    <th width="15%">
+                                        @Html.DisplayName("Comment")
+                                    </th>
+                                    <th width="10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int i = 1;}
+                                @foreach (var item in Model)
+                                {
+
+                                <tr>
+                                    <td width="40%">
+                                        @Html.DisplayFor(modelItem => item.FormDesc)
+                                    </td>
+                                    <td width="15%">
+                                        @Html.DisplayFor(modelItem => item.RowKey)
+                                    </td>
+                                    <td width="15%">
+                                        @Html.DisplayFor(modelItem => item.apptype)
+                                    </td>
+                                    <td width="10%">
+                                        @Html.DisplayFor(modelItem => item.FormDate)
+                                    </td>
+                                    <td width="10%">
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td width="15%">
+                                        <div class="commenttag" data-toggle="modal" data-target="#@("tr"+i)"><span>@Html.DisplayFor(modelItem => item.comment)</span></div>
+
+                                        @*<div class="Modalpop" id="@("ttr"+i)">
+                <a class="closebtn"><img src="~/images/cancel.svg" alt="" width="16" height="16" /></a>
+                <div class="commentmodal" >
+                    <span>@Html.DisplayFor(modelItem => item.comment)</span>
+                </div>
+            </div>
+
+            <script>
+                $("#@("tr"+i)").click(function () {
+                    $(".Modalpop").addClass("Open");
+                    $("body").addClass("overlaybg");
+                });
+                $(".closebtn").click(function () {
+                    $("body").removeClass("overlaybg");
+                    $(".Modalpop").removeClass("Open");
+                })
+            </script>*@
+
+                                        <div class="modal fade commentModal" id="@("tr"+i)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        Comment:
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <img src="~/images/cancel.svg" alt="" width="16" height="16" />
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p style="white-space: pre-line">@Html.DisplayFor(modelItem => item.comment)</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+
+
+                                    <td width="10%" class="text-center">
+                                        <div class="tblactionbtn">
+                                            @if (item.Status != "Completed")
+                                                {
+                                            @if (!User.IsInRole("NormalUser"))
+                                                    {
+                                            @Html.ActionLink("Review", "ViewForm", new { form = item.FormName, row = item.RowKey, PartitionKey = item.PartitionKey }, new { @class = "lnkbutton" })
+                                                    }
+
+                                            @if (User.IsInRole("NormalUser") && (item.Status == "Draft" || item.Status == "Rejected"))
+                                                    {
+                                            @Html.ActionLink("Review", "ViewForm", new { form = item.FormName, row = item.RowKey, PartitionKey = item.PartitionKey }, new { @class = "lnkbutton" })
+                                                    }
+                                            @if (User.IsInRole("NormalUser") && (item.Status == "Finished"))
+                                                    {
+                                                        string path = item.pdfFile;
+                                                        path = path.Replace("https:\\", "");
+                                                        path = path.Replace("\\", "/");
+                                            <a class="DownloadFile-btn" onclick="OpenTabs(@("txtUrl"+i)); return false;">cilck</a>
+                                            <input id="@("txtUrl"+i)" type="hidden" value="@item.pdfFile" />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                            @if (User.IsInRole("CEO"))
+                                                    {
+                                            @Html.ActionLink("Generate Certificate", "GenerateCertificate", new { rowkey = item.RowKey, form = item.FormName, PartitionKey = item.PartitionKey }, new { @class = "DownloadFile-btn", data_toggle = "tooltip", data_placement = "top", @title = "Generate Certificate" })
+                                                    }
+                                                }
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                                    i++;
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <input type="hidden" id="popupvalue" value="@ViewBag.sts" />
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Certificate Generated</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <small>Certificate is sent to applicant via email</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    function OpenTabs(x) {
+        //alert(x);
+        var test;
+        var urls = "";
+        urls = x.value;
+        /*urls = urls.replace("https:\\", "");*/
+        for (var i = 0; i < urls.split(';').length; i++) {
+            test = "//" + urls.split(';')[i];
+            window.open(test, '_blank');
+        }
+    }
+
+    function SearchDashboard() {
+        var DropDownList1 = document.getElementById("DropDownList1");
+        var selectedText = DropDownList1.options[DropDownList1.selectedIndex].innerHTML;
+        var selectedValue = DropDownList1.value;
+        var SearchValue = document.getElementById("SearchValue");
+
+        window.location.href = '/ReviewerDashboard/SearchFilter?id=' + selectedValue + '&Val=' + SearchValue.value;
+        
+        }
+</script>
+
+<script>
+    $(document).ready(function () {
+        //$('[data-target="popover"]').popover({
+        //    placement: 'top',
+        //    trigger: 'hover'
+        //});
+
+        $('.js-btn-popover').popover({
+            placement: 'top',
+            trigger: 'hover'
+        });
+
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        var a = document.getElementById('popupvalue').value;
+        if (a == "Success") {
+            $("#myModal").modal('show');
+        }
+        else {
+            $("#myModal").modal('hide');
+        }
+    });
+</script>

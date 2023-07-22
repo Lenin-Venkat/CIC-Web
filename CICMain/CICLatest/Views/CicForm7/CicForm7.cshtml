@@ -1,0 +1,794 @@
+﻿@{ ViewData["Title"] = "Manufacturers and suppliers registration form – CICF 7"; }
+
+@model CICLatest.Models.Cicf7Model
+@{
+
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            @*<li><a href="/">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>*@
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Manufacturers and suppliers registration form – CICF 7</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+
+        <div class="">
+            <div class="">
+                <h1>Manufacturers and suppliers registration form – CICF 7 </h1>
+                @*<h1>@ViewBag.FormTitle</h1>*@
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="@ViewBag.type">
+                                <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="true">Type of Application</a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.business">
+                                <a href="#BusinessDetails" data-toggle="tab" aria-controls="BusinessDetails" role="tab" aria-expanded="false"> Business Details </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.fin">
+                                <a href="#TechnicalDataClient" data-toggle="tab" aria-controls="TechnicalDataClient" role="tab">
+                                    Technical Data &
+                                    List of Previous Projects/Clients
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.work">
+                                <a href="#FinancialCapability" data-toggle="tab" aria-controls="FinancialCapability" role="tab">
+                                    Financial Capability
+                                </a>
+                            </li>
+                            <li role="presentation" class="@ViewBag.doc">
+                                <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Document Upload</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <form method="post"  asp-controller="CicForm7" asp-action="CicForm7" id="form7"  enctype="multipart/form-data">
+                        <div class="tab-content" id="main_form">
+                            <div class="tab-pane @ViewBag.type" role="tabpanel" id="TypeofApplication">
+                                <div class="TypeofApplication-wrapper">
+                                    @*<partial name="~/Views/Shared/_TypeofApplication7.cshtml" />*@
+                                    @Html.Partial("_TypeofApplication7", @Model)
+                                </div>
+                            </div>
+                            <div class="tab-pane  @ViewBag.business" role="tabpanel" id="BusinessDetails">
+                                <div class="BusinessDetails-wrapper">
+                                    @*<partial name="~/Views/Shared/_BusinessDetails7.cshtml" />*@
+                                    @Html.Partial("_BusinessDetails7", @Model)
+
+                                </div>
+                            </div>
+                            <div class="tab-pane  @ViewBag.fin" role="tabpanel" id="TechnicalDataClient">
+                                <div class="TechnicalDataClient-wrapper">
+                                    <h4 class="text-center">Technical Data & List of Previous Projects/Clients</h4>
+                                    <div class="cic-application-wrapper">
+
+                                        <div class="cic-technoicaldetails-inner">
+
+
+                                            <div class="fieldset">
+                                                <div class="form-group">
+                                                    <label>State Details of Materials and/or Equipment Manufactured and/or Supplied <span class="asterisk">*</span></label>
+                                                    <textarea asp-for="@Model.technicalData.StateDetailsOfMaterials" class="form-control" cols="10" rows="10" placeholder="Please  state details"></textarea>
+                                                    <span asp-validation-for="@Model.technicalData.StateDetailsOfMaterials" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>
+                                                        State any Attainment or Compliance to any Regional and/or International Standards. (Manufacturers and Suppliers)
+                                                        <span class="asterisk">*</span>
+                                                    </label>
+                                                    <textarea asp-for="@Model.technicalData.StateOfAttainent" placeholder="Please  State any Attainment" class="form-control" cols="10" rows="10"></textarea>
+                                                    <span asp-validation-for="@Model.technicalData.StateOfAttainent" class="text-danger"></span>
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="cic-table-wrapper">
+                                                <div class="title">
+                                                    <strong>Section D - List of Previous Projects/Clients</strong>
+                                                </div>
+                                                @for (int i = 0; i < Model.listOfPrevousClent.Count; i++)
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-lg-12 ">
+                                                            <div class="table-validation-error">
+                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].NameofClient" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].ServiceProvided" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].DateOrPeriod" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].ContractValue" class="text-danger"></span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                }
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg">
+                                                    <table id="listofPreviousproject" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name of Client</th>
+                                                                <th scope="col">Service Provided</th>
+                                                                <th scope="col">Date/Period</th>
+                                                                <th scope="col">Contract Value </th>
+                                                                <th scope="col"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbodyList">
+
+                                                            @for (int i = 0; i < Model.listOfPrevousClent.Count; i++)
+                                                            {
+                                                                <tr id="@i">
+                                                                    <td class="row0">
+                                                                        <input asp-for="listOfPrevousClent[i].NameofClient" class="form-control" type="text" />
+                                                                    </td>
+                                                                    <td class="row1">
+                                                                        <input asp-for="listOfPrevousClent[i].ServiceProvided" class="form-control" type="text" />
+                                                                    </td>
+                                                                    <td class="row2">
+                                                                        <input asp-for="listOfPrevousClent[i].DateOrPeriod" class="form-control" type="text" id="DateOrPeriod" />
+                                                                    </td>
+                                                                    <td class="row3">
+                                                                        <input asp-for="listOfPrevousClent[i].ContractValue" class="form-control" type="text" />
+
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="hidden" asp-for="cWork" />
+                                                                        <input type="hidden" asp-for="listOfPrevousClent[i].PartitionKey" />
+                                                                        <input type="hidden" asp-for="listOfPrevousClent[i].RowKey" />
+                                                                        <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+
+                                                                    </td>
+
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="8" class="Addnewrecord-td">
+                                                                    <button class="btnTblRow" id="btnAddProjects" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tfoot>
+
+                                                    </table>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(function () {
+                                                        $('#DateOrPeriod').datepicker({
+
+
+
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "mm/dd/yyyy",
+                                                            language: "tr"
+                                                        });
+
+
+
+
+                                                    });
+
+
+
+                                                    $(function () {
+                                                        $("[id*=Tanggal]").attr("ReadOnly", true)
+                                                        $("[id*=Tgl_Rawat]").datepicker({
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            dateFormat: "mm/dd/yyyy"
+                                                        });
+                                                    });
+                                                </script>
+                                                <script>
+                                                    var counterProject = document.getElementById("cWork").value;
+
+                                                    $(function () {
+
+                                                        $('#btnAddProjects').click(function () {
+                                                            $(`<tr id="${counterProject}">
+                                                                                                             <td class="row0">
+                                                                                                             <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].NameofClient" value=""/>
+                                                                                                             </td>
+                                                                                                             <td class="row1">
+                                                                                                             <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].ServiceProvided" value=" "  />
+                                                                                                            </td>
+                                                                                                            <td class="row2">
+                                                                                                            <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].DateOrPeriod" id ="DateOrPeriod${counterProject}" value=" " />
+                                                                                                            </td>
+                                                                                                            <td class="row3">
+                                                                                                            <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].ContractValue" value=" " />
+                                                                                                            </td>
+                                                                                                             <td>
+                                                                                                            <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                                                                                                            </td>
+                                                                                                            </tr><script>$(function () {
+                                                        $('#DateOrPeriod${counterProject}').datepicker({
+
+
+
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "dd/mm/yyyy",
+                                                            language: "tr"
+                                                        });
+
+
+
+
+                                                    });<\/script>`).appendTo('#listofPreviousproject');
+                                                            counterProject++;
+                                                            document.getElementById("cWork").value = counterProject;
+                                                            return false;
+                                                        });
+                                                    });
+
+                                                    $(document).ready(function () {
+
+                                                        $('#tbodyList').on('click', '.remove', function () {
+
+                                                            // containing the clicked button
+                                                            var child = $(this).closest('tr').nextAll();
+
+                                                            child.each(function () {
+
+                                                                // Getting <tr> id.
+                                                                var id = $(this).attr('id');
+
+                                                                // Getting the <p> inside the .row-index class.
+                                                                var idx = $(this).children('.row0').children('input');
+                                                                var idx1 = $(this).children('.row1').children('input');
+                                                                var idx2 = $(this).children('.row2').children('input');
+                                                                var idx3 = $(this).children('.row3').children('input');
+                                                                //var idx4 = $(this).children('.row5').children('input');
+                                                                //var idx5 = $(this).children('.row6').children('input');
+                                                                //var idx6 = $(this).children('.row7').children('input');
+
+                                                                // Gets the row number from <tr> id.
+                                                                var dig = parseInt(id);
+
+                                                                var cnew = dig - 1;
+                                                                // Modifying row index.
+                                                                //idx.html(`Row ${dig - 1}`);
+                                                                idx.attr('name', `listOfPrevousClent[${cnew}].NameofClient`)
+                                                                idx1.attr('name', `listOfPrevousClent[${cnew}].ServiceProvided`)
+                                                                idx2.attr('name', `listOfPrevousClent[${cnew}].DateOrPeriod`)
+                                                                idx3.attr('name', `listOfPrevousClent[${cnew}].ContractValue`)
+                                                                //idx4.attr('name', `worksCapability[${cnew}].ContractSum`)
+                                                                //idx5.attr('name', `worksCapability[${cnew}].TelephoneNo`)
+                                                                //idx6.attr('name', `worksCapability[${cnew}].TypeofInvolvement`)
+
+                                                                // Modifying row id.
+                                                                $(this).attr('id', `${dig - 1}`);
+                                                            });
+
+                                                            // Removing the current row.
+                                                            $(this).closest('tr').remove();
+
+                                                            // Decreasing total number of rows by 1.
+                                                            counterProject--;
+                                                            document.getElementById("cWork").value = counterProject;
+
+                                                        });
+                                                    });
+                                                </script>
+
+                                                <ul class="cic-form-action-block">
+                                                    <li>
+                                                        @*<button type="button" class="default-btn btn-preview prev-step">Previous</button>*@
+                                                        <button type="submit" class="default-btn btn-preview" asp-route-pre="Business" asp-route-name="finance">Previous</button>
+
+                                                        <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+
+                                                    </li>
+                                                    <li>
+                                                        @*<button type="button" class="btn btn-submit next-step">Next</button>*@
+                                                        <button type="submit" class="btn btn-submit" asp-route-next="work" asp-route-name="finance">Next</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane @ViewBag.work" role="tabpanel" id="FinancialCapability">
+                                <div class="FinancialCapability-wrapper">
+                                    @*<partial name="~/Views/Shared/_FinancialCapability7.cshtml" />*@
+                                    @Html.Partial("_FinancialCapability7", @Model)
+                                </div>
+                            </div>
+
+
+                            <div class="tab-pane @ViewBag.doc " role="tabpanel" id="DocumentUpload">
+                                <h4 class="text-center"> Document upload </h4>
+
+                                <div class="cic-application-wrapper">
+                                    <div class="newregistration-checklist" id="newcheklist">
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>Business Particulars</h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>Certified copy of company registration (foreign companies).</li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.companyRegistration" id="upload1" type="file">
+                                                                <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+
+
+                                                            </div>
+                                                            @if (Model.companyRegistration != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.companyRegistration">@Model.companyRegistration</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.companyRegistration</label>
+                                                                }
+                                                            }
+
+
+                                                            <span asp-validation-for="@Model.declarationForm7.companyRegistration" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>
+                                                            Certified copies of share certificates (all companies with more than one director).
+                                                        </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.shraeCertificate" id="upload2" type="file">
+                                                                <label for="upload2" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.shraeCertificate != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.shraeCertificate">@Model.shraeCertificate</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.shraeCertificate</label>
+                                                                }
+                                                            }
+
+                                                            <span asp-validation-for="@Model.declarationForm7.shraeCertificate" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Trading License(must be relevant to scope of work) </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.TradingLicense" id="upload3" type="file">
+                                                                <label for="upload3" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.TradingLicense != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.TradingLicense">@Model.TradingLicense</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.TradingLicense</label>
+                                                                }
+                                                            }
+
+
+
+                                                            <span asp-validation-for="@Model.declarationForm7.TradingLicense" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Form J </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.formj" id="upload4" type="file">
+                                                                <label for="upload4" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.formj != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.formj">@Model.formj</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.formj</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.formj" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Form C </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.FormC" id="upload5" type="file">
+                                                                <label for="upload5" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.FormC != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.FormC">@Model.FormC</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.FormC</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.FormC" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="uploadItem">
+                                                        <li>BMSA Registration Certificate </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RegistrationCertificate" id="upload6" type="file">
+                                                                <label for="upload6" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.RegistrationCertificate != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.RegistrationCertificate">@Model.RegistrationCertificate</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.RegistrationCertificate</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.RegistrationCertificate" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>Financial Requirements</h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>Audited financial statements and balance sheet for the three years immediately preceding the application.</li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.CertifiedCompanyRegistration" id="upload7" type="file">
+                                                                <label for="upload7" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.CertifiedCompanyRegistration != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.CertifiedCompanyRegistration">@Model.CertifiedCompanyRegistration</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.CertifiedCompanyRegistration</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.CertifiedCompanyRegistration" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>
+                                                    Identification
+                                                </h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>Certified copies of identity documents of shareholders (All companies).</li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.CertifiedIdentityDocuments" id="upload8" type="file">
+                                                                <label for="upload8" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.CertifiedIdentityDocuments != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.CertifiedIdentityDocuments">@Model.CertifiedIdentityDocuments</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.CertifiedIdentityDocuments</label>
+                                                                }
+                                                            }
+
+                                                            <span asp-validation-for="@Model.declarationForm7.CertifiedIdentityDocuments" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="newregistration-checklist" id="renewcheklist">
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>Business Particulars</h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Trading License(must be relevant to scope of work)</li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewBusinessScopeOfwork" id="upload9" type="file">
+                                                                <label for="upload9" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.RenewBusinessScopeOfwork != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.RenewBusinessScopeOfwork">@Model.RenewBusinessScopeOfwork</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.RenewBusinessScopeOfwork</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewBusinessScopeOfwork" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>
+                                                            Certified copies of share certificates (if any change).
+
+                                                        </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewCertificate" id="upload10" type="file">
+                                                                <label for="upload10" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.RenewCertificate != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.RenewCertificate">@Model.RenewCertificate</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.RenewCertificate</label>
+                                                                }
+                                                            }
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewCertificate" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Form J (if any change) </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewFormJ" id="upload11" type="file">
+                                                                <label for="upload11" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.RenewFormJ != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.RenewFormJ">@Model.RenewFormJ</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.RenewFormJ</label>
+                                                                }
+                                                            }
+
+
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewFormJ" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+                                                    <ul class="uploadItem">
+                                                        <li>Certified Form C (if any change). </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.ReNewFormC" id="upload12" type="file">
+                                                                <label for="upload12" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.ReNewFormC != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.ReNewFormC">@Model.ReNewFormC</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.ReNewFormC</label>
+                                                                }
+                                                            }
+
+                                                            <span asp-validation-for="@Model.declarationForm7.ReNewFormC" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+
+
+                                                    <ul class="uploadItem">
+                                                        <li>BMSA Registration Certificate </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewFormBMCA" id="upload13" type="file">
+                                                                <label for="upload13" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            @if (Model.RenewFormBMCA != null)
+                                                            {
+                                                                if (Model.formval == "Edit")
+                                                                {
+                                                                    <a href="" asp-for="@Model.RenewFormBMCA">@Model.RenewFormBMCA</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label style="color:darkblue;">@Model.RenewFormBMCA</label>
+                                                                }
+                                                            }
+
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewFormBMCA" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                    @*<ul class="uploadItem">
+                                                        <li>BMSA Registration Certificate </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input id="upload14" type="file">
+                                                                <label for="upload14" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>Financial Requirements</h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>Audited financial statements and balance sheet for the three years immediately preceding the application.</li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewFinancialRequirment" id="upload15" type="file">
+                                                                <label for="upload15" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewFinancialRequirment" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="uploadDocument-wrapper">
+                                            <div class="title">
+                                                <h3>
+                                                    Identification
+                                                </h3>
+                                            </div>
+                                            <div class="document-upload">
+                                                <div class="document-upload-fieldset">
+                                                    <ul class="uploadItem">
+                                                        <li>
+                                                            Certified copies of identity documents of shareholders (All companies).
+                                                        </li>
+                                                        <li>
+                                                            <div class="fileAttachment">
+                                                                <input asp-for="@Model.declarationForm7.RenewIdentification" id="upload16" type="file">
+                                                                <label for="upload16" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                                    Upload
+                                                                </label>
+                                                            </div>
+                                                            <span asp-validation-for="@Model.declarationForm7.RenewIdentification" class="text-danger"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="DocumentUpload-wrapper">
+                                    @*<partial name="~/Views/Shared/_Declaration7.cshtml" />*@
+                                    @Html.Partial("_Declaration7", @Model)
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $('#renewcheklist').hide();
+    function handleClick(myRadio)
+    {
+        var value = myRadio.value;
+        if (value == 'Renewal') {
+            $('#newcheklist').hide();
+            $('#renewcheklist').show();
+            window.location.href = '/Cicform7/GetData?apptype=' + value;
+        }
+        else {
+            $('#newcheklist').show();
+            $('#renewcheklist').hide();
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+

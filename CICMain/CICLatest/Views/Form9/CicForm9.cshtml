@@ -1,0 +1,705 @@
+﻿
+@model Form9ViewModel
+
+@{ ViewData["Title"] = "Bulk Projects And Levy Assessment Registration Form – CICF 9"; }
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li>
+                <strong class="current-item">
+                    Bulk Projects And Levy Assessment Registration Form – CICF 9
+                </strong>
+            </li>
+        </ul>
+    </div>
+    @*<h1>Bulk Projects And Levy Assessment Registration Form – CICF 9</h1>*@
+    <form method="post" id="form9" enctype="multipart/form-data">
+        <div class="Cic-form-content">
+            <h1>Bulk Projects And Levy Assessment Registration Form – CICF 9</h1>
+            <div class="cic_bulk_prj_cont">
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Company or Institution <span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" placeholder="Please enter Company or Institution" asp-for="@Model.App.CompanyName" />
+                        <span asp-validation-for="@Model.App.CompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Name of Institution Focal Person <span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" placeholder="Please enter Name of Institution Focal Person" asp-for="@Model.App.InstitutionFocalPerson" />
+                        <span asp-validation-for="@Model.App.InstitutionFocalPerson" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group textarea">
+                        <label>Postal address <span class="asterisk">*</span></label>
+                        <textarea type="text" class="form-control" placeholder="Please enter  postal address" asp-for="@Model.App.PostalAddress"></textarea>
+                        <span asp-validation-for="@Model.App.PostalAddress" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg form-group textarea">
+                        <label>Physical Address <span class="asterisk">*</span></label>
+                        <textarea type="text" class="form-control" placeholder="Please enter physical address" asp-for="@Model.App.PhysicalAddress"></textarea>
+                        <span asp-validation-for="@Model.App.PhysicalAddress" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Email Address <span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" placeholder="Please enter email address" asp-for="@Model.App.Email" />
+                        <span asp-validation-for="@Model.App.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Tel. No <span class="asterisk">*</span></label>
+                        <input type="text" class="form-control" placeholder="Please enter telephone no" asp-for="@Model.App.TelephoneNumber" />
+                        <span asp-validation-for="@Model.App.TelephoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Fax No <span></span></label>
+                        <input asp-for="@Model.App.FaxNo" type="text" class="form-control" placeholder="Please enter fax no" />
+                        @if (Model.formval == "Edit")
+                        {
+                            <input type="hidden" asp-for="@Model.formval" />
+                            <input type="hidden" asp-for="@Model.FormRegistrationNo" />
+                            <input type="hidden" asp-for="@Model.PartitionKey" />
+                            <input type="hidden" asp-for="@Model.RowKey" />
+                            <input type="hidden" asp-for="@Model.FormStatus" />
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <div class="Construction-list">
+                <div class="title">
+                    <h3>List of Construction projects to be undertaken</h3>
+                </div>
+                <div class="cic-table-wrapper">
+                    <div class="title">
+                        <strong>Building Works Projects</strong>
+                    </div>
+                    @for (int i = 0; i < Model.buildingWorkForProject.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+
+                                    <div class="validationmsg"><span asp-validation-for="buildingWorkForProject[i].ProjectName" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="buildingWorkForProject[i].NameOfResponsibleContractor" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="buildingWorkForProject[i].EstProjectCost" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="buildingWorkForProject[i].ProposedCommencementDate" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="buildingWorkForProject[i].ProposedCompletionDate" class="text-danger"></span></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="table-fieldset">
+                        <div class="table-responsive-lg">
+                            <table id="buildingWorkFor" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project Name</th>
+                                        <th scope="col">
+                                            Name Of
+                                            Responsible Contractor
+                                        </th>
+                                        <th scope="col">Est. Project Cost</th>
+                                        <th scope="col">
+                                            Proposed
+                                            Commencement Date
+                                        </th>
+                                        <th scope="col">
+                                            Proposed
+                                            Completion Date
+                                        </th>
+
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="first">
+                                    @for (int i = 0; i < Model.buildingWorkForProject.Count; i++)
+                                    {
+                                        <tr id="@i">
+                                            <td class="row0"><input class="form-control" type="text" asp-for="buildingWorkForProject[i].ProjectName" /></td>
+                                            <td class="row1"><input class="form-control" type="text" asp-for="buildingWorkForProject[i].NameOfResponsibleContractor" /></td>
+                                            <td class="row2"><input class="form-control" type="text" asp-for="buildingWorkForProject[i].EstProjectCost" /></td>
+                                            <td class="row3"><input class="form-control datetimepicker" type="text" asp-for="buildingWorkForProject[i].ProposedCommencementDate" id="DateOrPeriod" /></td>
+                                            <td class="row4">
+                                                <input class="form-control datetimepicker" type="text" asp-for="buildingWorkForProject[i].ProposedCompletionDate" id="DateOrPeriod" />
+                                                <input type="hidden" asp-for="FirstGrid" />
+                                                <input type="hidden" asp-for="buildingWorkForProject[i].PartitionKey" />
+                                                <input type="hidden" asp-for="buildingWorkForProject[i].RowKey" />
+                                                <input type="hidden" asp-for="buildingWorkForProject[i].FormRegistrationNo" />
+                                            </td>
+                                            <td>
+                                                @*<button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button>*@
+                                                <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" class="Addnewrecord-td">
+                                            @*<button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>*@
+                                            <button class="btnTblRow" id="btnbuildingWork" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="cic-table-wrapper">
+                    <div class="title">
+                        <strong>Civils Works Projects</strong>
+                    </div>
+                    @for (int i = 0; i < Model.civilsWorksProjects.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+                                    <div class="validationmsg"><span asp-validation-for="civilsWorksProjects[i].ProjectName" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="civilsWorksProjects[i].NameOfResponsibleContractor" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="civilsWorksProjects[i].EstProjectCost" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="civilsWorksProjects[i].ProposedCommencementDate" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="civilsWorksProjects[i].ProposedCompletionDate" class="text-danger"></span></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="table-fieldset">
+                        <div class="table-responsive-lg">
+                            <table id="civilsWorksProject" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project Name</th>
+                                        <th scope="col">
+                                            Name Of
+                                            Responsible Contractor
+                                        </th>
+                                        <th scope="col">Est. Project Cost</th>
+                                        <th scope="col">
+                                            Proposed
+                                            Commencement Date
+                                        </th>
+                                        <th scope="col">
+                                            Proposed
+                                            Completion Date
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="second">
+                                    @for (int i = 0; i < Model.civilsWorksProjects.Count; i++)
+                                    {
+                                        <tr id="@i">
+                                            <td class="rowindex"><input class="form-control" type="text" asp-for="civilsWorksProjects[i].ProjectName" /></td>
+                                            <td class="rowindex1"><input class="form-control" type="text" asp-for="civilsWorksProjects[i].NameOfResponsibleContractor" /></td>
+                                            <td class="rowindex2"><input class="form-control" type="text" asp-for="civilsWorksProjects[i].EstProjectCost" /></td>
+                                            <td class="rowindex3"><input class="form-control datetimepicker" type="text" asp-for="civilsWorksProjects[i].ProposedCommencementDate" id="DateOrPeriod" /></td>
+                                            <td class="rowindex4">
+                                                <input class="form-control datetimepicker" type="text" asp-for="civilsWorksProjects[i].ProposedCompletionDate" id="DateOrPeriod" />
+                                                <input type="hidden" asp-for="SecondGrid" />
+                                                <input type="hidden" asp-for="civilsWorksProjects[i].PartitionKey" />
+                                                <input type="hidden" asp-for="civilsWorksProjects[i].RowKey" />
+                                                <input type="hidden" asp-for="civilsWorksProjects[i].FormRegistrationNo" />
+
+                                            </td>
+                                            <td>
+                                                @*<button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button>*@
+                                                <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" class="Addnewrecord-td">
+                                            @*<button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>*@
+                                            <button class="btnTblRow" id="btncivilsWorksProjects" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="cic-table-wrapper">
+                    <div class="title">
+                        <strong>Mechanical Works Projects</strong>
+                    </div>
+                    @for (int i = 0; i < Model.mechanicalWorksProjects.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+                                    <div class="validationmsg"><span asp-validation-for="mechanicalWorksProjects[i].ProjectName" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="mechanicalWorksProjects[i].NameOfResponsibleContractor" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="mechanicalWorksProjects[i].EstProjectCost" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="mechanicalWorksProjects[i].ProposedCommencementDate" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="mechanicalWorksProjects[i].ProposedCompletionDate" class="text-danger"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="table-fieldset">
+                        <div class="table-responsive-lg">
+                            <table id="tblmechanicalWorksProjects" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Project Name</th>
+                                        <th scope="col">
+                                            Name Of
+                                            Responsible Contractor
+                                        </th>
+                                        <th scope="col">Est. Project Cost</th>
+                                        <th scope="col">
+                                            Proposed
+                                            Commencement Date
+                                        </th>
+                                        <th scope="col">
+                                            Proposed
+                                            Completion Date
+                                        </th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="third">
+                                    @for (int i = 0; i < Model.mechanicalWorksProjects.Count; i++)
+                                    {
+                                        <tr id="@i">
+                                            <td class="rowindex0"><input class="form-control" type="text" asp-for="mechanicalWorksProjects[i].ProjectName" /></td>
+                                            <td class="rowindex1"><input class="form-control" type="text" asp-for="mechanicalWorksProjects[i].NameOfResponsibleContractor" /></td>
+                                            <td class="rowindex2"><input class="form-control" type="text" asp-for="mechanicalWorksProjects[i].EstProjectCost" /></td>
+                                            <td class="rowindex3"><input class="form-control datetimepicker" type="text" asp-for="mechanicalWorksProjects[i].ProposedCommencementDate" /></td>
+                                            <td class="rowindex4">
+                                                <input class="form-control datetimepicker" type="text" asp-for="mechanicalWorksProjects[i].ProposedCompletionDate" />
+                                                <input type="hidden" asp-for="ThirdGrid" />
+                                                <input type="hidden" asp-for="mechanicalWorksProjects[i].PartitionKey" />
+                                                <input type="hidden" asp-for="mechanicalWorksProjects[i].RowKey" />
+                                                <input type="hidden" asp-for="mechanicalWorksProjects[i].FormRegistrationNo" />
+                                            </td>
+                                            <td>
+                                                <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+                                                @*<button class="btnDeleteRow" type="button" disabled> <img src="~/images/trush.svg" alt="remove row" /> </button>*@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" class="Addnewrecord-td">
+                                            @*<button class="Addnewrecord" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>*@
+                                            <button class="btnTblRow" id="btnmechanicalWorksProjects" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="DocumentUpload-wrapper">
+                    <div class="uploadDocument-wrapper">
+                        <div class="document-upload">
+                            <div class="document-upload-fieldset">
+                                <ul class="uploadItem">
+                                    <li>Purchase orders </li>
+                                    <li>
+                                        <div class="fileAttachment">
+                                            <input type="file" id="upload1" asp-for="@Model.App.PurchaseordersFile">
+                                            <label for="upload1" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                Upload
+                                            </label>
+                                        </div>
+                                        @if (Model.App.PurchaseordersFilee != null)
+                                        {
+                                            if (Model.formval == "Edit")
+                                            {
+                                                <a href="" asp-for="@Model.App.PurchaseordersFilee">@Model.App.PurchaseordersFilee</a>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:darkblue;">@Model.App.PurchaseordersFilee</label>
+                                            }
+                                        }
+                                        <span asp-validation-for="@Model.App.PurchaseordersFile" class="text-danger"></span>
+                                    </li>
+                                </ul>
+                                <ul class="uploadItem">
+                                    <li>
+                                        Invoices
+                                    </li>
+                                    <li>
+                                        <div class="fileAttachment">
+                                            <input type="file" id="Invoices" asp-for="@Model.App.InvoicesFile">
+                                            <label for="Invoices" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                Upload
+                                            </label>
+                                        </div>
+                                        @if (Model.App.InvoicesFilee != null)
+                                        {
+                                            if (Model.formval == "Edit")
+                                            {
+                                                <a href="" asp-for="@Model.App.InvoicesFilee">@Model.App.InvoicesFilee</a>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:darkblue;">@Model.App.InvoicesFilee</label>
+                                            }
+                                        }
+                                        <span asp-validation-for="@Model.App.InvoicesFile" class="text-danger"></span>
+                                    </li>
+                                </ul>
+
+                                <ul class="uploadItem">
+                                    <li>
+                                        Summary bill of quantities
+                                    </li>
+                                    <li>
+                                        <div class="fileAttachment">
+                                            <input type="file" id="SummaryBill" asp-for="@Model.App.SummarybillofquantitiesFile">
+                                            <label for="SummaryBill" data-input-value="" data-select-text="Upload" data-remove-text="Remove file" data-drag-text="Choose file">
+                                                Upload
+                                            </label>
+
+                                        </div>
+                                        @if (Model.App.SummarybillofquantitiesFilee != null)
+                                        {
+                                            if (Model.formval == "Edit")
+                                            {
+                                                <a href="" asp-for="@Model.App.SummarybillofquantitiesFilee">@Model.App.SummarybillofquantitiesFilee</a>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:darkblue;">@Model.App.SummarybillofquantitiesFilee</label>
+                                            }
+                                        }
+                                        <span asp-validation-for="@Model.App.SummarybillofquantitiesFile" class="text-danger"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <partial name="~/Views/Shared/_Declaration9.cshtml" />
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+@*<script type="text/javascript">
+    $('#Reviseddate').hide();
+    function handleClick(myProject) {
+        var projectType = myProject.value;
+
+        if (projectType == 'Ongoingproject') {
+            $('#Reviseddate').show();
+        }
+        else {
+            $('#Reviseddate').hide();
+        }
+    }</script>*@
+<script>
+    var counterFirst = document.getElementById("FirstGrid").value;
+
+    $(function () {
+
+        $('#btnbuildingWork').click(function () {
+            $(`<tr id="${counterFirst}">
+                      <td class="row0">
+                      <input type="text" class="form-control" name="buildingWorkForProject[${counterFirst}].ProjectName" value=""/>
+                      </td>
+                      <td class="row1">
+                      <input type="text" class="form-control" name="buildingWorkForProject[${counterFirst}].NameOfResponsibleContractor" value=" "  />
+                      </td>
+                       <td class="row2">
+                      <input type="text" class="form-control" name="buildingWorkForProject[${counterFirst}].EstProjectCost" value="0" />
+                      </td>
+                       <td class="row3">
+                       <input type="text" class="form-control DateOrPeriod${counterFirst}" name="buildingWorkForProject[${counterFirst}].ProposedCommencementDate" id ="DateOrPeriod${counterFirst}" value=" " />
+                       </td>
+                      <td class="row4">
+                       <input type="text" class="form-control DateOrPeriod${counterFirst}"  name="buildingWorkForProject[${counterFirst}].ProposedCompletionDate" id ="DateOrPeriod${counterFirst}" value=" " />
+                       </td>
+                        <td>
+                       <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                      </td>
+                      </tr>
+                        <script>$(function (){
+                                                        $('.DateOrPeriod${counterFirst}').datepicker({
+
+
+
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "mm/dd/yyyy",
+                                                            language: "tr"
+                                                        });
+
+
+
+
+                                                    });<\/script>`).appendTo('#buildingWorkFor');
+            counterFirst++;
+            document.getElementById("FirstGrid").value = counterFirst;
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#first').on('click', '.remove', function () {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row0').children('input');
+                var idx1 = $(this).children('.row1').children('input');
+                var idx2 = $(this).children('.row2').children('input');
+                var idx3 = $(this).children('.row3').children('input');
+                var idx4 = $(this).children('.row4').children('input');
+                //var idx5 = $(this).children('.row6').children('input');
+                //var idx6 = $(this).children('.row7').children('input');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `buildingWorkForProject[${cnew}].ProjectName`)
+                idx1.attr('name', `buildingWorkForProject[${cnew}].NameOfResponsibleContractor`)
+                idx2.attr('name', `buildingWorkForProject[${cnew}].EstProjectCost`)
+                idx3.attr('name', `buildingWorkForProject[${cnew}].ProposedCommencementDate`)
+                idx4.attr('name', `buildingWorkForProject[${cnew}].ProposedCompletionDate`)
+                //idx5.attr('name', `worksCapability[${cnew}].TelephoneNo`)
+                //idx6.attr('name', `worksCapability[${cnew}].TypeofInvolvement`)
+
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counterFirst--;
+            document.getElementById("FirstGrid").value = counterFirst;
+
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('.datetimepicker').datepicker({
+
+            changeMonth: true,
+            changeYear: true,
+            format: "mm/dd/yyyy",
+            language: "tr"
+        });
+    });
+</script>
+<script>
+    var counterSecond = document.getElementById("SecondGrid").value;
+
+    $(function () {
+
+        $('#btncivilsWorksProjects').click(function () {
+            $(`<tr id="${counterSecond}">
+                      <td class="rowindex">
+                      <input type="text" class="form-control" name="civilsWorksProjects[${counterSecond}].ProjectName" value=""/>
+                      </td>
+                      <td class="rowindex1">
+                      <input type="text" class="form-control" name="civilsWorksProjects[${counterSecond}].NameOfResponsibleContractor" value=" "  />
+                      </td>
+                       <td class="rowindex2">
+                      <input type="text" class="form-control" name="civilsWorksProjects[${counterSecond}].EstProjectCost" value="0" />
+                      </td>
+                       <td class="rowindex3">
+                       <input type="text" class="form-control DateOrPeriod${counterSecond}" name="civilsWorksProjects[${counterSecond}].ProposedCommencementDate" id ="DateOrPeriod${counterSecond}" value=" " />
+                       </td>
+                      <td class="rowindex4">
+                       <input type="text" class="form-control DateOrPeriod${counterSecond}"  name="civilsWorksProjects[${counterSecond}].ProposedCompletionDate" id ="DateOrPeriod${counterSecond}" value=" " />
+                       </td>
+                        <td>
+                       <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                      </td>
+                      </tr>
+                        <script>$(function (){
+                                                        $('.DateOrPeriod${counterSecond}').datepicker({
+
+
+
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "mm/dd/yyyy",
+                                                            language: "tr"
+                                                        });
+
+
+
+
+                                                    });<\/script>`).appendTo('#civilsWorksProject');
+            counterSecond++;
+            document.getElementById("SecondGrid").value = counterSecond;
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#second').on('click', '.remove', function () {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.rowindex').children('input');
+                var idx1 = $(this).children('.rowindex1').children('input');
+                var idx2 = $(this).children('.rowindex2').children('input');
+                var idx3 = $(this).children('.rowindex3').children('input');
+                var idx4 = $(this).children('.rowindex4').children('input');
+                //var idx5 = $(this).children('.row6').children('input');
+                //var idx6 = $(this).children('.row7').children('input');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `civilsWorksProjects[${cnew}].ProjectName`)
+                idx1.attr('name', `civilsWorksProjects[${cnew}].NameOfResponsibleContractor`)
+                idx2.attr('name', `civilsWorksProjects[${cnew}].EstProjectCost`)
+                idx3.attr('name', `civilsWorksProjects[${cnew}].ProposedCommencementDate`)
+                idx4.attr('name', `civilsWorksProjects[${cnew}].ProposedCompletionDate`)
+                //idx5.attr('name', `worksCapability[${cnew}].TelephoneNo`)
+                //idx6.attr('name', `worksCapability[${cnew}].TypeofInvolvement`)
+
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counterSecond--;
+            document.getElementById("SecondGrid").value = counterSecond;
+
+        });
+    });
+</script>
+<script>
+    var counterThird = document.getElementById("ThirdGrid").value;
+
+    $(function () {
+
+        $('#btnmechanicalWorksProjects').click(function () {
+            $(`<tr id="${counterThird}">
+                      <td class="rowindex0">
+                      <input type="text" class="form-control" name="mechanicalWorksProjects[${counterThird}].ProjectName" value=""/>
+                      </td>
+                      <td class="rowindex1">
+                      <input type="text" class="form-control" name="mechanicalWorksProjects[${counterThird}].NameOfResponsibleContractor" value=" "  />
+                      </td>
+                       <td class="rowindex2">
+                      <input type="text" class="form-control" name="mechanicalWorksProjects[${counterThird}].EstProjectCost" value="0" />
+                      </td>
+                       <td class="rowindex3">
+                       <input type="text" class="form-control DateOrPeriod${counterThird}" name="mechanicalWorksProjects[${counterThird}].ProposedCommencementDate" id ="DateOrPeriod${counterThird}" value=" " />
+                       </td>
+                      <td class="rowindex4">
+                       <input type="text" class="form-control DateOrPeriod${counterThird}"  name="mechanicalWorksProjects[${counterThird}].ProposedCompletionDate" id ="DateOrPeriod${counterThird}" value=" " />
+                       </td>
+                        <td>
+                       <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
+                      </td>
+                      </tr>
+                        <script>$(function (){
+                                                        $('.DateOrPeriod${counterThird}').datepicker({
+
+
+
+                                                            changeMonth: true,
+                                                            changeYear: true,
+                                                            format: "mm/dd/yyyy",
+                                                            language: "tr"
+                                                        });
+
+
+
+
+                                                    });<\/script>`).appendTo('#tblmechanicalWorksProjects');
+            counterThird++;
+            document.getElementById("ThirdGrid").value = counterThird;
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#third').on('click', '.remove', function () {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.rowindex0').children('input');
+                var idx1 = $(this).children('.rowindex1').children('input');
+                var idx2 = $(this).children('.rowindex2').children('input');
+                var idx3 = $(this).children('.rowindex3').children('input');
+                var idx4 = $(this).children('.rowindex4').children('input');
+                //var idx5 = $(this).children('.row6').children('input');
+                //var idx6 = $(this).children('.row7').children('input');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `mechanicalWorksProjects[${cnew}].ProjectName`)
+                idx1.attr('name', `mechanicalWorksProjects[${cnew}].NameOfResponsibleContractor`)
+                idx2.attr('name', `mechanicalWorksProjects[${cnew}].EstProjectCost`)
+                idx3.attr('name', `mechanicalWorksProjects[${cnew}].ProposedCommencementDate`)
+                idx4.attr('name', `mechanicalWorksProjects[${cnew}].ProposedCompletionDate`)
+                //idx5.attr('name', `worksCapability[${cnew}].TelephoneNo`)
+                //idx6.attr('name', `worksCapability[${cnew}].TypeofInvolvement`)
+
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counterThird--;
+            document.getElementById("ThirdGrid").value = counterThird;
+
+        });
+    });
+</script>

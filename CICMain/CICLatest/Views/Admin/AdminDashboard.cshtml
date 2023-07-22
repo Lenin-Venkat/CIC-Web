@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="home-page">
+    <div class="home-content">
+        <div class="container dashboard-content">
+            <div class="dash-form-list">
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="Clerk">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>Clerk Queue</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="Compliance Officer">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>Registration Officer Queue</h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="Compliance Analyst">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>Registration Analyst Queue</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="CIC Compliance">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>CIC Compliance Queue</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="Ops Manager">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>Ops Manager Queue</h4>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="form-item">
+                    <a asp-action="Index" asp-controller="Admin" asp-route-id="CEO">
+                        <div class="form-picture">
+                            <img src="~/images/form-icon.svg" alt="form icon" width="144" height="88" />
+                        </div>
+                        <div class="details">
+                            <h4>CEO Queue</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

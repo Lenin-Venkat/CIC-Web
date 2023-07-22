@@ -1,0 +1,354 @@
+﻿@model MainViewModel
+
+<h4 class="text-center">Details of owner/client of the project</h4>
+<div class="workdiscipiline-fielset">
+    <div class="fieldset">
+        <div class="form-fields">
+            <div class="title">
+                <h5>Section B – Details of owner/client of the project</h5>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Name <span class="asterisk">*</span></label>
+                    <input asp-for="tab2.Name" class="form-control" placeholder="Please Enter name" type="text" />
+                    <span asp-validation-for="tab2.Name" class="text-danger"></span>
+                </div>
+            </div>           
+             <div class="row">
+                        <div class="col-lg form-group">
+                            <label>ID No. (if Swazi Individual) </label>
+                            <input asp-for="tab2.IDNO" class="form-control" placeholder="Please Enter ID No." type="text" />
+                            <span asp-validation-for="tab2.IDNO" class="text-danger"></span>
+                            @Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-lg form-group">
+                            <label>
+                                Passport No. (if non-Swazi Individual)
+                            </label>
+
+                            <input asp-for="tab2.PassportNo" class="form-control" placeholder="Please Enter Passport No" type="text" />
+                            <span asp-validation-for="tab2.PassportNo" class="text-danger"></span>
+                        </div>
+                    </div>
+               
+           
+            <div class="row">
+                <div class="col-lg form-group textarea">
+                    <label>Postal Address  <span class="asterisk">*</span></label>
+                    <textarea asp-for="tab2.PostalAddress" class="form-control" placeholder="Please enter postal address"></textarea>
+                    <span asp-validation-for="tab2.PostalAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group textarea">
+                    <label>Physical Address  <span class="asterisk">*</span></label>
+                    <textarea asp-for="tab2.PhysicalAddress" class="form-control" placeholder="Please enter physical address"></textarea>
+                    <span asp-validation-for="tab2.PhysicalAddress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Telephone No <span class="asterisk">*</span></label>
+                    <input asp-for="tab2.Telephone"  type="text" class="form-control" placeholder="Please enter telephone no" />
+                    <span asp-validation-for="tab2.Telephone" class="text-danger"></span>
+                </div>
+                <div class="col-lg form-group">
+                    <label>Fax No </label>
+                    <input asp-for="tab2.FaxNo" class="form-control" placeholder="Please enter Fax no " />
+                    @*<span asp-validation-for="tab2.FaxNo" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label>Email Address <span class="asterisk">*</span></label>
+                    <input class="form-control" placeholder="Please enter email address " asp-for="tab2.EmailAdress" />
+                    <span asp-validation-for="tab2.EmailAdress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-group mb0">
+                    <div class="title">
+                        <strong>
+                            Owner/Client Category
+                        </strong>
+
+                        @*@Html.ValidationMessageFor(m => m.OwnerCategory, "", new { @class = "text-danger" })*@
+                    </div>
+
+                    <div class="owner-cateogory">
+                        <ul>
+                            @{
+                                for (int i = 0; i < Model.ListCategory.Count(); i++)
+                                {
+                                    <li>
+                                                                    <label class="custom-radio">
+                                                                        @Model.ListCategory[i].CategoryName
+                                                                        @*<input asp-for="OwnerCategory" value="@Model.ListCategory[i].CategoryID" type="radio" onclick="OwnerClientCategory(this);" />*@
+                                                                        <input asp-for="OwnerCategory" value="@Model.ListCategory[i].CategoryName" type="radio" onclick="OwnerClientCategory(this);" />
+
+                                                                        <input asp-for="@Model.ListCategory[i].CategoryID" type="hidden" />
+                                                                        <span class="checkmark"></span>
+                                                                    </label>
+
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <span asp-validation-for="@Model.OwnerCategory" class="text-danger">@ViewBag.OwnerCategory</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group" id="Other">
+                    <label for="Other" id="Other">Other (please specify)</label>
+                    <input asp-for="tab2.Other" id="other" class="form-control" placeholder="Please enter client/owner category" />
+                    <span asp-validation-for="tab2.Other" class="text-danger"></span>
+                </div>
+             
+            </div>
+
+            <script type="text/javascript">
+                function OwnerClientCategory(x)
+                {
+                    //const errorElement = x.parentElement.nextElementSibling;
+                    //errorElement.style.display = 'none';
+                    var errorElement = document.querySelector('span[data-valmsg-for="OwnerCategory"]');
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                    var value = x.value;
+                    //if (value == '24')
+                    //{
+                    //    $('#Other').show();
+                    //    $('#other').show();
+                    //}
+                    if (value == "Other")
+                    {
+                        $('#Other').show();
+                        $('#other').show();
+                    }
+                    else {
+                        $('#Other').hide();
+                        $('#other').hide();
+                    }
+                    
+                    return;
+                }
+            </script>
+            
+        </div>
+    </div>
+    <div class="fieldset">
+        <div class="form-fields">
+            <div class="title">
+                <strong>Authorized Contact Person</strong>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group firstname">
+                    <label for="Firstname">First Name <span class="asterisk">*</span></label>
+
+
+                    <div class="input-group">
+                        <select asp-for="tab2.AuthoriseGende" class="custom-select" id="inputGroupSelect02">
+                            <option> Choose...</option>
+                            <option selected value="1">Mr.</option>
+                            <option value="2">Mrs.</option>
+                            <option value="3">Ms.</option>
+
+                        </select>
+                        <div class="input-group-append">
+                            <input asp-for="tab2.AuthrisedFirstName" type="text" class="form-control" placeholder="Please enter First name" />
+
+                        </div>
+                    </div>
+                    <span asp-validation-for="tab2.AuthrisedFirstName" class="text-danger"></span>
+                  
+                </div>
+
+                <div class="col-lg form-group">
+                    <label for="Surname">Surname </label>
+                    <input asp-for="tab2.AuthorisedSurname" type="text" class="form-control" placeholder="Please enter surname" />
+                    <span asp-validation-for="tab2.AuthorisedSurname" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="Telephone">Designation <span class="asterisk">*</span></label>
+                    <input asp-for="tab2.Designation" type="text" class="form-control" placeholder="Please enter Designation" />
+                    <span asp-validation-for="tab2.Designation" class="text-danger"></span>
+                </div>
+
+                <div class="col-lg form-group">
+                    <label for="telephnon">Telephone No <span class="asterisk">*</span></label>
+                    <input asp-for="tab2.TelePhoneNo" type="text" class="form-control" placeholder="Please enter Telephone No" />
+                    <span asp-validation-for="tab2.TelePhoneNo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group ">
+                    <label for="Faxno">Fax No </label>
+                    <input asp-for="tab2.AuthorisedFaxNo" type="text" class="form-control" placeholder="Please enter Fax No" />
+                  
+                </div>
+
+                <div class="col-lg form-group">
+                    <label for="Mobileno">Mobile No.<span class="asterisk">*</span></label>
+                    <input type="text" class="form-control" placeholder="Please enter Mobile No." asp-for="tab2.AuthorisedMobile" />
+                    <span asp-validation-for="tab2.AuthorisedMobile" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="EmailAddress">Email Address <span class="asterisk">*</span>  </label>
+                    <input asp-for="tab2.AuthorisedEmail" class="form-control" placeholder="Please enter Email" />
+                    <span asp-validation-for="tab2.AuthorisedEmail" class="text-danger"></span>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col form-group mb0">
+                    <div class="title">
+                        <strong>Section C - work discipline</strong>
+                    </div>
+                    <div class="owner-cateogory">
+                        <ul>
+                            @foreach (var item in Model.ListCategory1)
+                            {
+                                <li>
+                                    <label class="custom-radio">
+                                        @item.CategoryName
+                                        <input asp-for="@Model.WorkDiscipline" type="radio" value="@item.CategoryName" onclick="levelofRegistration(@item.CategoryID);" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+
+                    <span asp-validation-for="@Model.WorkDiscipline" class="text-danger">@ViewBag.WorkDiscipline</span>
+
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 form-group">
+                    <label>Specialist Categories:  <span class="asterisk"></span></label>
+                    @Html.DropDownListFor(x => x.selectedsubcategory, new SelectList(Model.subCategoryModel, "SubCategoryID", "SubCategoryName"), "-- Select --", new { id = "SubCategoryID", @class = "custom-select form-control" })
+                </div>
+            </div>
+
+           
+
+
+            <script type="text/javascript">
+                    var values = [];
+                    function levelofRegistration(x)
+                    {
+                    var errorElement = document.querySelector('span[data-valmsg-for="WorkDiscipline"]');
+                    if (errorElement) {
+                        errorElement.style.display = 'none';
+                    }
+                        $.ajax(
+                            {
+                                type: 'POST',
+                                url: "@(Url.Action("GetSubCategory1", "Form8"))",
+                                data: { CategoryID: x },
+                                success: function (data)
+                                {
+                                    var items = '';
+                                    $("#SubCategoryID").empty();
+                                    $.each(data, function (i, subcategory)
+                                    {
+                                        //    debugger;
+                                        items += "<option value='" + subcategory.subCategoryID + "'>" + subcategory.subCategoryName + "</option>";
+                                    });
+                                    $('#SubCategoryID').html(items);
+
+                                    $("#SubCategoryID").removeAttr("multiple");
+
+                                },
+                                error: function ()
+                                {
+
+                                }
+                            });
+                    }                
+            </script>
+        </div>
+    </div>
+
+    
+    <ul class="cic-form-action-block">
+        <li>
+            <button type="submit" class="default-btn btn-preview" asp-route-pre="type" asp-route-name="business">Previous</button>
+            <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-submit" asp-route-next="finance" asp-route-name="business">Next</button>
+
+        </li>
+    </ul>
+
+    <script>
+        const textareaInputs = document.querySelectorAll('textarea[data-val="true"]');
+        const errorElements = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        textareaInputs.forEach(function (textareaInput) {
+            const errorElement = getErrorMessageElement(textareaInput);
+            textareaInput.addEventListener('input', function () {
+                if (textareaInput.value.trim() !== '') {
+                    errorElement.style.display = 'none';
+                }
+            });
+        });
+
+        function getErrorMessageElement(textareaInput) {
+            const fieldName = textareaInput.getAttribute('name');
+            const errorElement = Array.from(errorElements).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorElement;
+        }
+    </script>
+
+    <script>
+        // Get all input fields and error message elements
+        // Get all input fields and error message elements
+        const inputFields1 = document.querySelectorAll('input[data-val="true"]');
+        const errorMessages1 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        // Add event listeners to all input fields to hide their respective error messages when the input value changes
+        inputFields1.forEach(function (inputField) {
+            const errorMessage = getErrorMessageElement(inputField);
+            inputField.addEventListener('input', function () {
+                if (inputField.value.trim() !== '') {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+
+        // Helper function to get the corresponding error message element for an input field
+        function getErrorMessageElement(inputField) {
+            const fieldName = inputField.getAttribute('name');
+            const errorMessage = Array.from(errorMessages1).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorMessage;
+        }
+    </script>
+
+</div>
+
+<div class="divider"></div>
+

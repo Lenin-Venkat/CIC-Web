@@ -1,0 +1,215 @@
+﻿@model CICLatest.Models.Form9ViewModel
+
+@{ ViewData["Title"] = "Bulk Projects And Levy Assessment Registration Form – CICF 9"; }
+
+<section class="Cic-form-wrapper">
+
+    <div class="Cic-form-content" id="printarea">
+
+        <div class="">
+            <div class="">
+                <h1>REGISTRATION OF CONSTRUCTION PROJECTS – CICF 9</h1><h5></h5>
+                <div class="wizard">
+                    <div class="tab-content" style="background-color:white;padding:20px 20px 20px 20px">
+                        <div class="fieldset">
+                            <div class="row">
+                                <div class="col-lg form-group">Company or Institution</div>
+                                <div class="col-lg form-group">@Model.App.CompanyName</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Name of Institution Focal Person</div>
+                                <div class="col-lg form-group" id="RepresentativeName">@Model.App.InstitutionFocalPerson</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Postal address</div>
+                                <div class="col-lg form-group">@Model.App.PostalAddress</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Physical address</div>
+                                <div class="col-lg form-group">@Model.App.PhysicalAddress</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Email Address</div>
+                                <div class="col-lg form-group"><label id="Email">@Model.App.Email</label> </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Tel. No</div>
+                                <div class="col-lg form-group">@Model.App.TelephoneNumber</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg form-group">Fax No</div>
+                                <div class="col-lg form-group">@Model.App.FaxNo</div>
+                            </div>
+                        </div>
+                        <div class="title">
+                            <h3>List of Construction projects to be undertaken</h3>
+                        </div>
+                        <div class="title">
+                            <strong>Building Works Projects</strong>
+                        </div><br />
+                        <div class="table-fieldset">
+                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                <table class="table table-bordered" id="tblShare">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Project Name</th>
+                                            <th scope="col">Name Of Responsible Contractor</th>
+                                            <th scope="col">Est. Project Cost</th>
+                                            <th scope="col">Proposed Commencement Date</th>
+                                            <th scope="col">Proposed Completion Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @for (int i = 0; i < Model.buildingWorkForProject.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.buildingWorkForProject[i].ProjectName</td>
+                                                <td>@Model.buildingWorkForProject[i].NameOfResponsibleContractor</td>
+                                                <td>@Model.buildingWorkForProject[i].EstProjectCost</td>
+                                                <td>@Model.buildingWorkForProject[i].ProposedCommencementDate</td>
+                                                <td>@Model.buildingWorkForProject[i].ProposedCompletionDate</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="title">
+                            <strong>Civils Works Projects</strong>
+                        </div><br />
+                        <div class="table-fieldset">
+                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                <table class="table table-bordered" id="tblShare">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Project Name</th>
+                                            <th scope="col">Name Of Responsible Contractor</th>
+                                            <th scope="col">Est. Project Cost</th>
+                                            <th scope="col">Proposed Commencement Date</th>
+                                            <th scope="col">Proposed Completion Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @for (int i = 0; i < Model.civilsWorksProjects.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.civilsWorksProjects[i].ProjectName</td>
+                                                <td>@Model.civilsWorksProjects[i].NameOfResponsibleContractor</td>
+                                                <td>@Model.civilsWorksProjects[i].EstProjectCost</td>
+                                                <td>@Model.civilsWorksProjects[i].ProposedCommencementDate</td>
+                                                <td>@Model.civilsWorksProjects[i].ProposedCompletionDate</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="title">
+                            <strong>Mechanical Works Projects</strong>
+                        </div><br />
+                        <div class="table-fieldset">
+                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                <table class="table table-bordered" id="tblShare">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Project Name</th>
+                                            <th scope="col">Name Of Responsible Contractor</th>
+                                            <th scope="col">Est. Project Cost</th>
+                                            <th scope="col">Proposed Commencement Date</th>
+                                            <th scope="col">Proposed Completion Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        @for (int i = 0; i < Model.buildingWorkForProject.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>@Model.mechanicalWorksProjects[i].ProjectName</td>
+                                                <td>@Model.mechanicalWorksProjects[i].NameOfResponsibleContractor</td>
+                                                <td>@Model.mechanicalWorksProjects[i].EstProjectCost</td>
+                                                <td>@Model.mechanicalWorksProjects[i].ProposedCommencementDate</td>
+                                                <td>@Model.mechanicalWorksProjects[i].ProposedCompletionDate</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="fielset-inner">
+                               <div class="title">
+                                <h3>Undertaking</h3>
+                                </div>
+                            <br/>
+                                <div class="row">
+
+                                    <div class="col diclaration-agr">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" asp-for="RepresentativeName">I/We</span>
+
+                                            </div>
+                                            <input readonly asp-for="@Model.App.RepresentativeName" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" asp-for="CompName">representing</span>
+
+                                            </div>
+                                            <input readonly  type="text" asp-for="@Model.App.CompName" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" asp-for="Position">herein in my capacity as</span>
+
+                                            </div>
+                                            <input readonly type="text" class="form-control" asp-for="@Model.App.Position" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">, do hereby certify that I am duly authorized to </span>
+                                            </div>
+
+                                        </div>
+                                        <p>sign this application for Project Registration and further bind the company/myself to the conditions thereof. </p>
+
+
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" asp-for="Place">Signed at</span><br>
+
+                                            </div>
+                                            <input readonly type="text" class="form-control" asp-for="@Model.App.Place" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">on this day</span>
+
+                                            </div>
+                                            <input readonly type="text" class="form-control week" asp-for="@Model.App.Day" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">of</span>
+                                            </div>
+                                            <input readonly type="text" class="form-control month" asp-for="@Model.App.Month" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" asp-for="Year">20</span>
+
+                                            </div>
+                                            <input readonly type="text" asp-for="@Model.App.Year" class="form-control year" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

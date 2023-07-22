@@ -1,0 +1,328 @@
+﻿
+@model MainViewModel
+<div class="cic-application-wrapper">
+
+
+    <div class="Declaration-wrapper">
+        <div class="title">
+            <strong>Declaration</strong>
+            <p>
+               @*<span asp-validation-for="@Model.tab5.WitnessName" class="text-danger"></span>
+               <span asp-validation-for="@Model.tab5.WitnessSignature" class="text-danger"></span>
+               <span asp-validation-for="@Model.tab5.WitnessTitleDesignation" class="text-danger"></span>*@
+            </p>
+        </div>
+        <div class="Declaration-content">
+            <p>
+                I/We declare that all the particulars and information provided in this application are complete, correct and true and I/we agree that in the event that any of the aforementioned particulars and information provided is found to be untrue or fraudulent, registration for Levy Payment with the Construction Industry
+                Council will be rejected and any proposed Building/Construction work will be terminated.
+            </p>
+            <p>I/We declare that in the event that there are any changes regarding the project/s registered with CIC, we shall inform the Construction Industry Council. </p>
+
+        </div>
+        <div class="Declaration-fielset-block">
+            <div class="fielset-inner">
+                <div class="row">
+                    <div class="col diclaration-agr">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">I/We</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.RepresentativeName" type="text" class="form-control" aria-label="Amount (to the nearest dollar)"> 
+                                <span asp-validation-for="@Model.tab5.RepresentativeName" class="text-danger"></span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">representing</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.CompName" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.CompName" class="text-danger"></span>
+                            </div>
+                            
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">herein in my capacity as</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.Position" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.Position" class="text-danger"></span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">, do hereby certify that I am duly authorized to </span>
+                            </div>
+
+                        </div>
+                        <p>sign this application for Project Registration and further bind the company/myself to the conditions thereof. </p>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Signed at</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.Place" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.Place" class="text-danger"></span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">on this day</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.Day" type="text" class="form-control week" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.Day" class="text-danger"></span>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text">of</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.Month" type="text" class="form-control month" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.Month" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="input-group-append">
+                                <span class="input-group-text">20</span>
+                            </div>
+                            <div class="form-control-div">
+                                <input asp-for="@Model.tab5.Year" type="text" class="form-control year" aria-label="Amount (to the nearest dollar)">
+                                <span asp-validation-for="@Model.tab5.Year" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 form-group">
+                        <label>Signature <span class="asterisk">*</span></label>
+                        <div class="fileAttachment Signatureattachment">
+                            <input asp-for="@Model.tab5.Signature" id="Signature" type="file">
+                            <label for="Signature" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                @*Browse*@
+                            </label>
+                        </div>
+                        @if (Model.Signature1 != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.Signature1">@Model.Signature1</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.Signature1</label>
+                            }
+                        }
+
+
+                        <span asp-validation-for="@Model.tab5.Signature" class="text-danger"></span>
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="title">
+                    <strong>Witnessed by</strong>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 form-group">
+                        <label>Name <span class="asterisk">*</span></label>
+                        <input asp-for="@Model.tab5.WitnessName" class="form-control" placeholder="Please enter name" type="text" />
+                        <span asp-validation-for="@Model.tab5.WitnessName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg-4 form-group">
+                        <label>Signature <span class="asterisk">*</span></label>
+                        <div class="fileAttachment Signatureattachment">
+                            <input id="Signature1" type="file" asp-for="@Model.tab5.WitnessSignature">
+                            <label for="Signature1" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                @*Browse*@
+                            </label>
+
+                        </div>
+                        @if (Model.WitnessSignature != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.WitnessSignature">@Model.WitnessSignature</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.WitnessSignature</label>
+                            }
+                        }
+                        <span asp-validation-for="@Model.tab5.WitnessSignature" class="text-danger"></span>
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 form-group">
+                        <label>Title/Designation <span class="asterisk">*</span></label>
+                        <input asp-for="@Model.tab5.WitnessTitleDesignation" class="form-control" placeholder="Please enter Title/Designation" type="text" />
+                        <span asp-validation-for="@Model.tab5.WitnessTitleDesignation" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Name</label>
+                        <input class="form-control" asp-for="@Model.tab5.WitnessName1" placeholder="Please enter name" type="text" />
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Signature </label>
+                        <div class="fileAttachment Signatureattachment">
+                            <input id="Signature2" type="file" asp-for="@Model.tab5.WitnessSignature1">
+                            <label for="Signature2" data-input-value="" data-select-text="Browse" data-remove-text="Remove file" data-drag-text="Choose file">
+                                @*Browse*@
+                            </label>
+                        </div>
+                        @if (Model.WitnessSignature1 != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.WitnessSignature1">@Model.WitnessSignature1</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.WitnessSignature1</label>
+                            }
+                        }
+                        <div class="createnewsign">
+                            Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 form-group mb0">
+                        <label>Title/Designation </label>
+                        <input class="form-control" placeholder="Please enter value" type="text" asp-for="@Model.tab5.WitnessTitleDesignation1" />
+                    </div>
+                </div>
+
+
+            </div>
+            <ul class="cic-form-action-block">
+                <li>
+                    <button type="submit" asp-route-pre="work" asp-route-name="doc" class="default-btn btn-preview">Previous</button>
+                    <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                </li>
+                <li>
+                    <button type="button" class="btn default-btn btn-preview" onclick="Preview();">Preview</button>
+                    <button type="submit" asp-route-name="final" class="btn btn-submit">Finish</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Get all input fields and error message elements
+        // Get all input fields and error message elements
+        const inputFields6 = document.querySelectorAll('input[data-val="true"]');
+        const errorMessages6 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        // Add event listeners to all input fields to hide their respective error messages when the input value changes
+        inputFields6.forEach(function (inputField) {
+            const errorMessage = getErrorMessageElement(inputField);
+            inputField.addEventListener('input', function () {
+                if (inputField.value.trim() !== '') {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+
+        // Helper function to get the corresponding error message element for an input field
+        function getErrorMessageElement(inputField) {
+            const fieldName = inputField.getAttribute('name');
+            const errorMessage = Array.from(errorMessages6).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorMessage;
+        }
+    </script>
+
+
+</div>
+<div id='myModal' class='modal fade modalpreview'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="~/images/cancel.svg" alt="close modal" />
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="termsconditionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">CIC Business terms & conditions agreement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    I/We declare that all the particulars and information provided in this application are complete, correct and true and I/we agree that in the event that any of the aforementioned particulars and information provided is found to be untrue or fraudulent, registration for Levy Payment with the Construction Industry
+                    Council will be rejected and any proposed Building/Construction work will be terminated.
+                </p>
+                <p>I/We declare that in the event that there are any changes regarding the project/s registered with CIC, we shall inform the Construction Industry Council. </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-submit">I Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    //function tickTerms() {
+    //    document.getElementById('docs_TermsAndConditions').checked = true;
+    //    $("#docs_TermsAndConditions").prop("checked", true);
+    //    }
+
+
+    function Preview()
+    {
+       
+        var jsonData = $('#form8part').serialize();// @Html.Raw(Json.Serialize(Model));
+            var options = { "backdrop": "static", keyboard: true };
+
+
+         $.ajax({
+            type: 'POST',
+             url: "@(Url.Action("PreviewForm", "ViewForm8"))",
+             data: $('#form8part').serialize(),
+             success: function (data)
+             {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             } ,
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+</script>

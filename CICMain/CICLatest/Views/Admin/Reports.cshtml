@@ -1,0 +1,155 @@
+﻿
+@model ReportModel
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Admin" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item"> Reports</strong></li>
+        </ul>
+
+    </div>
+    <div class="Cic-form-content invoice-table">
+        <div class="Businessdetals-fielset" style="padding-top: 20px;padding-left:20px;">
+            <form method="post" asp-controller="Admin" asp-action="ExportReports">
+                <h1><img src="~/images/invoice.svg" alt="" /> Export Report</h1>
+                @Html.ValidationMessageFor(m => m.err)
+            <div class="form-fields">
+                <span asp-validation-for="@Model.filterColumnName" class="text-danger"></span>
+                <ul style="list-style: none;">
+                    <li>
+                        <label class="custom-radio">
+                            Application Type
+                            <input type="radio" asp-for="@Model.filterColumnName" value="AppType" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="col-lg-4 form-group" id="typeid">
+                            <select class="custom-select form-control" asp-for="@Model.AppTypeValue">
+                                <option required>Select Application Type</option>
+                                <option value="NewApplication">New application</option>
+                                <option value="AdditionalWork">Additional Discipline</option>
+                                <option value="Renewal">Renewal</option>
+                                <option value="Project">Project</option>
+                            </select>
+                        </div>
+                    </li>
+                    <br />
+
+                    <li>
+                        <label class="custom-radio">
+                            CIC Form
+                            <input type="radio" asp-for="@Model.filterColumnName" value="form" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="col-lg-12" id="catid">
+                            <div class="col-lg-4 form-group">
+                                <select class="custom-select form-control" asp-for="@Model.Formname" id="Formname">
+                                    <option required>Select Form</option>
+                                    <option value="cicform1">Form 1</option>
+                                    <option value="cicform1">Form 2</option>
+                                    <option value="cicform3">Form 3</option>
+                                    <option value="cicform4">Form 4</option>
+                                    <option value="cicform5">Form 5</option>
+                                    <option value="cicform6">Form 6</option>
+                                    <option value="cicform7">Form 7</option>
+                                    <option value="cicform8">Form 8</option>
+                                    <option value="cicform9">Form 9</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                @Html.DropDownListFor(x => x.CatValue, new SelectList(Model.CategoryModel, "CategoryID", "CategoryName"), "-- Select --", new { id = "CategoryID", @class = "custom-select form-control" })
+                            </div>
+                        </div>
+                    </li>
+                    <br/>
+                    
+                    <li>
+                        <label class="custom-radio">
+                            Operational Reports
+                                <input type="radio" asp-for="@Model.filterColumnName" value="operationreport" onclick="hideDocSection(this);" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <div class="col-lg-4 form-group" id="operationid">
+                                <select class="custom-select form-control" asp-for="@Model.OperationalReportType" id="OperationalReportType">
+                                <option required>Select Operation Type</option>
+                                <option value="Projects">Projects</option>
+                                <option value="Contractors">Contractors</option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#Formname').change(function () {
+                            var url = '@Url.Content("~/")' + "Admin/GetCategory";
+                            var ddlsource = $(this).val();
+                            //alert(ddlsource);
+
+                            $.getJSON(url, { formname: ddlsource }, function (data) {
+                                var items = '';
+                                $("#CategoryID").empty();
+
+                                $.each(data, function (i, subcategory) {
+                                    //    debugger;
+                                    items += "<option value='" + subcategory.categoryName + "'>" + subcategory.categoryName + "</option>";
+                                });
+                                $("#CategoryID").html(items);
+
+                                $("#CategoryID").removeAttr("multiple");
+
+                            });
+                        })
+                    })
+                </script>
+                <script type="text/javascript">
+                    window.onload = function () {
+
+                        $("#typeid").hide();
+                        // $("#typed").hide();
+                        $('#catid').hide();
+                        $('#operationid').hide();
+                    };
+
+                    function hideDocSection(myRadio) {
+                        var value = myRadio.value;
+                        if (value == 'AppType') {
+                            $('#typeid').show();
+                            $('#catid').hide();
+                            $('#operationid').hide();
+                            // $("#typed").hide();
+                        }
+
+                        if (value == 'form') {
+                            $('#typeid').hide();
+                            $('#catid').show();
+                            $('#operationid').hide();
+                            // $("#typed").hide();
+                        }
+                        if (value == 'operationreport') {
+                            $('#typeid').hide();
+                            $('#catid').hide();
+                            $('#operationid').show();
+                            // $("#typed").hide();
+                        }
+
+                        //if (value == 'Timestamp') {
+                        //  $('#typeid').hide();
+                        //$('#catid').hide();
+                        // $("#typed").show();
+                        //}
+                    }
+                </script>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <input type="submit" class="default-btn btn-draft" value="Export" asp-controller="Admin" asp-action="ExportReports">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+

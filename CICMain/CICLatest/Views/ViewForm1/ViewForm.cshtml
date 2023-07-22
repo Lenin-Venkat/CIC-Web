@@ -1,0 +1,787 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model Form1Model
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <form method="post" asp-controller="ViewForm1" asp-action="ViewForm">
+        <section class="Cic-form-wrapper">
+            <div class="cic-breadcurm">
+                <ul>
+                    <li><a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+                    @*<li><strong class="current-item">@ViewBag.FormTitle</strong></li>*@
+                    <li><strong class="current-item">Form details</strong></li>
+                </ul>
+            </div>
+            <div class="Cic-form-content saveasdraft" id="printarea">
+
+                <div class="">
+                    <div class="">
+                        <h1>@ViewBag.name</h1>
+                        <div class="product-number-blk">
+                            <h5>Form Registration Number - <span class="vals">@Model.FirmRegistrationNo</span></h5>
+                        </div>
+                        <div class="wizard">
+                            <div class="wizard-inner">
+                                <div class="connecting-line"></div>
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#TypeofApplication" data-toggle="tab" aria-controls="TypeofApplication" role="tab" aria-expanded="false">Type of Application</a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="#BusinessDetails" data-toggle="tab" aria-controls="BusinessDetails" role="tab" aria-expanded="false">Business Details</a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="#FinancialCapability" data-toggle="tab" aria-controls="FinancialCapability" role="tab"> Financial Capability</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#WorksCapability" data-toggle="tab" aria-controls="WorksCapability" role="tab">Works Capability</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#DocumentUpload" data-toggle="tab" aria-controls="DocumentUpload" role="tab">Documents</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content saveasdraft-content">
+                                <div class="tab-pane active" role="tabpanel" id="TypeofApplication">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Type of Application</div>
+                                            <div class="col-lg form-group vals">@Model.AppType</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Association Name</div>
+                                            <div class="col-lg form-group vals">@Model.AssociationName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name of Authorised Officer</div>
+                                            <div class="col-lg form-group vals">@Model.AuthorisedOfficerName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Association Certificate Attachment</div>
+                                            <div class="col-lg form-group vals">
+                                                @if (Model.signature != null)
+                                                {
+                                                    string path = Model.path + @"\Filesignature_" + Model.signature;
+                                                    path = path.Replace("https:\\", "");
+                                                    path = path.Replace("\\", "/");
+                                                    <a href="//@path" asp-for="@Model.signature" target="_blank">@Model.signature</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="BusinessDetails">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Business Names</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Trading Style</div>
+                                            <div class="col-lg form-group vals">@Model.TradingStyle</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">BusinessType</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessType</div>
+                                        </div>
+                                        @if (ViewBag.other)
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg form-group">Other (please specify)</div>
+                                                <div class="col-lg form-group">@Model.Other</div>
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="col-lg form-group">Date of Registration of Company</div>
+                                            <div class="col-lg form-group vals">@Model.cdate</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Place of Registration of Company</div>
+                                            <div class="col-lg form-group vals">@Model.CompanyRegistrationPlace</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Company Registration Number</div>
+                                            <div class="col-lg form-group vals">@Model.CompanyRegistrationNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Physical Address in Eswatini</div>
+                                            <div class="col-lg form-group vals">@Model.PhysicalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Company Head Office Physical Address</div>
+                                            <div class="col-lg form-group vals">@Model.CompanyHOPhysicalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Postal Address</div>
+                                            <div class="col-lg form-group vals">@Model.PostalAddress</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Telephone No</div>
+                                            <div class="col-lg form-group vals">@Model.TelephoneNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax</div>
+                                            <div class="col-lg form-group vals">@Model.FaxNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email</div>
+                                            <div class="col-lg form-group vals"><label id="Email">@Model.Email</label></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Category of Works Applying for</div>
+                                            <div class="col-lg form-group vals">@Model.Category</div>
+                                        </div>
+                                        @if (Model.FormName == "Form2")
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg form-group">Sub Category </div>
+                                                <div class="col-lg form-group">@ViewBag.subCategory</div>
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="col-lg form-group">Grade</div>
+                                            <div class="col-lg form-group vals">@Model.Grade
+                                            @if(Model.newGradecomment != null && Model.Reviewer != "Clerk")
+            {
+                                                <br />
+                @Model.newGradecomment
+            }
+                                            </div>
+                                                                                   
+                                        </div>
+                                        @if(Model.Reviewer == "Clerk" && Model.AppType !="NewApplication")
+                                        {
+                                            <div class="row">
+                                        <div class="col-lg form-group">Please click on checkbox for upgrade</div>
+                                        <div class="col-lg form-group vals">
+                                            <table>
+                                                @foreach (var Org in @ViewBag.gradeSCore)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <input id="@Org" type="checkbox" name="gradeUpgrade" value="@Org" />
+                                                        </td>
+                                                        <td>
+                                                            <label for="@Org">@Org</label>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                         }
+                                        
+                                        @if (ViewBag.grade)
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg form-group">Present Grade Registered for</div>
+                                                <div class="col-lg form-group vals">@Model.PresentGrade</div>
+                                            </div>
+                                        }
+                                        <div>
+                                            <h5>Business Representative</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name</div>
+                                            <div class="col-lg form-group vals" id="RepresentativeName">@Model.BusinessRepresentativeName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Position</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessRepresentativePositionNumber</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Cell No</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessRepresentativeCellNo</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Fax</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessRepresentativeFax</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Email</div>
+                                            <div class="col-lg form-group vals">@Model.BusinessRepresentativeEmail</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Signature</div>
+                                            <div class="col-lg form-group vals">
+                                                @if (Model.BusinessRepresentativeSign != null)
+                                                {
+                                                    string path = Model.path + @"\Businesssignature_" + Model.BusinessRepresentativeSign;
+                                                    path = path.Replace("https:\\", "");
+                                                    path = path.Replace("\\", "/");
+                                                    <a href="//@path" asp-for="@Model.BusinessRepresentativeSign" target="_blank">@Model.BusinessRepresentativeSign</a>
+                                                }
+                                            </div>
+                                        </div>
+                                        @if (Model.Sharelist != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblShare">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name ofDirector(s)/Partners</th>
+                                                                <th scope="col">Nationality</th>
+                                                                <th scope="col">ID/Passport No.</th>
+                                                                <th scope="col">Country of Residence</th>
+                                                                <th scope="col">Cellphone No.</th>
+                                                                <th scope="col">% Shares</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.Sharelist.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.Sharelist[i].DirectorName</td>
+                                                                    <td>@Model.Sharelist[i].Nationnality</td>
+                                                                    <td>@Model.Sharelist[i].IdNO</td>
+                                                                    <td>@Model.Sharelist[i].Country</td>
+                                                                    <td>@Model.Sharelist[i].CellphoneNo</td>
+                                                                    <td>@Model.Sharelist[i].SharePercent</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <h6>No Data for Directorship and Share Dividends</h6>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="FinancialCapability">
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Financial Year 1 end Total Turnover</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear1</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Financial Year 2 end Total Turnover</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear2</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Financial Year 3 end Total Turnover</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear3</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Financial Value of surety if any: E</div>
+                                            <div class="col-lg form-group vals">@Model.FinancialValue</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Indicate the name of the Financial Institution(s)</div>
+                                            <div class="col-lg form-group vals">@Model.FinancialInstitutionName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Available Capital E</div>
+                                            <div class="col-lg form-group vals">@Model.AvailableCapital</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Signature</div>
+                                            <div class="col-lg form-group vals">
+                                                @if (Model.statementsign != null)
+                                                {
+                                                    string path = Model.path + @"\StatmentFile_" + Model.statementsign;
+                                                    path = path.Replace("https:\\", "");
+                                                    path = path.Replace("\\", "/");
+                                                    <a href="//@path" asp-for="@Model.statementsign" target="_blank">@Model.statementsign</a>
+                                                }
+                                            </div>
+                                        </div>
+                                        @if (Model.applicantBank != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblbank">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Bank Name</th>
+                                                                <th scope="col">Branch Name</th>
+                                                                <th scope="col">Branch Code</th>
+                                                                <th scope="col">Holder Name</th>
+                                                                <th scope="col">Account Number</th>
+                                                                <th scope="col">Account Type</th>
+                                                                <th scope="col">Telephone No</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.applicantBank.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.applicantBank[i].BankName</td>
+                                                                    <td>@Model.applicantBank[i].BranchName</td>
+                                                                    <td>@Model.applicantBank[i].BranchCode</td>
+                                                                    <td>@Model.applicantBank[i].AccountHoulderName</td>
+                                                                    <td>@Model.applicantBank[i].AccountNo</td>
+                                                                    <td>@Model.applicantBank[i].AccountTYpe</td>
+                                                                    <td>@Model.applicantBank[i].TelephoneNo</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="WorksCapability">
+                                    @if (Model.worksCapability != null)
+                                    {
+                                        <div class="table-fieldset">
+                                            <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                <table class="table table-bordered" id="tblwork">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Project Name</th>
+                                                            <th scope="col">Location</th>
+                                                            <th scope="col">Registation no.</th>
+                                                            <th scope="col">Completion Date</th>
+                                                            <th scope="col">Contract Sum</th>
+                                                            <th scope="col">Client and Telephone no.</th>
+                                                            <th scope="col">Type of involvement</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbody">
+                                                        @for (int i = 0; i < Model.worksCapability.Count; i++)
+                                                        {
+                                                            <tr>
+                                                                <td>@Model.worksCapability[i].ProjectName</td>
+                                                                <td>@Model.worksCapability[i].Location</td>
+                                                                <td>@Model.worksCapability[i].RegistationNo</td>
+                                                                <td>@Model.worksCapability[i].CompletionDate</td>
+                                                                <td>@Model.worksCapability[i].ContractSum</td>
+                                                                <td>@Model.worksCapability[i].TelephoneNo</td>
+                                                                <td>@Model.worksCapability[i].TypeofInvolvement</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="tab-pane" role="tabpanel" id="DocumentUpload">
+                                    <div class="fieldset">
+
+                                        <div class="row">
+                                            @if (Model.BusinessFile1Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile1_" + Model.BusinessFile1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified copy of company registration</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.BusinessFile2Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile2_" + Model.BusinessFile2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified copies of share certificates</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.BusinessFile3Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile3_" + Model.BusinessFile3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Proof of registration with the Eswatini Contractors Association</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.BusinessFile4Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile4_" + Model.BusinessFile4Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified Form C</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile4Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.BusinessFile5Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile5_" + Model.BusinessFile5Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified Form J</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile5Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.BusinessFile6Name != null)
+                                            {
+                                                string path = Model.path + @"\BusinessFile6_" + Model.BusinessFile6Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified copy of current trading license, must be relevant to scope of work</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.BusinessFile6Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.ShareholdersFile1Name != null)
+                                            {
+                                                string path = Model.path + @"\ShareholdersFile1_" + Model.ShareholdersFile1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified copies of identity documents of shareholders (All companies)</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.ShareholdersFile1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.ShareholdersFile2Name != null)
+                                            {
+                                                string path = Model.path + @"\ShareholdersFile2_" + Model.ShareholdersFile2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certified copies of academic qualifications of core directors</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.ShareholdersFile2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.ShareholdersFile3Name != null)
+                                            {
+                                                string path = Model.path + @"\ShareholdersFile3_" + Model.ShareholdersFile3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Academic qualifications and curriculum vitae of technical staff or technical person/s in charge</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.ShareholdersFile3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        @*//Finanne*@
+                                        <div class="row">
+                                            @if (Model.FinancialFile1Name != null)
+                                            {
+                                                string path = Model.path + @"\FinancialFile1_" + Model.FinancialFile1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Audited Financial Statements for the three years immediately preceding the application for Grades 1 and 2</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.FinancialFile1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.FinancialFile2Name != null)
+                                            {
+                                                string path = Model.path + @"\FinancialFile2_" + Model.FinancialFile2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Financial Statements for the three years immediately preceding the application Grades 3 to 5</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.FinancialFile2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.FinancialFile3Name != null)
+                                            {
+                                                string path = Model.path + @"\FinancialFile3_" + Model.FinancialFile3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Proof of financial sponsorship (if any)</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.FinancialFile3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        @* Track *@
+                                        <div class="row">
+                                            @if (Model.TrackRecordFile1Name != null)
+                                            {
+                                                string path = Model.path + @"\TrackRecordFile1_" + Model.TrackRecordFile1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Sub-Contract Agreement for sub-contracting works on Projects Done if applicable</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.TrackRecordFile1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.TrackRecordFile2Name != null)
+                                            {
+                                                string path = Model.path + @"\TrackRecordFile2_" + Model.TrackRecordFile2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Certificates or letter of Completion for Projects Done</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.TrackRecordFile2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.FinancialFile3Name != null)
+                                            {
+                                                string path = Model.path + @"\FinancialFile3_" + Model.FinancialFile3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Final Certificate of Payment for Projects Done</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.FinancialFile3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        @* Joint venture *@
+                                        <div class="row">
+                                            @if (Model.JointVentureFile1Name != null)
+                                            {
+                                                string path = Model.path + @"\JointVentureFile1_" + Model.JointVentureFile1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">A joint venture agreement of the works done and completed</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.JointVentureFile1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.JointVentureFile2Name != null)
+                                            {
+                                                string path = Model.path + @"\JointVentureFile2_" + Model.JointVentureFile2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">Completion certificates of the joint venture works</div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.JointVentureFile2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.JointVentureFile3Name != null)
+                                            {
+                                                string path = Model.path + @"\JointVentureFile3_" + Model.JointVentureFile3Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Letter from project manager to provide proof that the parties involved in the joint venture
+                                                    participated fully in their responsibilities
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.JointVentureFile3Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.JointVentureFile4Name != null)
+                                            {
+                                                string path = Model.path + @"\JointVentureFile4_" + Model.JointVentureFile4Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Letter from client to provide proof that the parties involved in the joint venture
+                                                    participated fully in their responsibilities
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.JointVentureFile4Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        @*  *@
+
+                                        <div class="row">
+                                            @if (Model.taxLawName != null)
+                                            {
+                                                string path = Model.path + @"\TaxLaw_" + Model.taxLawName;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Proof of compliance with tax laws
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.taxLawName</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.EvidenceName != null)
+                                            {
+                                                string path = Model.path + @"\Evidence_" + Model.EvidenceName;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Evidence of previous completed projects
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.EvidenceName</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.ComplienceName != null)
+                                            {
+                                                string path = Model.path + @"\Compliance_" + Model.ComplienceName;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Proof of compliance with the provisions of section 41 of the CIC Act No. 14 of 2013
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.ComplienceName</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.sign1Name != null)
+                                            {
+                                                string path = Model.path + @"\Signature1_" + Model.sign1Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Signature
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.sign1Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.sign2Name != null)
+                                            {
+                                                string path = Model.path + @"\Signature2_" + Model.sign2Name;
+                                                path = path.Replace("https:\\", "");
+                                                path = path.Replace("\\", "/");
+                                                <div class="col-lg form-group">
+                                                    Witnessed Signature
+                                                </div>
+                                                <div class="col-lg form-group vals">
+                                                    <a href="//@path" target="_blank">@Model.sign2Name</a>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comment">Comment:</label> &nbsp; <label id="GFG"></label>
+                                        <textarea class="form-control" name="comment" rows="5" id="comment"></textarea>
+                                    </div>
+                                    <ul class="cic-form-action-block">
+                                        <li>
+                                            @*<a href="#" data-toggle="modal" data-target="#acceptForm" class="btn btn-submit">Approve Form</a>*@
+                                            <button type="submit" class="btn btn-submit">Approve</button>
+                                            <button type="button" class="btn btn-reject" onclick="submitForm('Reject');">Reject</button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            @*<div class="backbtn">
+                                    <a asp-controller="ReviewerDashboard" asp-action="ReviewerDashboard"> <img src="/images/right-arrow.svg" alt="arrow" /> Back to Dashboard</a>
+                                </div>*@
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="modal fade" id="acceptForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-body">
+                        <p>Do you want to approve Form?</p>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-submit" data-dismiss="modal">Approve</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+    function submitForm(x) {
+        var label = $('#Email');
+        var email = label.text();
+        var RepresentativeName = $('#RepresentativeName').text();
+        var comment = document.getElementById('comment').value;
+
+        if (comment) {
+            $.ajax({
+                type: 'POST',
+                url: "@(Url.Action("RejectForm", "ViewForm1"))",
+                data: { "value": x, "emailId": email, "RepresentativeName": RepresentativeName, "comment": comment },
+                success: function (result) {
+                    window.location.href = '/ReviewerDashboard/ReviewerDashboard';
+                },
+                error: function () {
+                    console.log('Failed ');
+                }
+            })
+        }
+        else {
+            document.getElementById('GFG').innerHTML = "Please enter comment";
+            document.getElementById('GFG').style.color = "red";
+        }
+    }
+
+    function download() {
+         $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("DownloadFile", "ViewForm1"))",
+            success: function (result) {
+                alert('Successfully downloaded files to C:\CICFiles');
+              },
+            error: function () {
+                alert('Failed to receive the Data');
+                }
+        })
+    }
+
+
+    </script>

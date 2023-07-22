@@ -1,0 +1,138 @@
+﻿@{ ViewData["Title"] = "Registration Page"; }
+@*<h1>@ViewData["Title"]</h1>*@
+@model RegisterViewModel
+<style type="text/css">
+    header {
+        display: none;
+    }
+</style>
+<div class="registration-page">
+    <div class="registration-body">
+        <div class="reg-header">
+            <div class="reg-logo">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/reg-logo.png" alt="CiC Logo" width="174" height="111" />
+                </a>
+            </div>
+            @*<div class="divider">
+                <img src="~/images/divider.svg" alt="divider line" />
+            </div>*@
+        </div>
+        @*<div class="reg-short-content">
+            <h2>Create your account</h2>
+            <p id="customer">As a new customer, we are happy to get you started.</p>
+        </div>*@
+
+        <form method="post">
+            <div class="reg-user-block">
+                <div class="reg-content">
+                    <div class="user-box">
+                        <img src="~/images/user-icon.svg" alt="" />
+                    </div>
+                    <div class="reg-short-content">
+                        <h2>Create your account</h2>
+                        <p id="customer">As a new customer, we are happy to get you started.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="reg-wrapper">
+                @Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="fname" class="required">First name <span class="asterisk">*</span></label>
+                        <input class="form-control" placeholder="Please enter first name" asp-for="FirstName" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label class="required" for="lname">Last name <span class="asterisk">*</span></label>
+                        <input asp-for="LastName" class="form-control" placeholder="Please enter Last name" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="bname" class="required">Business name <span class="asterisk">*</span></label>
+                        <input class="form-control" placeholder="Please enter Business name" asp-for="BusinessName" />
+                        <span asp-validation-for="BusinessName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 form-group">
+                        <label for="email">Email address <span class="asterisk">*</span></label>
+                        <input asp-for="Email" class="form-control" placeholder="Please enter email address" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-2 form-group">
+                        <label for="countrycode">Country Code <span class="asterisk"> *</span></label>
+                        
+                        <input asp-for="CountryCode" class="form-control" placeholder="268" pattern="^[\+]?268[-]?|[0]?[1-9][0-9]{2}$" title="Please enter valid country code" />
+                        <span asp-validation-for="CountryCode" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <label for="phone">Cell phone <span class="asterisk"> *</span></label>                        
+                        <input asp-for="PhoneNumber" class="form-control" placeholder="78128825" pattern="^[\+]?268[-]?|[0]?[1-9][0-9]{7}$" title="Please enter valid phone number" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="psw">Password <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="Password" class="form-control" id="psw" aria-hidden="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" />
+                            <i class="pwdhidenshow eye-close" aria-hidden="true" id="pwdhideshow"></i>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                    </div>
+                    <div class="col-lg form-group">
+                        <label for="cpsw">Confirm password <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="ConfirmPassword" id="cpsw" class="form-control" />
+                            <i class="pwdhidenshow eye-close" aria-hidden="true" id="cpwdhideshow"></i>
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                @*<div class="row">
+                    <div class="col-lg form-group">
+                        <label class="required" for="userRole">User role <span class="asterisk">*</span> </label>
+                        <select id="Id" name="Id" asp-for="Id" class="custom-select form-control" asp-items="@ViewBag.AllRoles">
+                            <option value="Select">Select Role</option>                            
+                        </select>
+                        <input type="hidden" name="Name" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                </div>*@
+
+                <div class="row">
+                    <div class="col-lg">
+                        <label class="custom-checkbox" for="checkbox1" id="certify">
+                            I hereby certify that I am authorized to create a customer
+                            account on behalf of the company and act as an administrator for the portal.
+                            <input type="checkbox" value="true" id="checkbox1" name="TermsAndConditions" asp-for="TermsAndConditions" />
+                            <input type="hidden" value="false" name="TermsAndConditions" asp-for="TermsAndConditions" />
+                            <span class="checkmark"></span>
+                            <span asp-validation-for="TermsAndConditions" class="text-danger"></span>
+                        </label>
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col-lg text-center">
+                        <div class="regbtn-block">
+                            <input type="submit" class="btn btn-submit" value="Submit" id="submit" />
+                            <a asp-action="Login" asp-controller="Account"><img src="~/images/right-arrow.svg" /> Back to Login</a>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,230 @@
+﻿@model OperationalReports
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<section class="Cic-reviewer-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-area="" asp-controller="Admin" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            <li><strong class="current-item">Operational Reports</strong></li>
+        </ul>
+    </div>
+    <div class="Cic-form-content reviewerdashboard-table">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Report Type: </label>
+                        <select id="ddlReportType" class="form-control">
+                            <option value="">Please select one</option>
+                            <option value="Projects" selected>Projects</option>
+                            <option value="Contractors">Contractors</option>
+                        </select>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Search Type: </label>
+                        <select id="ddlsearchType" class="form-control">
+                            <option value="-1"> Please select Report Type</option>
+                        </select>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Search Value: </label>
+                        <input id="txtSearchValue" type="text" class="form-control" placeholder="Please Enter Value" />
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>&nbsp;</label>
+                        <div class="col-lg form-group">
+                            <input type="button" class="default-btn btn-draft" value="Search" onclick="SearchDashboard()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div id="divProducts" @Html.Raw(Model.SelectedReportType != "Projects" ? "style='display: none;'" : "") class="card-body table-responsive-lg p-0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    @foreach (string item in Model.ProjectColumns)
+                                    {
+                                        @if (item != "Missing Column")
+                                        {
+                                            <th width="10">
+                                                @Html.DisplayName(item)
+                                            </th>
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ProjectsData != null && Model.ProjectsData.Count > 0)
+                                {
+                                    @foreach (Project item in Model.ProjectsData)
+                                    {
+                                        <tr>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.DateofAward)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Proposedcommencedate)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Proposedcompleteddate)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                           @* <td width="">
+                                                @Html.DisplayFor(modelItem => item.ClientSubcategory)
+                                            </td>*@
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.OwnerCategoryId)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Organization)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Grade)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.MobileNo)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.Telephone)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.FirstNameSurnamefields)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.BriefDescriptionofProject)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.ContractVAlue)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.LevyPaybale)
+                                            </td>
+                                            <td width="">
+                                                @Html.DisplayFor(modelItem => item.TotalProjectCost)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="divContractor" @Html.Raw(Model.SelectedReportType != "Contractors" ? "style='display: none;'" : "") class="card-body table-responsive-lg p-0">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    @foreach (string item in Model.ContractorColumns)
+                                    {
+                                        <th width="10">
+                                            @Html.DisplayName(item)
+                                        </th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @if (Model.ContractorsData != null && Model.ContractorsData.Count > 0)
+                                    {
+                                        @foreach (Contractor item in Model.ContractorsData)
+                                        {
+                                        <tr>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.RegNo)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.Category)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.WorkDiscipline)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.Grade)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.ContractorName)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.TelephoneNo)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.MobileNo)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.PostalPhysicalAddress)
+                                            </td>
+                                            <td width="">
+                                                    @Html.DisplayFor(modelItem => item.RegDate)
+                                            </td>
+                                        </tr>
+                                        }
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="selectedReportType" value=@Model.SelectedReportType />
+        <input type="hidden" id="selectedSearchType" value=@Model.SelectedSearchType />
+        <input type="hidden" id="selectedSearchValue" value="@Model.SearchValue">
+    </div>
+    <script type="text/javascript">
+
+        var searchTypeOption = {
+            project: [{ text: 'PROJECT OWNER', value: 'Name' },
+            { text: 'CLASSIFICATION', value: 'CLientSubcategory' },
+            { text: 'CONTRACTOR GRADE', value: 'Grade' },
+            { text: 'CONTRACTOR', value: 'Oraganization' }],
+            contract: [{ text: 'CATEGORY', value: 'Category' },
+            { text: 'CONTRACTOR NAME', value: 'ContractorName' },
+            { text: 'EMAIL', value: 'Email' }]
+        }
+        $(function () {
+            if($("#selectedReportType").val()!=""&&$("#selectedReportType").val()!="/"){
+                $('#ddlReportType').val($("#selectedReportType").val());
+                reportTypeChangeHandler();
+            }
+            if($("#selectedSearchType").val()!=""&&$("#selectedSearchType").val()!="/"){
+                $('#ddlsearchType').val($("#selectedSearchType").val());
+            }
+            
+            if($("#selectedSearchValue").val()!=""&&$("#selectedSearchValue").val()!="/"){
+                $('#txtSearchValue').val($("#selectedSearchValue").val());
+            }
+            $('#ddlReportType').on('change', function (e) {
+               reportTypeChangeHandler();
+
+            });
+        });
+        var reportTypeChangeHandler=function(){
+            let selectedPrj=$('#ddlReportType :selected').text();
+             let selectionText = selectedPrj !== 'Please select one' ? 'Please select one' : 'Please select Report Type';
+                $('#ddlsearchType').find('option').remove().end().append(`<option value="-1">${selectionText}</option>`).val('-1');
+                let displayOptions = selectedPrj === 'Projects' ? searchTypeOption.project
+                    : (selectedPrj === 'Contractors' ? searchTypeOption.contract : []);
+                displayOptions.forEach((optn) => {
+                    $('#ddlsearchType').append(`<option value="${optn.value}">${optn.text}</option>`)
+                });
+        }
+        var SearchDashboard = function () {
+            var reportType = $('#ddlReportType :selected').text();
+            var searchType = $('#ddlsearchType :selected').val();
+            var searchValue = $('#txtSearchValue').val();
+            window.location.href = '/Admin/OperationReportWithSearchData?reportType=' + reportType + '&searchType=' + searchType + '&searchValue=' + searchValue;
+
+        }
+    </script>
+</section>
+

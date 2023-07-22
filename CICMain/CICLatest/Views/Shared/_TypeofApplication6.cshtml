@@ -1,0 +1,194 @@
+﻿@model CICLatest.Models.Cicf6Model
+
+<h4 class="text-center">Type of Application</h4>
+<div class="cic-application-wrapper">
+
+    <div class="cic-form-block">
+        <div class="cic-logo-upload">
+            <div class="col-ting">
+                <div class="control-group file-upload" id="file-upload1">
+                    <div class="image-box text-center">
+                        <p>Company<br />Logo</p>
+                        <img src="" alt="">
+                    </div>
+                    <div class="controls" style="display: none;">
+                        <input type="file" name="contact_image_1" />
+                    </div>
+                </div>
+            </div>
+            <h3>My Company</h3>
+        </div>
+    </div>
+
+    <div class="cic-fielset-inner">
+        <div class="fieldset">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <div class="title">
+                        <strong>Type of Application <span class="asterisk">*</span></strong>
+
+                    </div>
+
+                    <div class="form-fields">
+                        <ul>
+                            <li>
+                                <label class="custom-radio">
+                                    New Application for Registration
+                                    @*<input type="radio" asp-for="@Model.App.AppType" value="New">*@
+                                    <input type="radio" asp-for="@Model.App.AppType" checked="checked" value="NewApplication" onclick="handleClick(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            @*<li>
+                <label class="custom-radio">
+                    Additional Work Discipline
+                   <input type="radio" asp-for="@Model.App.AppType" value="Add" />
+                    <span class="checkmark"></span>
+                </label>
+            </li>*@
+                            <li>
+                                <label class="custom-radio">
+                                    Registration Renewal
+                                    @*<input type="radio" asp-for="@Model.App.AppType" value="ReNew" />*@
+                                    <input type="radio" asp-for="@Model.App.AppType" value="Renewal" onclick="handleClick(this);" />
+
+
+
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+
+                       
+                    </div>
+                    @Html.ValidationMessageFor(m => m.App.AppType, "", new { @class = "text-danger" })
+                    <div class="divider"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg form-group mb0">
+                    <label for="fname">Categories for registration  <span class="asterisk">*</span></label>
+                    @*<select id="categoies" class="custom-select form-control" asp-for="@Model.App.Categories">
+            <option required>Select Category name</option>
+            <option>
+                Ia - Air conditioning, and refrigerator works.
+            </option>
+            <option>Ib - Landscaping and gardening works. </option>
+            <option>Ic - Shopfitting and carpentry works.</option>
+            <option>Id - Fencing works. </option>
+            <option>Ie - Tree cutting works.</option>
+            <option>If - Plumbing works. </option>
+            <option>Ig- Borehole drilling works.</option>
+            <option>Ih - Painting works.</option>
+            <option>Ii - Bricklaying works</option>
+            <option>Ij - Electrical works.</option>
+            <option>Ik - Flooring (tilling and/or terrazzo) works. </option>
+            <option>Il - Water proofing works.  </option>
+            <option>Im - Glazing works, Aluminium works, partitions and ceiling works.</option>
+            <option>In - Security installations, access control, CCTV installation works </option>
+            <option>Io - Mechanical and ventilation works </option>
+
+        </select>
+        <span asp-validation-for="@Model.App.Categories" class="text-danger">@ViewBag.Categories</span>
+        @Html.ValidationMessageFor(m => m.App.Categories, "", new { @class = "text-danger" })*@
+                    @*<select asp-for="@Model.App.Categories" class="custom-select" id="CategoryID" asp-items="@(new SelectList(@ViewBag.ListofCategory, "CategoryID", "CategoryName"))">*@
+                    <select asp-for="@Model.App.Categories" class="custom-select" id="CategoryName" asp-items="@(new SelectList(@ViewBag.ListofCategory, "CategoryName", "CategoryName"))">
+                    </select>
+                    <span asp-validation-for="@Model.App.Categories" class="text-danger"></span>
+
+                    @*<span asp-validation-for="@Model.App.Categories" class="text-danger"> @ViewBag.Categories</span>
+        @Html.ValidationMessageFor(m => m.App.Categories, "", new { @class = "text-danger" })*@
+
+
+                </div>
+
+            </div>
+            <div class="divider"></div>
+        </div>
+
+        <div class="fieldset">
+            <div class="row">
+                <div class="col-lg form-group">
+                    <label for="fname">Association Name <span class="asterisk">*</span></label>
+                    @*<select id="Associationname" class="custom-select form-control" asp-for="@Model.App.AssociationName">
+            <option required>Select association name</option>
+            <option>SAICC (Imvukuzane)</option>
+            <option>SAEES</option>
+            <option>ECA (Eswatini Contractors Association)</option>
+            <option>BMSA</option>
+        </select>
+        <span asp-validation-for="@Model.App.AssociationName" class="text-danger">@ViewBag.AssociationName</span>
+        @Html.ValidationMessageFor(m => m.App.AssociationName, "", new { @class = "text-danger" })*@
+                    <select asp-for="@Model.App.AssociationName" class="custom-select" id="AssociationId" asp-items="@(new SelectList(@ViewBag.ListofAssociation, "AssociationName", "AssociationName1"))"></select>
+                    @*<span asp-validation-for="@Model.App.AssociationName" class="text-danger">@ViewBag.AssociationName</span>
+        @Html.ValidationMessageFor(m => m.App.AssociationName, "", new { @class = "text-danger" })*@
+                    <span asp-validation-for="@Model.App.AssociationName" class="text-danger"></span>
+
+                </div>
+                <div class="col-lg form-group">
+                    <label for="lname">Name of Authorised Officer <span class="asterisk">*</span></label>
+                    <input asp-for="@Model.App.AuthorisedOfficerName" class="form-control" placeholder="Name of Authorised Officer" type="text" />
+                    <span asp-validation-for="@Model.App.AuthorisedOfficerName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg form-group mb0">
+                    <div class="Attachmentlabel">Association Certificate Attachment <span class="asterisk">*</span></div>
+                    <div class="CertificateAttachment">
+                        <span id="filename">Drag & drop your file here or Browse &nbsp; </span>
+                        <label for="fileAssociate" style="margin-bottom:0">
+                            <input asp-for="@Model.App.Filee" type="file" id="fileAssociate" />
+
+
+
+                        </label>
+
+
+                        @if (Model.App != null)
+                        {
+                            if (Model.formval == "Edit")
+                            {
+                                <a href="" asp-for="@Model.App.File">@Model.App.File</a>
+                            }
+                            else
+                            {
+                                <label style="color:darkblue;">@Model.App.File</label>
+                            }
+                        }
+
+
+                    </div>
+                    @if (Model.formval == "Edit")
+                    {
+                            <input type="hidden" asp-for="@Model.ImagePath" id="path" />
+                       
+                            <input type="hidden" asp-for="@Model.formval" />
+                            <input type="hidden" asp-for="@Model.FormRegistrationNo" />
+                            <input type="hidden" asp-for="@Model.PartitionKey" />
+                            <input type="hidden" asp-for="@Model.RowKey" />
+                            <input type="hidden" asp-for="@Model.ImagePath" id="path" />
+                       
+
+
+
+                    }
+                    <span asp-validation-for="@Model.App.Filee" class="text-danger"> @ViewBag.Filee</span>
+                    @*@Html.ValidationMessageFor(m => m.App.Filee, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+        </div>
+
+
+        <ul class="cic-form-action-block">
+            <li>
+                <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-submit" asp-route-next="business" asp-route-name="type">Next</button>
+            </li>
+        </ul>
+    </div>
+
+
+</div>

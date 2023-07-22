@@ -1,0 +1,347 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model Cicf7Model
+
+<style>
+    .GFG {
+        background-color: white;
+        //border: 2px solid black;
+        color: green;
+        padding: 5px 10px;
+        text-align: center;
+        display: inline-block;
+        font-size: 20px;
+        margin: 10px 0px;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+
+<section class="Cic-form-wrapper">
+
+    <div class="Cic-form-content" id="printarea">
+
+        <div class="">
+            <div class="">
+                <h1>MANUFACTURERS AND SUPPLIERS REGISTRATION FORM – CICF 7</h1>
+
+                <div id="previewmain">
+
+
+                       <div class="accordion" id="Previewmaindetails">
+                        <div class="card">
+                            <div class="card-header" id="prevhead1">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget1"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION A - Type of Application</a>
+                            </div>
+                            <div id="prevtarget1" class="collapse show" aria-labelledby="prevhead1" data-parent="#Previewmaindetails">
+                                <div class="card-body">
+
+                                    <div class="fieldset">
+                                        <div class="row">
+                                            <div class="col-lg form-group">Type of Application</div>
+                                            <div class="col-lg form-group">@Model.App.AppType</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Association Name</div>
+                                            <div class="col-lg form-group">@Model.App.AssociationName</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg form-group">Name of Authorised Officer</div>
+                                            <div class="col-lg form-group">@Model.App.AuthorisedOfficerName</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                           <div class="card">
+                            <div class="card-header" id="prevhead2">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget2"
+                                   aria-expanded="true" aria-controls="prevtarget1">SECTION B - Business Details</a>
+                            </div>
+                            <div id="prevtarget2" class="collapse show" aria-labelledby="prevhead2" data-parent="#Previewmaindetails">
+                                   <div class="card-body">
+                                       <div class="fieldset">
+                                           <div class="row">
+                                               <div class="col-lg form-group">Business Names</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessName</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Trading Style</div>
+                                               <div class="col-lg form-group">@Model.businessModel.TradingStyle</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">BusinessType</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessType</div>
+                                           </div>
+
+                                           @if (ViewBag.other)
+                                           {
+                                               <div class="row">
+                                                   <div class="col-lg form-group">Other (please specify)</div>
+                                                   <div class="col-lg form-group">@Model.businessModel.Other</div>
+                                               </div>
+                                           }
+                                           <div class="row">
+                                               <div class="col-lg form-group">Date of Registration of Company</div>
+                                               <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationDate</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Place of Registration of Company</div>
+                                               <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationPlace</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Company Registration Number</div>
+                                               <div class="col-lg form-group">@Model.businessModel.CompanyRegistrationNumber</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Physical Address in Eswatini</div>
+                                               <div class="col-lg form-group">@Model.businessModel.PhysicalAddress</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Company Head Office Physical Address</div>
+                                               <div class="col-lg form-group">@Model.businessModel.CompanyHOPhysicalAddress</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Postal Address</div>
+                                               <div class="col-lg form-group">@Model.businessModel.PostalAddress</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Telephone No</div>
+                                               <div class="col-lg form-group">@Model.businessModel.TelephoneNumber</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Fax</div>
+                                               <div class="col-lg form-group">@Model.businessModel.FaxNo</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Email</div>
+                                               <div class="col-lg form-group"><label id="Email"></label>@Model.businessModel.Email</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Work Discipline Applying for</div>
+                                               <div class="col-lg form-group">@Model.businessModel.WorkDisciplineType</div>
+                                           </div>
+                                           <div>
+                                               <h5>Business Representative</h5>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Name</div>
+                                               <div class="col-lg form-group" id="RepresentativeName">@Model.businessModel.BusinessRepresentativeName</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Position</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativePositionNumber</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Cell No</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeCellNo</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Fax</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeFax</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Email</div>
+                                               <div class="col-lg form-group">@Model.businessModel.BusinessRepresentativeEmail</div>
+                                           </div>
+
+                                       </div>
+
+                                       <div class="fieldset bordered">
+                                           <div>
+                                               <strong>Directorship and Share Dividends</strong>
+
+                                           </div>
+                                           @if (Model.Sharelist != null)
+                                           {
+                                               <div class="table-fieldset">
+                                                   <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                       <table class="table table-bordered" id="tblShare">
+                                                           <thead>
+                                                               <tr>
+                                                                   <th scope="col">Name ofDirector(s)/Partners</th>
+                                                                   <th scope="col">Nationality</th>
+                                                                   <th scope="col">ID/Passport No.</th>
+                                                                   <th scope="col">Country of Residence</th>
+                                                                   <th scope="col">Cellphone No.</th>
+                                                                   <th scope="col">% Shares</th>
+                                                               </tr>
+                                                           </thead>
+                                                           <tbody id="tbody">
+                                                               @for (int i = 0; i < Model.Sharelist.Count; i++)
+                                                               {
+                                                                   <tr>
+                                                                       <td>@Model.Sharelist[i].DirectorName</td>
+                                                                       <td>@Model.Sharelist[i].Nationnality</td>
+                                                                       <td>@Model.Sharelist[i].IdNO</td>
+                                                                       <td>@Model.Sharelist[i].Country</td>
+                                                                       <td>@Model.Sharelist[i].CellphoneNo</td>
+                                                                       <td>@Model.Sharelist[i].SharePercent</td>
+                                                                   </tr>
+                                                               }
+                                                           </tbody>
+                                                       </table>
+                                                   </div>
+                                               </div>
+                                           }
+                                       </div>
+                                       
+                                    </div>
+                            </div>
+                            </div>
+
+                             <div class="card">
+                            <div class="card-header" id="prevhead3">
+                                <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#prevtarget3"
+                                   aria-expanded="true" aria-controls="prevtarget3">
+                                    SECTION C - Technical Data & List of Previous Projects/Clients
+                                </a>
+                            </div>
+                            <div id="prevtarget3" class="collapse" aria-labelledby="prevhead3" data-parent="#prevhead3">
+                                <div class="fieldset">
+                                    <div class="row">
+                                        <div class="col-lg-12 form-group">State Details of Materials and/or Equipment Manufactured and/or Supplied:</div>
+                                        <div class="col-lg-12 form-group">@Model.technicalData.StateDetailsOfMaterials</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 form-group">State any Attainment or Compliance to any Regional and/or International Standards. (Manufacturers and Suppliers)</div>
+                                        <div class="col-lg-12 form-group">@Model.technicalData.StateOfAttainent </div>
+                                    </div>
+                                    <div class="fieldset bordered">
+                                        <div>
+                                            <strong>List of Previous Projects/Clients</strong>
+
+                                        </div>
+                                        @if (Model.listOfPrevousClent != null)
+                                        {
+                                            <div class="table-fieldset">
+                                                <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                    <table class="table table-bordered" id="tblproject">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name of Client</th>
+                                                                <th scope="col">Service Provided</th>
+                                                                <th scope="col">Date/Period</th>
+                                                                <th scope="col">Contract Value</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tbody">
+                                                            @for (int i = 0; i < Model.listOfPrevousClent.Count; i++)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Model.listOfPrevousClent[i].NameofClient</td>
+                                                                    <td>@Model.listOfPrevousClent[i].ServiceProvided</td>
+                                                                    <td>@Model.listOfPrevousClent[i].DateOrPeriod</td>
+                                                                    <td>@Model.listOfPrevousClent[i].ContractValue</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+                           <div class="card">
+                               <div class="card-header" id="prevhead4">
+                                   <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#prevtarget4"
+                                      aria-expanded="true" aria-controls="prevtarget1">
+                                       SECTION D -  Financial Capability
+                                   </a>
+                               </div>
+                               <div id="prevtarget4" class="collapse show" aria-labelledby="prevhead4" data-parent="#Previewmaindetails">
+                                   <div class="body">
+                                       <div class="fieldset">
+                                           <div class="row">
+                                               <div class="col-lg form-group">Financial Year 1 end Total Turnover</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.AnnualTurnoverYear1</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Financial Year 2 end Total Turnover</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.AnnualTurnoverYear2</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Financial Year 3 end Total Turnover</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.AnnualTurnoverYear3</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Financial Year 3 end Total Turnover</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.AnnualTurnoverYear3</div>
+                                           </div>
+                                           @*<div class="row">
+                                               <div class="col-lg form-group">2. Financial Value of surety if any: E</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.FinancialValue</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">Indicate the name of the Financial Institution(s) </div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.FinancialInstitutionName</div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-lg form-group">3. Available Capital E</div>
+                                               <div class="col-lg form-group">@Model.financialCapabilityForm7.AvailableCapital</div>
+                                           </div>*@
+
+                                           <div class="fieldset bordered">
+                                               <div>
+                                                   <strong>
+                                                       Applicants Banks
+                                                   </strong>
+
+                                               </div>
+                                               @if (Model.companyBank != null)
+                                               {
+                                                   <div class="table-fieldset">
+                                                       <div class="table-responsive-lg" style="overflow-x:auto;">
+                                                           <table class="table table-bordered" id="tblbank">
+                                                               <thead>
+                                                                   <tr>
+                                                                       <th scope="col">Bank Name</th>
+                                                                       <th scope="col">Branch Name</th>
+                                                                       <th scope="col">Branch Code</th>
+                                                                       <th scope="col">Holder Name</th>
+                                                                       <th scope="col">Account Number</th>
+                                                                       <th scope="col">Account Type</th>
+                                                                       <th scope="col">Telephone No</th>
+                                                                   </tr>
+                                                               </thead>
+                                                               <tbody id="tbody">
+                                                                   @for (int i = 0; i < Model.companyBank.Count; i++)
+                                                                   {
+                                                                       <tr>
+                                                                           <td>@Model.companyBank[i].BankName</td>
+                                                                           <td>@Model.companyBank[i].BranchName</td>
+                                                                           <td>@Model.companyBank[i].BranchCode</td>
+                                                                           <td>@Model.companyBank[i].AccountHoulderName</td>
+                                                                           <td>@Model.companyBank[i].AccountNo</td>
+                                                                           <td>@Model.companyBank[i].AccountTYpe</td>
+                                                                           <td>@Model.companyBank[i].TelephoneNo</td>
+                                                                       </tr>
+                                                                   }
+                                                               </tbody>
+                                                           </table>
+                                                       </div>
+                                                   </div>
+                                               }
+                                           </div>
+                                       </div>
+                                       </div>
+                                </div>
+                               </div>
+                           </div>
+
+
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+  
+
+</section>

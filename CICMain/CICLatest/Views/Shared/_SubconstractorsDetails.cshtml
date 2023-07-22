@@ -1,0 +1,583 @@
+﻿@model CICLatest.Models.MainViewModel
+<h4 class="text-center">Details of all sub-contractors & Details of All Suppliers </h4>
+<div class="SubcontDetails-fielset" onload="getSubcontractSupplierList()">
+    <div class="fieldset">
+        <div class="form-fields">
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <h5>SECTION D – Details of All Consultancy Firms of Project</h5>
+                    @*@Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })*@
+
+                    @for (int i = 0; i < Model.Tab3MainSection.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+                                    <div class="validationmsg"><span asp-validation-for="Tab3MainSection[i].Profession" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="Tab3MainSection[i].NameofConsultancyFirm" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="Tab3MainSection[i].CountryofOrigin" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="Tab3MainSection[i].Contact" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="Tab3MainSection[i].CicRegistrationNo" class="text-danger"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="fixed-side" scope="col">Profession</th>
+                                    <th scope="col" class="secendcolumn">Name of Consultancy Firm</th>
+                                    <th scope="col">Country of Origin</th>
+                                    <th scope="col">Contact Details</th>
+                                    <th scope="col">CIC Registration No.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @for (int i = 0; i < Model.Tab3MainSection.Count; i++)
+                                {
+
+                                    <tr>
+                                        @*<th class="fixed-side">Project </th>*@
+                                        <td class="secendcolumn">
+                                            <input asp-for="Tab3MainSection[i].Profession" type="text" readonly class="form-control" placeholder="" />
+                                        </td>
+                                        <td class="secendcolumn">
+                                            <input asp-for="Tab3MainSection[i].NameofConsultancyFirm" type="text" class="form-control" placeholder="" />
+                                        </td>
+                                        <td> <input asp-for="Tab3MainSection[i].CountryofOrigin" type="text" class="form-control" placeholder="" /> </td>
+                                        <td> <input asp-for="Tab3MainSection[i].Contact" type="text" class="form-control" placeholder="" /> </td>
+                                        <td>
+                                            <input asp-for="Tab3MainSection[i].CicRegistrationNo" type="text" class="form-control" placeholder="" />
+
+
+                                            <input type="hidden" asp-for="Tab3MainSection[i].PartitionKey" />
+                                            <input type="hidden" asp-for="Tab3MainSection[i].RowKey" />
+                                            <input type="hidden" asp-for="Tab3MainSection[i].FormRegistrationNo" />
+
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fieldset">
+        <div class="form-fields">
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <strong>
+                        Section E – details of all sub-contractors (domestic, nominated or selected)
+                    </strong>
+                    @*@if (Model.tab3SecSection!=null)
+                    {*@
+                    @for (int i = 0; i < Model.tab3SecSection.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+
+                                    <div class="validationmsg"><span asp-validation-for="tab3SecSection[i].NameofSubContractors" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3SecSection[i].CountryofOrigin" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3SecSection[i].ScopeofWork" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3SecSection[i].ContactDetails" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3SecSection[i].RegistrationNo" class="text-danger"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*}*@
+
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table id="tblSecondSection" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name of Sub-Contractors</th>
+                                    <th scope="col">Country of Origin</th>
+                                    <th scope="col">Scope of Work</th>
+                                    <th scope="col">Contact Details </th>
+                                    <th scope="col">CIC Registration No.</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodySecTab3">
+                                @*@if (Model.tab3SecSection != null)
+                                {*@
+
+                                @for (int i = 0; i < Model.tab3SecSection.Count; i++)
+                                {
+                                    <tr id="@i">
+                                        <td class="row-index">
+                                            <select asp-for="tab3SecSection[i].NameofSubContractors" class="custom-select form-control" id="SubContractor_0" asp-items="@(new SelectList(@Model.ListOfSubContractors, "SubContractorValue", "SubContractorText"))" onchange="subContractorsChange(0)">
+                                                <option selected>Select</option>
+                                            </select>
+                                            @*@Html.DropDownListFor(x => x.tab3SecSection[i].NameofSubContractors, new SelectList(@ViewBag.ListOfSubContractors, "SubContractorValue", "SubContractorText"), "Select", new { id = "SubContractor_" + i, @class = "custom-select form-control" })*@
+                                        </td>
+                                        <td class="row-index1"><input class="form-control" type="text" asp-for="tab3SecSection[i].CountryofOrigin" readonly /></td>
+                                        <td class="row-index2"><input class="form-control" type="text" asp-for="tab3SecSection[i].ScopeofWork" readonly /></td>
+                                        <td class="row-index3"><input class="form-control" type="text" asp-for="tab3SecSection[i].ContactDetails" readonly /></td>
+                                        <td class="row-index4">
+                                            <input class="form-control" type="text" asp-for="tab3SecSection[i].RegistrationNo" readonly />
+                                            <input type="hidden" asp-for="Tab3Sec" />
+
+                                            <input type="hidden" asp-for="tab3SecSection[i].PartitionKey" />
+                                            <input type="hidden" asp-for="tab3SecSection[i].RowKey" />
+                                            <input type="hidden" asp-for="tab3SecSection[i].FormRegistrationNo" />
+                                        </td>
+                                        <td>
+
+                                            <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+                                        </td>
+
+                                    </tr>
+                                }
+                                @*}*@
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="Addnewrecord-td">
+
+                                        <button class="btnTblRow" id="btnAddTab3Sec" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                var counter = document.getElementById("Tab3Sec").value;
+
+                var values = [];
+                window.onload = function () {
+                    $.ajax(
+                        {
+                            type: 'GET',
+                            url: "@(Url.Action("GetSubContractSupplierList", "Form8"))",
+                            dataType: "json",
+                            success: function (data) {
+                                //  const data1=data;
+                                console.log(data);
+                                // var myObj = JSON.parse(data1);
+
+                            },
+                            error: function () {
+                                console.log('failure')
+                            }
+                        });
+                }
+
+                $(function () {
+
+                    $('#btnAddTab3Sec').click(function () {
+
+                        $(`<tr id="${counter}"><td class="row-index">
+                                            <select class="custom-select form-control" data-val="true" data-val-required="Please Enter Name of SubContractors" id="SubContractor_${counter}" name="tab3SecSection[${counter}].NameofSubContractors" onchange="subContractorsChange(${counter})"><option value="">Select</option>
+                                            </select>
+                                            </td>
+                                            <td class="row-index1">
+                                            <input type="text" class="form-control" name="tab3SecSection[${counter}].CountryofOrigin" value=" " readonly/>
+                                            </td>
+                                            <td class="row-index2">
+                                            <input type="text" class="form-control" name="tab3SecSection[${counter}].ScopeofWork" value=" " readonly/>
+                                            </td>
+                                            <td class="row-index3">
+                                            <input type="text" class="form-control" name="tab3SecSection[${counter}].ContactDetails" value=" " readonly/>
+                                            </td>
+                                            <td class="row-index4">
+                                            <input type="text" class="form-control" name="tab3SecSection[${counter}].RegistrationNo" value=" " readonly/>
+                                            </td>
+                                            <td>
+                                            <button type="button" class="remove">Delete</button>
+                                            </td>
+                                            </tr>`).appendTo('#tblSecondSection');
+
+                        $.ajax({
+                            type: 'GET',
+                            url: "@(Url.Action("GetAllSubContractors", "Form8"))",
+                            success: function (data) {
+                                var subContractors = JSON.parse(data);
+
+                                $.each(subContractors, function (index, value) {
+                                    var option = $('<option></option>').attr("value", value.SubContractorValue).text(value.SubContractorText);
+
+                                    $(`[name="tab3SecSection[${counter - 1}].NameofSubContractors"]`).append(option);
+                                });
+                            },
+                            error: function () {
+
+                            }
+                        });
+
+                        counter++;
+
+                        document.getElementById("Tab3Sec").value = counter;
+
+                        return false;
+                    });
+                });
+
+                $(document).ready(function () {
+
+                    $('#tbodySecTab3').on('click', '.remove', function () {
+
+                        // containing the clicked button
+                        var child = $(this).closest('tr').nextAll();
+
+                        // Iterating across all the rows
+                        // obtained to change the index
+                        child.each(function () {
+
+                            // Getting <tr> id.
+                            var id = $(this).attr('id');
+
+                            // Getting the <p> inside the .row-index class.
+                            var idx = $(this).children('.row-index').children('input');
+                            var idx1 = $(this).children('.row-index1').children('input');
+                            var idx2 = $(this).children('.row-index2').children('input');
+                            var idx3 = $(this).children('.row-index3').children('input');
+                            var idx4 = $(this).children('.row-index4').children('input');
+
+                            // Gets the row number from <tr> id.
+                            var dig = parseInt(id);
+
+                            var cnew = dig - 1;
+                            // Modifying row index.
+                            //idx.html(`Row ${dig - 1}`);
+                            idx.attr('name', `tab3SecSection[${cnew}].NameofSubContractors`)
+                            idx1.attr('name', `tab3SecSection[${cnew}].CountryofOrigin`)
+                            idx2.attr('name', `tab3SecSection[${cnew}].ScopeofWork`)
+                            idx3.attr('name', `tab3SecSection[${cnew}].ContactDetails`)
+                            idx4.attr('name', `tab3SecSection[${cnew}].RegistrationNo`)
+                            // Modifying row id.
+                            $(this).attr('id', `${dig - 1}`);
+                        });
+
+                        // Removing the current row.
+                        $(this).closest('tr').remove();
+
+                        // Decreasing total number of rows by 1.
+                        counter--;
+                        document.getElementById("Tab3Sec").value = counter;
+                    });
+                });
+            </script>
+
+            <div class="cic-table-wrapper">
+                <div class="title">
+                    <strong>
+                        SECTION F – Details of All Suppliers
+                    </strong>
+                    @*@if (Model.tab3ThirdSection != null)
+                    {*@
+                    @for (int i = 0; i < Model.tab3ThirdSection.Count; i++)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="table-validation-error">
+                                    <div class="validationmsg"><span asp-validation-for="tab3ThirdSection[i].Supplier" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3ThirdSection[i].CountryofOrigin" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3ThirdSection[i].ScopeofWork" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3ThirdSection[i].ContactDetails" class="text-danger"></span></div>
+                                    <div class="validationmsg"><span asp-validation-for="tab3ThirdSection[i].RegistrationNo" class="text-danger"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @*}*@
+                </div>
+                <div class="table-fieldset">
+                    <div class="table-responsive-lg">
+                        <table id="tbl3ThirdSection" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name of Supplier </th>
+                                    <th scope="col">Country of Origin</th>
+                                    <th scope="col">Scope of Work/Supply </th>
+                                    <th scope="col">Contact Details </th>
+                                    <th scope="col">CIC Registration No.</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tab3Thirdtbody">
+                                @*@if (Model.tab3ThirdSection != null)
+                                {*@
+                                @for (int i = 0; i < Model.tab3ThirdSection.Count; i++)
+                                {
+
+                                    <tr id="@i">
+                                        <td class="row-index0">
+                                            @*<input class="form-control" type="text" asp-for="tab3ThirdSection[i].Supplier" />*@
+                                            <select asp-for="tab3ThirdSection[i].Supplier" class="custom-select form-control" id="Supplier_0" asp-items="@(new SelectList(@Model.ListOfSuppliers, "SupplierValue", "SupplierText"))" onchange="suppliersChange(0)">
+                                                <option selected>Select</option>
+                                            </select>
+                                        </td>
+                                        <td class="row-index1"><input class="form-control" type="text" asp-for="tab3ThirdSection[i].CountryofOrigin" /></td>
+                                        <td class="row-index2"><input class="form-control" type="text" asp-for="tab3ThirdSection[i].ScopeofWork" /></td>
+                                        <td class="row-index3"><input class="form-control" type="text" asp-for="tab3ThirdSection[i].ContactDetails" /></td>
+                                        <td class="row-index4">
+                                            <input class="form-control" type="text" asp-for="tab3ThirdSection[i].RegistrationNo" />
+                                            <input type="hidden" asp-for="Tab3Third" />
+                                            <input type="hidden" asp-for="tab3ThirdSection[i].PartitionKey" />
+                                            <input type="hidden" asp-for="tab3ThirdSection[i].RowKey" />
+                                            <input type="hidden" asp-for="tab3ThirdSection[i].FormRegistrationNo" />
+
+                                        </td>
+                                        <td>
+                                            <button class="remove" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button>
+
+                                        </td>
+
+                                    </tr>
+                                }
+                                @*}*@
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="8" class="Addnewrecord-td">
+
+                                        <button class="btnTblRow" id="btnAddTab3Third" type="button"> <span><img src="~/images/plus.svg" alt="" /> </span> Add new record</button>
+                                    </td>
+                                </tr>
+                            </tfoot>
+
+                        </table>
+                    </div>
+
+
+
+                    <ul class="cic-form-action-block">
+                        <li>
+                            <button type="submit" asp-route-name="finance" asp-route-pre="business" class="default-btn btn-preview">Previous</button>
+                            <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                        </li>
+                        <li>
+                            <button type="submit" asp-route-name="finance" asp-route-next="work" class="btn btn-submit">Next</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Get all input fields and error message elements
+        // Get all input fields and error message elements
+        const inputFields3 = document.querySelectorAll('input[data-val="true"]');
+        const errorMessages3 = document.querySelectorAll('span.field-validation-valid, span.field-validation-error');
+
+        // Add event listeners to all input fields to hide their respective error messages when the input value changes
+        inputFields3.forEach(function (inputField) {
+            const errorMessage = getErrorMessageElement(inputField);
+            inputField.addEventListener('input', function () {
+                if (inputField.value.trim() !== '') {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+
+        // Helper function to get the corresponding error message element for an input field
+        function getErrorMessageElement(inputField) {
+            const fieldName = inputField.getAttribute('name');
+            const errorMessage = Array.from(errorMessages3).find(function (element) {
+                return element.getAttribute('data-valmsg-for') === fieldName;
+            });
+            return errorMessage;
+        }
+    </script>
+</div>
+
+
+
+<script type="text/javascript">
+    var counterTab3Third = document.getElementById("Tab3Third").value;
+
+    $(function () {
+
+        $('#btnAddTab3Third').click(function () {
+
+            $(`<tr id="${counterTab3Third}">
+                    <td class="row-index0">
+                        <select class="custom-select form-control" data-val="true" data-val-required="Please Enter Name of Supplier" id="Supplier_${counterTab3Third}" name="tab3ThirdSection[${counterTab3Third}].Supplier" onchange="suppliersChange(${counterTab3Third})"><option value="">Select</option>
+                        </select>
+                    </td>
+                    <td class="row-index1">
+                        <input type="text" class="form-control" name="tab3ThirdSection[${counterTab3Third}].CountryofOrigin" value=""  />
+                    </td>
+                    <td class="row-index2">
+                        <input type="text" class="form-control" name="tab3ThirdSection[${counterTab3Third}].ScopeofWork" value="" />
+                    </td>
+                    <td class="row-index3">
+                        <input type="text" class="form-control" name="tab3ThirdSection[${counterTab3Third}].ContactDetails" value="" />
+                    </td>
+                    <td class="row-index4">
+                        <input type="text" class="form-control" name="tab3ThirdSection[${counterTab3Third}].RegistrationNo" value="" />
+                    </td>
+                    <td>
+                        <button type="button" class="remove"> <img src="/images/trush.svg" alt="remove row" /></button>
+                    </td>
+                    </tr>`).appendTo('#tbl3ThirdSection');
+
+            $.ajax({
+                type: 'GET',
+                url: "@(Url.Action("GetAllSuppliers", "Form8"))",
+                success: function (data) {
+                    var suppliers = JSON.parse(data);
+
+                    $.each(suppliers, function (index, value) {
+                        var option = $('<option></option>').attr("value", value.SupplierValue).text(value.SupplierText);
+
+                        $(`[name="tab3ThirdSection[${counterTab3Third - 1}].Supplier"]`).append(option);
+                    });
+                },
+                error: function () {
+
+                }
+            });
+
+            counterTab3Third++;
+
+            document.getElementById("Tab3Third").value = counterTab3Third;
+
+            return false;
+        });
+    });
+
+    $(document).ready(function () {
+
+        $('#tab3Thirdtbody').on('click', '.remove', function () {
+
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            // Iterating across all the rows
+            // obtained to change the index
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row-index0').children('input');
+                var idx1 = $(this).children('.row-index1').children('input');
+                var idx2 = $(this).children('.row-index2').children('input');
+                var idx3 = $(this).children('.row-index3').children('input');
+                var idx4 = $(this).children('.row-index4').children('input');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id);
+
+                var cnew = dig - 1;
+                // Modifying row index.
+                //idx.html(`Row ${dig - 1}`);
+                idx.attr('name', `tab3ThirdSection[${cnew}].Supplier`)
+                idx1.attr('name', `tab3ThirdSection[${cnew}].CountryofOrigin`)
+                idx2.attr('name', `tab3ThirdSection[${cnew}].ScopeofWork`)
+                idx3.attr('name', `tab3ThirdSection[${cnew}].ContactDetails`)
+                idx4.attr('name', `tab3ThirdSection[${cnew}].RegistrationNo`)
+                // Modifying row id.
+                $(this).attr('id', `${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            counterTab3Third--;
+            document.getElementById("Tab3Third").value = counterTab3Third;
+        });
+    });
+
+    function subContractorsChange(x) {
+        var subContractorElement = $(`#SubContractor_${x}`);
+
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("GetSubContractorDetails", "Form8"))",
+            data: { SubContractor: subContractorElement.val() },
+            success: function (data) {
+                debugger;
+                var subcontractorsData = JSON.parse(data);
+
+                var child = $(`#SubContractor_${x}`).closest('tr').nextAll();
+
+                child.prevObject.each(function () {
+                    var idx1 = $(this).find('.row-index1').children('input');
+                    var idx2 = $(this).find('.row-index2').children('input');
+                    var idx3 = $(this).find('.row-index3').children('input');
+                    var idx4 = $(this).find('.row-index4').children('input');
+
+                    idx1.attr("value", subcontractorsData.CountryofOrigin);
+                    idx2.attr("value", subcontractorsData.ScopeofWork);
+                    idx3.attr("value", subcontractorsData.ContactDetails);
+                    idx4.attr("value", subcontractorsData.RegistrationNo);
+                });
+            },
+            error: function () {
+
+            }
+        })
+    }
+
+    function suppliersChange(x) {
+        var supplierElement = $(`#Supplier_${x}`);
+       
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("GetSupplierDetails", "Form8"))",
+            data: { Supplier: supplierElement.val() },
+            success: function (data) {
+                var suppliersData = JSON.parse(data);
+
+                var child = $(`#Supplier_${x}`).closest('tr').nextAll();
+
+                child.prevObject.each(function () {
+                    var idx1 = $(this).find('.row-index1').children('input');
+                    var idx2 = $(this).find('.row-index2').children('input');
+                    var idx3 = $(this).find('.row-index3').children('input');
+                    var idx4 = $(this).find('.row-index4').children('input');
+
+                    idx1.attr("value", suppliersData.CountryofOrigin);
+                    idx2.attr("value", suppliersData.ScopeofWork);
+                    idx3.attr("value", suppliersData.ContactDetails);
+                    idx4.attr("value", suppliersData.RegistrationNo);
+                    hideErrorMessages();
+                });
+            },
+            error: function () {
+
+            }
+        })
+
+        function hideErrorMessages() {
+            const autoFilledFields = ['LevyPaybale', 'TotalProjectCost', 'TotalProjectCostIncludingLevy'];
+            autoFilledFields.forEach(function (fieldName) {
+                const errorMessage = getErrorMessageElement(document.getElementById(fieldName));
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        }
+    }
+
+</script>

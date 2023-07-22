@@ -1,0 +1,50 @@
+﻿@{ ViewData["Title"] = "Construction firms registration form - cicf 1"; }
+@model PaymentModel
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<section class="Cic-form-wrapper">
+    <div class="cic-breadcurm">
+        <ul>
+            <li><a asp-controller="Home" asp-action="Index">Dashboard</a> <span class="delimiter"><img src="~/images/dark-right-arrow.svg" /></span></li>
+            @*<li><strong class="current-item">Upload Payment proof</strong></li>*@
+        </ul>
+    </div>
+    <div class="Cic-form-content">
+        <div class="">
+            <div class="">
+                <h1>Upload Payment Proof</h1>
+                <div class="wizard">
+                    <div class="wizard-inner">
+                       
+                        <form method="post" enctype="multipart/form-data" id="form1" class="md-form">
+                            @if (ViewBag.msg != null)
+                            {
+                                @if (ViewBag.success == true)
+                                {
+                                    <div class="table-validation-sucess">
+                                        <div class="validationmsg"><span class="text-success field-validation-success">@ViewBag.msg</span></div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="table-validation-error">
+                                        <div class="validationmsg"><span class="text-danger field-validation-error">@ViewBag.msg</span></div>
+                                    </div>
+                                }
+                            }
+
+                            <input type="hidden" asp-for="CustNo" />
+                            <div class="mb-3">
+                                @*<label for="formFile" class="form-label">Default file input example</label>*@
+                                <input class="form-control" type="file" id="formFile" asp-for="Paymentfile" style="height: calc(2.5em + .75rem + 2px) ">
+                            </div>
+                            <button type="submit" class="btn btn-submit">Upload File</button>
+                            <button type="submit" class="btn btn-submit" asp-controller="Invoice" asp-action="Index">Back</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

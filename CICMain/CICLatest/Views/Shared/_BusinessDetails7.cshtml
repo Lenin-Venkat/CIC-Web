@@ -1,0 +1,611 @@
+﻿@model CICLatest.Models.Cicf7Model
+
+
+<h4 class="text-center"> Business Details </h4>
+<div class="cic-application-wrapper">
+    <div class="cic-fielset-inner">
+        <div class="BusinessDetails-content">
+            <div class="fieldset">
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label for="fname" class="required">Business Names <span class="asterisk">*</span></label>
+                        <input class="form-control" asp-for="businessModel.BusinessName" placeholder="Please enter Business name" />
+                        <span asp-validation-for="businessModel.BusinessName" class="text-danger"></span>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label class="required" for="lname">Trading Style <span class="asterisk">*</span></label>
+                        <input asp-for="businessModel.TradingStyle" class="form-control" placeholder="Please enter Trading Style" />
+                        <span asp-validation-for="businessModel.TradingStyle" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10 typeofbusiness">
+                        <div class="b-label">Type Of Business <span class="asterisk">*</span></div>
+                        <ul>
+                            <li>
+                                <label class="custom-radio">
+                                    Sole Proprietorship
+                                    <input type="radio" asp-for="@Model.businessModel.BusinessType" value="SoleProprietorship" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Partnership
+                                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="Partnership" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Foreign Company
+                                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="ForeignCompany" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Subsidiary Company
+                                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="SubsidiaryCompany" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Public Company
+                                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="PublicCompany" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Private Company
+                                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="PrivateCompany" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                @*<label class="custom-radio">
+                  Other
+                    <input asp-for="@Model.businessModel.BusinessType" type="radio" value="other" onclick="handleClick1(this);" />
+                    <span class="checkmark"></span>
+                </label>*@
+                                <label class="custom-radio">
+                                    Other
+                                    <input type="radio" asp-for="@Model.businessModel.BusinessType" value="Other" onclick="handleClick1(this);" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+                        <span asp-validation-for="businessModel.BusinessType" class="text-danger"></span>
+
+                        <script type="text/javascript">
+                            window.onload = function () {
+
+                                $('#other').hide();
+                                var s = $('input[id="businessModel_BusinessType"]:checked').val();
+                                //var apptype = 0;
+                                //if (s == "ForeignCompany") {
+                                //    $('#Newsection1').show();
+                                //    $('#Newsection2').hide();
+                                //    $('#Newsection3').hide();
+                                //    $('#Newsection4').hide();
+                                //    $('#Newsection5').hide();
+                                //    $('#Newsection6').hide();
+                                //    $('#share1').hide();
+                                //    $('#share2').show();
+                                //    $('#share3').show();
+                                //    $('#findoc').hide();
+                                //    $('#trackdoc').hide();
+                                //    $('#jointdoc').hide();
+                                //    $('#doc1').show();
+                                //    $('#compliance').show();
+                                //    $('#Newsection1').show();
+                                //    $('#Newsection2').hide();
+                                /* }*/
+                                //    else
+                                //    {
+                                //        $('#Newsection1').hide();
+                                //        $('#Newsection2').hide();
+                                //        $('#Newsection3').show();
+                                //        $('#Newsection4').show();
+                                //        $('#Newsection5').show();
+                                //        $('#Newsection6').show();
+                                //        $('#share1').show();
+                                //        $('#share2').show();
+                                //        $('#share3').show();
+                                //        $('#findoc').show();
+                                //        $('#trackdoc').show();
+                                //        $('#jointdoc').show();
+                                //        $('#doc1').hide();
+                                //        $('#compliance').hide();
+                                //        apptype = $('input[id="App_AppType"]:checked').val();
+
+                                //        if (apptype == 'Renewal') {
+                                //            $('#Newsection1').hide();
+                                //            $('#Newsection2').hide();
+                                //            $('#doc1').hide();
+                                //            $('#compliance').hide();
+                                //        }
+                                //        else {
+                                //            $('#Newsection1').show();
+                                //            $('#Newsection2').show();
+                                //            $('#doc1').hide();
+                                //            $('#compliance').hide();
+                                //        }
+                                //    }
+
+
+                            };
+                        </script>
+                        @*<script type="text/javascript">
+
+            function handleClick1(myRadio)
+            {
+                var value = myRadio.value;
+
+                if (value == '7') {
+                    $('#other').show();
+                }
+                else {
+                    $('#other').hide();
+                }
+            }
+
+        </script>*@
+                        <script type="text/javascript">
+
+                            function handleClick1(myRadio)
+                            {
+                                var value = myRadio.value;
+
+                                if (value == 'Other')
+                                {
+                                    $('#other').show();
+                                }
+                                else {
+                                    $('#other').hide();
+                                }
+
+                              
+                               
+                            }
+
+
+                          
+                        </script>
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 form-group Otherfielset" id="other">
+                        <label for="Other">Other (please specify)</label>
+                        <input asp-for="businessModel.Other" class="form-control" placeholder="Please enter other type of Business" />
+                        <span asp-validation-for="businessModel.Other" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Date of Registration of Company <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input autocomplete="off" asp-for="businessModel.CompanyRegistrationDate" id="datepicker" class="form-control datepicker-control" type="text" />
+                            <span asp-validation-for="businessModel.CompanyRegistrationDate" class="text-danger"></span>
+                        </div>
+
+
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#datepicker').datepicker({
+
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    format: "dd/mm/yyyy",
+                                    language: "tr"
+                                });
+                            });
+                        </script>
+                        <script type="text/javascript" lang="javascript">
+                            $(function () {
+                                $("[id*=Tanggal]").attr("ReadOnly", true)
+                                $("[id*=Tgl_Rawat]").datepicker({
+                                    changeMonth: true,
+                                    changeYear: true,
+                                    dateFormat: "yy/mm/dd"
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Place of Registration of Company <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.CompanyRegistrationPlace" class="form-control" placeholder="Please enter Place of Registration of Company" />
+                            <span asp-validation-for="businessModel.CompanyRegistrationPlace" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Company Registration Number <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.CompanyRegistrationNumber" class="form-control" placeholder="Please enter company registration number" />
+                            <span asp-validation-for="businessModel.CompanyRegistrationNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Physical Address in Eswatini <span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.PhysicalAddress" class="form-control" placeholder="Please enter Physical Address in Eswatini " />
+                            <span asp-validation-for="businessModel.PhysicalAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Company Head Office Physical Address<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.CompanyHOPhysicalAddress" class="form-control" placeholder="Please enter company head Office physical address " />
+                            <span asp-validation-for="businessModel.PhysicalAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Postal Address<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.PostalAddress" class="form-control" placeholder="Please enter Postal Address" />
+                            <span asp-validation-for="businessModel.PostalAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Telephone No<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.TelephoneNumber" class="form-control" placeholder="Please enter telephone no" />
+                            <span asp-validation-for="businessModel.TelephoneNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>
+                            Fax
+
+                        </label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.FaxNo" class="form-control" placeholder="Please enter Fax" />
+                            <span asp-validation-for="businessModel.FaxNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 form-group">
+                        <label>Email<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.Email" class="form-control" placeholder="Please enter Email address" />
+                            <span asp-validation-for="businessModel.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <div class="b-label">Work Discipline Applying for <span class="asterisk">*</span> </div>
+                        <ul>
+                            <li>
+                                <label class="custom-radio">
+                                    Supplier
+                                    <input asp-for="@Model.businessModel.WorkDisciplineType" type="radio" value="Supplier" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="custom-radio">
+                                    Manufacturer
+                                    <input asp-for="@Model.businessModel.WorkDisciplineType" type="radio" value="Manufacturer" />
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+                        <span asp-validation-for="businessModel.WorkDisciplineType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fieldset">
+                <div>
+                    <h5>Business Representative</h5>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Name<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.BusinessRepresentativeName" type="text" class="form-control" id="Please enter your name" />
+                            <span asp-validation-for="businessModel.BusinessRepresentativeName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>Position<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.BusinessRepresentativePositionNumber" type="text" class="form-control" placeholder="Please enter your position" />
+                            <span asp-validation-for="businessModel.BusinessRepresentativePositionNumber" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group">
+                        <label>Cell No<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.BusinessRepresentativeCellNo" type="text" class="form-control" placeholder="Please enter your cell number" />
+                            <span asp-validation-for="businessModel.BusinessRepresentativeCellNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-lg form-group">
+                        <label>
+                            Fax
+
+                        </label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.BusinessRepresentativeFax" type="text" class="form-control" placeholder="Please enter fax number" />
+                            <span asp-validation-for="businessModel.BusinessRepresentativeFax" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 form-group">
+                        <label>Email<span class="asterisk">*</span></label>
+                        <div class="inputs-group">
+                            <input asp-for="businessModel.BusinessRepresentativeEmail" type="email" class="form-control" placeholder="Please enter your Email address" />
+                            <span asp-validation-for="businessModel.BusinessRepresentativeEmail" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg form-group mb0">
+                        <div class="Attachmentlabel">Signature <span class="asterisk">*</span></div>
+                        <div class="CertificateAttachment">
+                            <span>Drag & drop your file here or Browse </span>
+                            <label for="file-uploadsevn">
+                                <input asp-for="@Model.businessModel.Signature" type="file" />
+
+                            </label>
+
+                            @if (Model.businessModel != null)
+                            {
+                                if (Model.formval == "Edit")
+                                {
+                                    <a href="" asp-for="@Model.Signature3">@Model.Signature3</a>
+                                }
+                                else
+                                {
+                                    <label style="color:darkblue;">@Model.Signature3</label>
+                                }
+                            }
+
+                        </div>
+                        <span asp-validation-for="@Model.businessModel.Signature" class="text-danger"></span>
+
+                        <div class="formonesignature">
+                           Click here
+                            <a href="javascript:void(0);" class="signatureToggle">
+                                Create New Signature
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        @*<script>
+
+                        $(function () {
+                            $("#file-uploadsevn").change(function () {
+                                var filepath = this.value;
+                                var m = filepath.match(/([^\/\\]+)$/);
+                                var filename = m[1];
+                                $("#filenamesenv").html(filename);##filenamesenv
+            at Function.se.error (VM167 jquery.min.js:2:13606)
+            at se.tokenize (VM167 jquery.min.js:2:21617)
+                            });
+                        });
+                    </script>*@
+    </div>
+
+    <div class="cic-table-wrapper">
+        <div class="title">
+            <strong>Directorship and Share Dividends</strong>
+        </div>
+        @for (int i = 0; i < Model.Sharelist.Count; i++)
+        {
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="table-validation-error">
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].DirectorName" class="text-danger"></span></div>
+
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].Nationnality" class="text-danger"></span></div>
+                        <div class="validationmsg">@Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })</div>
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].IdNO" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].Country" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].CellphoneNo" class="text-danger"></span></div>
+                        <div class="validationmsg"><span asp-validation-for="Sharelist[i].SharePercent" class="text-danger"></span></div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        @*@Html.ValidationMessageFor(m => m.err, "", new { @class = "text-danger" })*@
+        <div class="table-fieldset">
+            <div class="table-responsive-lg" style="overflow-x:auto;">
+                <table id="tblShare" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                Name of
+                                Director(s)/Partners
+                            </th>
+                            <th scope="col">Nationality</th>
+                            <th scope="col">ID/Passport No.</th>
+                            <th scope="col">
+                                Country
+                                of Residence
+                            </th>
+                            <th scope="col">Cellphone No.</th>
+                            <th scope="col">
+                                % Shares
+                            </th>
+
+                            @*<th scope="col">
+                                Document
+                                Attach
+                            </th>*@
+                            <th scope="col"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+
+                        @for (int i = 0; i < Model.Sharelist.Count; i++)
+                        {
+                            <tr id="@i">
+                                <td class="row-index">
+                                    <input class="form-control" type="text" placeholder="" asp-for="Sharelist[i].DirectorName" />
+                                </td>
+                                <td class="row-index1">
+                                    <select class="custom-select form-control" asp-for="Sharelist[i].Nationnality">
+                                        <option required>Select Nationality</option>                                        
+                                        <option value="Swazi">Swazi</option>
+                                        <option value="Foreign">Foreign</option>                                        
+                                    </select>
+                                </td>
+                                <td class="row-index2"><input class="form-control" type="text" style="cursor:pointer" placeholder="" asp-for="Sharelist[i].IdNO" /></td>
+                                <td class="row-index3"><input class="form-control" type="text" placeholder="" asp-for="Sharelist[i].Country" /></td>
+                                <td class="row-index4"><input class="form-control" type="text" placeholder="" asp-for="Sharelist[i].CellphoneNo" /></td>
+                                <td class="row-index5">
+                                    <input class="form-control" type="text" placeholder="" asp-for="Sharelist[i].SharePercent" />
+                                    <input type="hidden" asp-for="c" />
+                                    <input type="hidden" asp-for="Sharelist[i].PartitionKey" />
+                                    <input type="hidden" asp-for="Sharelist[i].RowKey" />
+                                </td>
+
+                               
+                                <td>
+                                    <button class="removeBusiness" type="button">
+                                        <img src="~/images/trush.svg" alt="remove row" />
+                                    </button>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8" class="Addnewrecord-td">
+                                <button type="button" id="btnAdd" class="btnTblRow"> <span><img src="/images/plus.svg" alt="" /> </span> Add new record</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+
+            <script>
+                var counter = document.getElementById("c").value;
+                $(function () {
+
+                    $('#btnAdd').click(function () {
+                        $(`<tr id="${counter}">
+                                                                                                   <td class="row-index">
+                                                                                                    <input type="text" class="form-control" name="Sharelist[${counter}].DirectorName" value=""/>
+                                                                                                    </td>
+                                                                                                    <td class="row-index1">
+                                                                                                    <select class="custom-select form-control" asp-for="Sharelist[${counter}].Nationnality"><option required >Select Account</option><option value="Swazi">Swazi</option><option value="Foreign">Foreign</option></select >
+                                                                                                    </td>
+                                                                                                    <td class="row-index2">
+                                                                                                    <input type="text" class="form-control" name="Sharelist[${counter}].IdNo" value=" "  />
+                                                                                                    </td>
+                                                                                                    <td class="row-index3">
+                                                                                                    <input type="text" class="form-control" name="Sharelist[${counter}].Country" value=" " />
+                                                                                                    </td>
+                                                                                                    <td class="row-index4">
+                                                                                                    <input type="text" class="form-control" name="Sharelist[${counter}].CellphoneNo" value=" "/>
+                                                                                                    </td>
+                                                                                                    <td class="row-index5">
+                                                                                                    <input type="text" class="form-control" name="Sharelist[${counter}].SharePercent" value="0"  />
+                                                                                                    </td>
+                                                                                                    
+                                                                                                    <td>
+                                                                                                    <button type="button" class="removeBusiness">Delete</button>
+                                                                                                    </td>
+                                                                                                    </tr>`).appendTo('#tblShare');
+                        counter++;
+                        document.getElementById("c").value = counter;
+                        //alert("cnt:" + counter + " c:" + document.getElementById("c").value);
+                        return false;
+                    });
+                });
+
+                $(document).ready(function () {
+
+                    $('#tbody').on('click', '.removeBusiness', function () {
+
+                        // containing the clicked button
+                        var child = $(this).closest('tr').nextAll();
+
+                        child.each(function () {
+
+                            // Getting <tr> id.
+                            var id = $(this).attr('id');
+
+                            // Getting the <p> inside the .row-index class.
+                            var idx = $(this).children('.row-index').children('input');
+                            var idx1 = $(this).children('.row-index1').children('select');
+                            var idx2 = $(this).children('.row-index2').children('input');
+                            var idx3 = $(this).children('.row-index3').children('input');
+                            var idx4 = $(this).children('.row-index4').children('input');
+                            var idx5 = $(this).children('.row-index5').children('input');
+                           // var idx6 = $(this).children('.row-index6').children('input');
+
+                            // Gets the row number from <tr> id.
+                            var dig = parseInt(id);
+
+                            var cnew = dig - 1;
+                            // Modifying row index.
+                            //idx.html(`Row ${dig - 1}`);
+                            idx.attr('name', `Sharelist[${cnew}].DirectorName`)
+                            idx1.attr('name', `Sharelist[${cnew}].Nationnality`)
+                            idx2.attr('name', `Sharelist[${cnew}].IDNo`)
+                            idx3.attr('name', `Sharelist[${cnew}].Country`)
+                            idx4.attr('name', `Sharelist[${cnew}].CellphoneNo`)
+                            idx5.attr('name', `Sharelist[${cnew}].SharePercent`)
+                           // idx6.attr('name', `Sharelist[${cnew}].ShareFile`)
+
+                            // Modifying row id.
+                            $(this).attr('id', `${dig - 1}`);
+                        });
+
+                        // Removing the current row.
+                        $(this).closest('tr').remove();
+
+                        // Decreasing total number of rows by 1.
+                        counter--;
+                        document.getElementById("c").value = counter;
+                    });
+                });
+            </script>
+
+            <ul class="cic-form-action-block">
+                <li>
+
+                    <button type="submit" class="default-btn btn-preview" asp-route-pre="type" asp-route-name="business">Previous</button>
+
+                    <button type="submit" class="default-btn btn-draft" asp-route-name="draft">Save as Draft</button>
+                </li>
+                <li>
+
+                    <button type="submit" class="btn btn-submit" asp-route-next="finance" asp-route-name="business">Next</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

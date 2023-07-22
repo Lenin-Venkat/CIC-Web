@@ -1,0 +1,191 @@
+﻿
+@model CICLatest.Models.Cicf6Model
+
+@{ ViewData["Title"] = "Personal Details"; }
+@*<h1>@ViewData["Title"]</h1>*@
+
+
+<h4 class="text-center"> Personal Details </h4>
+
+<div class="cic-application-wrapper">
+
+    <form method="post">
+        <div class="cic-fielset-inner">
+            <div class="PersonalDetails-content">
+
+                <div class="fieldset">
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Name(s) <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Name" class="form-control" type="text" placeholder="Please enter name" />
+                            <span asp-validation-for="personelDetails.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Surname <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Surname" class="form-control" type="text" placeholder="Please enter Surname" />
+                            <span asp-validation-for="personelDetails.Surname" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">ID No <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.IDNo" class="form-control" type="text" placeholder="Please enter ID No" />
+                            <span asp-validation-for="personelDetails.IDNo" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Nationality <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Nationality" class="form-control" type="text" placeholder="Please enter Nationality" />
+                            <span asp-validation-for="personelDetails.Nationality" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Home Area <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.HomeArea" class="form-control" type="text" placeholder="Please enter Home Area" />
+                            <span asp-validation-for="personelDetails.HomeArea" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Chief <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Chief" class="form-control" type="text" placeholder="Please enter Chief" />
+                            <span asp-validation-for="personelDetails.Chief" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Indvuna <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Indvuna" class="form-control" type="text" placeholder="Please enter Indvuna" />
+                            <span asp-validation-for="personelDetails.Indvuna" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Temporal Residence Permit No</label>
+                            <input asp-for="personelDetails.TemporalResidencePermitNo" class="form-control" type="text" placeholder="Please enter Permit No" />
+                            <span asp-validation-for="personelDetails.TemporalResidencePermitNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Work Permit No</label>
+                            <input asp-for="personelDetails.WorkPermitNo" class="form-control" type="text" placeholder="Please enter Work Permit No" />
+                            <span asp-validation-for="personelDetails.WorkPermitNo" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Cellphone No <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.CellphoneNo" class="form-control" type="text" placeholder="Please enter Cellphone No" />
+                            <span asp-validation-for="personelDetails.CellphoneNo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Email address <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Emailaddress" class="form-control" type="email" placeholder="Please enter email" />
+                            <span asp-validation-for="personelDetails.Emailaddress" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Fax No </label>
+                            <input asp-for="documentUpload.FaxNo" class="form-control" type="text" placeholder="Please enter Fax No" />
+                            <span asp-validation-for="documentUpload.FaxNo" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg form-group ">
+                            <label for="fname" class="required">Residential Address  <span class="asterisk">*</span></label>
+                            <textarea asp-for="personelDetails.ResidentialAddress" class="form-control textarea" cols="10" rows="10" placeholder="Please enter residential address"></textarea>
+                            <span asp-validation-for="personelDetails.ResidentialAddress" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg form-group">
+                            <label for="fname" class="required">Next of Kin <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.NextofKin" class="form-control" type="text" placeholder="Please enter next of kin" />
+                            <span asp-validation-for="personelDetails.NextofKin" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group">
+                            <label class="required" for="lname">Relationship <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.Relationship" class="form-control" type="text" placeholder="Please enter Relationship" />
+                            <span asp-validation-for="personelDetails.Relationship" class="text-danger"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg form-group mb0">
+                            <label for="fname" class="required">Contact No <span class="asterisk">*</span></label>
+                            <input asp-for="personelDetails.ContactNo" class="form-control" type="text" placeholder="Please enter Contact No" />
+                            <span asp-validation-for="personelDetails.ContactNo" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg form-group mb0">
+                            <label class="required" for="lname">Nature of Trade/Expertise <span class="asterisk">*</span></label>
+
+                            <div class="inputs-group Expertise-grp">
+                                <input asp-for="personelDetails.NatureofTradeExpertise" class="form-control" type="text" placeholder="Please enter Nature of Trade/Expertise" />
+
+                                <div class="fileAttachment">
+                                    <input asp-for="personelDetails.NatureofTradeUpload" id="Expertise" type="file">
+
+                                    <label for="Expertise" data-input-value="" data-select-text="Attachment" data-remove-text="Remove file" data-drag-text="Choose file">
+                                        Attachment
+                                    </label>
+                                </div>
+                                @if (Model.NatureofTradeUpload != null)
+                                {
+                                    if (Model.formval == "Edit")
+                                    {
+                                        <a href="" asp-for="@Model.NatureofTradeUpload">@Model.NatureofTradeUpload</a>
+                                    }
+                                    else
+                                    {
+                                        <label style="color:darkblue;">@Model.NatureofTradeUpload</label>
+                                    }
+                                }
+
+
+                            </div>
+                            <div>
+                                <span asp-validation-for="personelDetails.NatureofTradeExpertise" class="text-danger"></span><br />
+                                <span asp-validation-for="personelDetails.NatureofTradeUpload" class="text-danger"></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <ul class="cic-form-action-block">
+                    <li>
+                        @*<button type="button" class="default-btn btn-preview prev-step">Previous</button>*@
+
+                        <button type="submit" class="default-btn btn-preview" asp-route-pre="type" asp-route-name="business">Previous</button>
+
+
+                        <button type="submit" asp-route-name="draft" class="default-btn btn-draft">Save as Draft</button>
+                    </li>
+                    <li>
+                        @*<button type="button" class="btn btn-submit next-step" id="submit">Next</button>*@
+
+                        <button type="submit" class="btn btn-submit" asp-route-next="finance" asp-route-name="business">Next</button>
+                    </li>
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+
+
