@@ -194,11 +194,11 @@ namespace CICLatest.Controllers
                     case "Clerk":
                         model.Reviewer = "Compliance Officer";
                         model.FormStatus = "Approve";
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
-                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
-                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+                        //ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
+                        //string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        //viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
                         break;
 
                     case "Compliance Officer":
@@ -212,7 +212,11 @@ namespace CICLatest.Controllers
                     case "Ops Manager":
                         model.Reviewer = "Ops Manager";
                         model.FormStatus = "Completed";
-
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
 
                         bool SFlag = ShareValidation(model.detailOfProjects);
 
