@@ -450,10 +450,10 @@ namespace CICLatest.Controllers
                     case "Clerk":
                         model.Reviewer = "Compliance Officer";
                         model.FormStatus = "Approve";
-                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved.</br>Comment:" + comment + "</br>Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
-                        sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
-                        sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
-                        sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+                        //string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved.</br>Comment:" + comment + "</br>Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        //sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        //sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        //sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
                         break;
 
                     case "Compliance Officer":
@@ -470,6 +470,12 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Ops Manager";
                        // model.Reviewer = "CEO"; //AK changed "Ops Manager" to CEO
                         model.FormStatus = "Completed";
+
+                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved.</br>Comment:" + comment + "</br>Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+
                         CICFees fees = null;
                         string invoiceNo;
 

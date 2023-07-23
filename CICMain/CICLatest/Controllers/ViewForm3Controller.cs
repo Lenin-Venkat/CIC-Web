@@ -414,15 +414,15 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Compliance Officer";
                         model.FormStatus = "Approve";
                         model.JVGrade = g;
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
-                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
-                        //viewForm1.sendNotification(model.BusinessEmail, "Request for invoice", body);
-                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+                        //ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        //string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        ////viewForm1.sendNotification(model.BusinessEmail, "Request for invoice", body);
+                        //viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
 
-                        body = "<p>Hi " + model.BusinessEmail + ",<br/>Form " + model.RowKey + " is reviewed and you are applicable for grade " + g + "<br/>Thank you,<br/>CIC Team</p>";
-                        viewForm1.sendNotification(model.CreatedBy, "CIC registration has been approved", body);
+                        //body = "<p>Hi " + model.BusinessEmail + ",<br/>Form " + model.RowKey + " is reviewed and you are applicable for grade " + g + "<br/>Thank you,<br/>CIC Team</p>";
+                        //viewForm1.sendNotification(model.CreatedBy, "CIC registration has been approved", body);
                         break;
 
                     case "Compliance Officer":
@@ -436,6 +436,18 @@ namespace CICLatest.Controllers
                     case "Ops Manager":
                         model.Reviewer = "Ops Manager";
                         model.FormStatus = "Completed";
+
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        //viewForm1.sendNotification(model.BusinessEmail, "Request for invoice", body);
+                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+
+                        body = "<p>Hi " + model.BusinessEmail + ",<br/>Form " + model.RowKey + " is reviewed and you are applicable for grade " + g + "<br/>Thank you,<br/>CIC Team</p>";
+                        viewForm1.sendNotification(model.CreatedBy, "CIC registration has been approved", body);
+
+
                         ViewForm1Controller viewForm2 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
                         string invoiceNo;
                         //AK

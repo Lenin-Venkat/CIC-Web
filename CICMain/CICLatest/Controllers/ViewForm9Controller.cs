@@ -178,11 +178,11 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Compliance Officer";
                         //model.PartitionKey = "CO";
                         model.FormStatus = "Approve";
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
-                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
-                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
-                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+                        //ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
+                        //string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        //viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        //viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
                         break;
 
                     case "Compliance Officer":
@@ -199,9 +199,15 @@ namespace CICLatest.Controllers
                         model.Reviewer = "CEO";
                         model.FormStatus = "Completed";
 
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
+                        viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
+                        viewForm1.sendNotification("mduduzi@cic.co.sz", "Request for invoice", body);
+
                         //model.PartitionKey = "CEO";
 
-                       //AK
+                        //AK
                         break;
                 }
                 model.buildingWorkForProject = null;
