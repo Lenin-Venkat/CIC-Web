@@ -854,7 +854,7 @@ namespace CICLatest.Controllers
             if (p.tab5.SummaryPage != null)
             {
                 memoryCache.Set("SummaryPage", p.tab5.SummaryPage);
-                p.SummaryPage = p.tab5.Signature.FileName;
+                p.SummaryPage = p.tab5.SummaryPage.FileName;
                 memoryCache.Set("SummaryPage", p.tab5.SummaryPage.FileName);
             }
             else
@@ -923,7 +923,7 @@ namespace CICLatest.Controllers
             {
                 memoryCache.Set("WitnessSignature1", p.tab5.WitnessSignature1);
                 p.WitnessSignature1 = p.tab5.WitnessSignature1.FileName;
-                memoryCache.Set("WitnessSignature1", p.tab5.WitnessSignature.FileName);
+                memoryCache.Set("WitnessSignature1", p.tab5.WitnessSignature1.FileName);
             }
             else
             {
@@ -1629,18 +1629,28 @@ namespace CICLatest.Controllers
             saveModelForm8.NoOfPartialCertificateCreated =  p1.NoOfPartialCertificateCreated;
 
             p1.ImagePath = "PRN" + tempMax;
+
+
+            //memoryCache.TryGetValue("uploadBlobPath", out string uploadBlobPath);
+            //BlobStorageService blobStorageService = new BlobStorageService();
             if (p1.tab5.Signature != null)
             {
+                //memoryCache.TryGetValue("Signature1", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.Signature, p1.ImagePath, "Signature1");
 
             }
             if (p1.tab5.WitnessSignature != null)
             {
+                //memoryCache.TryGetValue("WitnessSignature", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.WitnessSignature, p1.ImagePath, "WitnessSignature");
 
             }
             if (p1.tab5.WitnessSignature1 != null)
             {
+                //memoryCache.TryGetValue("WitnessSignature1", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.WitnessSignature1, p1.ImagePath, "WitnessSignature1");
 
             }
@@ -1648,21 +1658,29 @@ namespace CICLatest.Controllers
 
             if (p1.tab5.SummaryPage != null)
             {
+                //memoryCache.TryGetValue("SummaryPage", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.SummaryPage, p1.ImagePath, "SummaryPage");
 
             }
             if (p1.tab5.LetterOfContract != null)
             {
+                //memoryCache.TryGetValue("LetterOfContract", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.LetterOfContract, p1.ImagePath, "LetterOfContract");
 
             }
             if (p1.tab5.Letterindicating != null)
             {
+                //memoryCache.TryGetValue("Letterindicating", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.Letterindicating, p1.ImagePath, "Letterindicating");
 
             }
             if (p1.tab5.Signedletterupload != null)
             {
+                //memoryCache.TryGetValue("Signedletterupload", out string oldFileName);
+                //blobStorageService.DeleteBlobData($"{uploadBlobPath}\\{oldFileName}");
                 uploadFiles(p1.tab5.Signedletterupload, p1.ImagePath, "Signedletterupload");
             }
 
@@ -2083,7 +2101,6 @@ namespace CICLatest.Controllers
             string c = "";
             model.Tab3Sec = cnt;
             model.Tab3Third = cnt;
-            List<FileList> AllFileList = new List<FileList>();
             string jsonData;
             AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm8", rowkey, out jsonData);
             JObject myJObject = JObject.Parse(jsonData);
@@ -2102,8 +2119,13 @@ namespace CICLatest.Controllers
                 model.PartitionKey = partitionkey;
                 model.RowKey = fName;
                 path = (string)myJObject["value"][i]["path"];
+                memoryCache.Set("uploadBlobPath", path);
 
                 string key;
+                var AllFileList = new List<FileList>();
+
+                //AllFileList.Add(new FileList { FileKey = "WitnessSignature1", FileValue = "1690450871216.png" });
+                AllFileList = b.GetBlobList(path);
                 AllFileList = b.GetBlobList(path);
                 string Signature1 = null, WitnessSignature = null, WitnessSignature1 = null, LetterOfContract = null,
                     SummaryPage = null, Letterindicating = null, Signedletterupload = null;
