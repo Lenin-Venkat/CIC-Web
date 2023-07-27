@@ -38,21 +38,28 @@ namespace CICLatest.Helper
 
         public async void DeleteBlobData(string fileUrl)
         {
-            Uri uriObj = new Uri(fileUrl);
-            string BlobName = Path.GetFileName(uriObj.LocalPath);
+            try
+            {
+                Uri uriObj = new Uri(fileUrl);
+                string BlobName = Path.GetFileName(uriObj.LocalPath);
+                
+                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
+                CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
+                string strContainerName = "uploads";
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(strContainerName);
 
-            CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
-            CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
-            string strContainerName = "uploads";
-            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(strContainerName);
+                string pathPrefix = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + "/";
+                CloudBlobDirectory blobDirectory = cloudBlobContainer.GetDirectoryReference(pathPrefix);
+                // get block blob refarence  
+                CloudBlockBlob blockBlob = blobDirectory.GetBlockBlobReference(BlobName);
 
-            string pathPrefix = DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + "/";
-            CloudBlobDirectory blobDirectory = cloudBlobContainer.GetDirectoryReference(pathPrefix);
-            // get block blob refarence  
-            CloudBlockBlob blockBlob = blobDirectory.GetBlockBlobReference(BlobName);
-
-            // delete blob from container      
-            await blockBlob.DeleteAsync();
+                // delete blob from container      
+                await blockBlob.DeleteAsync();
+            }
+            catch
+            {
+                //Do nothing
+            }
         }
 
         private string GenerateFileName(string fileName, string path)
