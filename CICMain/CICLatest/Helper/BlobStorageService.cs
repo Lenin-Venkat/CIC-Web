@@ -1,4 +1,5 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using CICLatest.Models;
 using Microsoft.AspNetCore.Http;
@@ -241,7 +242,9 @@ namespace CICLatest.Helper
                         BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
                         string fName = "";
                         var blobs1 = containerClient.GetBlobs();
-                        foreach (BlobItem blobItem in blobs1)
+
+                        var sortedBlobs = GetSortedBlobs(blobs1);
+                        foreach (BlobItem blobItem in sortedBlobs)
                         {
                             String[] strlist = blobItem.Name.Split("/");
                             if (strlist[0] == dateFolderName && strlist[1] == RegNo)
@@ -264,6 +267,11 @@ namespace CICLatest.Helper
             }
                
             return filelist;
+        }
+
+        private IOrderedEnumerable<BlobItem> GetSortedBlobs(Pageable<BlobItem> blobs1)
+        {
+            return blobs1.Select(item => item).OrderBy(item1 => item1.Properties.LastModified);
         }
 
         public List<FileModel> GetInvoices(string custno)
