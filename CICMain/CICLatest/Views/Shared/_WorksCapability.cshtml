@@ -112,7 +112,7 @@
                                                                             <input type="text" class="form-control datepicker" id="workdate_${counter2}" name="worksCapability[${counter2}].CompletionDate" value=" " />
                                                                             </td>
                                                                             <td class="row5">
-                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].ContractSum" value="0" id="sum_${counter2}" />
+                                                                            <input type="text" class="form-control decimal-field" name="worksCapability[${counter2}].ContractSum" value="0" id="sum_${counter2}" />
                                                                             </td>
                                                                             <td class="row6">
                                                                             <input type="text" class="form-control" name="worksCapability[${counter2}].TelephoneNo" value="0" id="no_${counter2}" />
@@ -355,7 +355,8 @@
 
         // Attach event listeners to the decimal input fields
         // This will update the value with decimal places as the user types
-        $('.decimal-field').on('blur', function () {
+        $(document).on('blur', '.decimal-field', function() {
+        //$('.decimal-field').on('blur', function () {
             var inputValue = $(this).val();
             var formattedValue = formatDecimal(inputValue);
             $(this).val(formattedValue);

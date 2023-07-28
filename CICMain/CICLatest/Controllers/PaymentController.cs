@@ -112,11 +112,20 @@ namespace CICLatest.Controllers
         //}
         public void SendEmailNotification(string strFileName, byte[] fileData, string CustNo, string mimeType, string invoiceNo)
         {
-            strFileName = "<p>Dear Finance team, Please review attachment of POP that has been uploaded by " + CustNo + " for Invoice No. " + invoiceNo + "<br/><br/>Thank you.</p>";
+            var invoiceNoTrimmed = GetInvoiceNumberWithoutCustNo(CustNo, invoiceNo);
+            strFileName = "<p>Dear Finance team, Please review attachment of POP that has been uploaded by " + CustNo + " for Invoice No. " + invoiceNoTrimmed + "<br/><br/>Thank you.</p>";
             Email emailobj = new Email(_emailcofig);
             emailobj.SendPaymentAsync("POP", strFileName, fileData, mimeType);
         }
 
+        private string GetInvoiceNumberWithoutCustNo(string custNo, string invoiceNo)
+        {
+            if (invoiceNo.Contains(custNo, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return invoiceNo.Replace($"{custNo}-", string.Empty, StringComparison.InvariantCultureIgnoreCase).Replace("-SalesInvoice.pdf", string.Empty, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return invoiceNo;
+        }
 
         public void sendNotificationToBC(string varInvoiceNo, string CustNo, string TempFilename)
         {

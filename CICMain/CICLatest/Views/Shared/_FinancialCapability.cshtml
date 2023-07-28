@@ -267,14 +267,32 @@
         $(document).ready(function () {
             // Function to format decimal value to two decimal places
             function formatDecimal(value) {
-                //return parseFloat(value).toFixed(2);
-                return (Math.round(value * 100) / 100).toFixed(2);
+                return parseFloat(value).toFixed(2); 
+                //var number = parseFloat(value).toFixed(2); //Add 2 decimal points
+                //var tocommastring = Number(number).toLocaleString(); //Add commas
+                //var add00string = tocommastring.includes('.') ? tocommastring : tocommastring + '.00'; //Add 00 if lost after conversion
+
+                //const splitNumber = add00string.split('.');
+                //var handleSingleDecimalString = splitNumber[1].length == 1 ? add00string + '0' : add00string; //Add 0 if decimal has single digit
+
+                //console.log(splitNumber[1].length);
+                //console.log(number);
+                //console.log(tocommastring);
+                //console.log(add00string);
+                //console.log(handleSingleDecimalString);
+
+                //return handleSingleDecimalString;
             }
 
             // Attach event listeners to the decimal input fields
             // This will update the value with decimal places as the user types
             $('.decimal-field').on('blur', function () {
                 var inputValue = $(this).val();
+
+                //var eThis = $(this);
+                //var eVal = (isNaN(eThis.val())) ? 0 : eThis.val();
+                //eThis.data('boks', eVal);
+
                 var formattedValue = formatDecimal(inputValue);
                 $(this).val(formattedValue);
             });
