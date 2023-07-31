@@ -298,20 +298,4 @@
             });
         });
     </script>
-
-    <script>
-        function formatAmount(input) {
-            // Remove any existing commas from the input value
-            const inputValue = input.value.replace(/,/g, '');
-
-            // Convert the value to a number
-            const numericValue = parseFloat(inputValue);
-
-            // Format the numeric value with comma separator
-            const formattedValue = numericValue.toLocaleString();
-
-            // Update the input value with the formatted value
-            input.value = formattedValue;
-        }
-    </script>
 </div>
