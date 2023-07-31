@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-lg form-group">
                     <label for="lname">Indicate the name of the Financial Institution(s) <span class="asterisk">*</span></label>
-                    <input class="form-control decimal-field" placeholder="Please enter Financial Institution(s) name" type="text" asp-for="financialCapabilityModel.FinancialInstitutionName" />
+                    <input class="form-control" placeholder="Please enter Financial Institution(s) name" type="text" asp-for="financialCapabilityModel.FinancialInstitutionName" />
                     <span asp-validation-for="financialCapabilityModel.FinancialInstitutionName" class="text-danger"></span>
                 </div>
             </div>
@@ -297,5 +297,21 @@
                 $(this).val(formattedValue);
             });
         });
+    </script>
+
+    <script>
+        function formatAmount(input) {
+            // Remove any existing commas from the input value
+            const inputValue = input.value.replace(/,/g, '');
+
+            // Convert the value to a number
+            const numericValue = parseFloat(inputValue);
+
+            // Format the numeric value with comma separator
+            const formattedValue = numericValue.toLocaleString();
+
+            // Update the input value with the formatted value
+            input.value = formattedValue;
+        }
     </script>
 </div>

@@ -335,25 +335,28 @@ namespace CICLatest.Controllers
                 var user = await _userManager.FindByEmailAsync(email);
                 if (user != null)
                 {
+                  
                     var result = await _userManager.AddClaimAsync(user, claim);
+           
                     string body = "CIC - Please enter this One Time Password:" + randomNumber + "  Thank you,CIC Team";
-                    var c = new FormUrlEncodedContent(new[]
-                        {
-                        new KeyValuePair<string, string>("from", "CIC"),
-                        new KeyValuePair<string, string>("body", body),
-                        new KeyValuePair<string, string>("touser", forgotPasswordModel.EmailPhoneNumber),
+                    sendOTPSMS(forgotPasswordModel.EmailPhoneNumber, body);
+                    //var c = new FormUrlEncodedContent(new[]
+                    //    {
+                    //    new KeyValuePair<string, string>("from", "CIC"),
+                    //    new KeyValuePair<string, string>("body", body),
+                    //    new KeyValuePair<string, string>("touser", forgotPasswordModel.EmailPhoneNumber),
 
-                    });
+                    //});
 
-                    using (var httpClient = new HttpClient())
-                    {
+                    //using (var httpClient = new HttpClient())
+                    //{
 
-                        httpClient.DefaultRequestHeaders.Clear();
-                        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                        HttpResponseMessage response = httpClient.PostAsync("https://ciccommunicationapi.azurewebsites.net/api/Sms?from=CIC&body= " + body + "&touser=" + forgotPasswordModel.EmailPhoneNumber, c).Result;
-                        response.EnsureSuccessStatusCode();
+                    //    httpClient.DefaultRequestHeaders.Clear();
+                    //    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    //    HttpResponseMessage response = httpClient.PostAsync("https://ciccommunicationapi.azurewebsites.net/api/Sms?from=CIC&body= " + body + "&touser=" + forgotPasswordModel.EmailPhoneNumber, c).Result;
+                    //    response.EnsureSuccessStatusCode();
 
-                    }
+                    //}
                 }
                 else
                 {
@@ -547,7 +550,9 @@ namespace CICLatest.Controllers
                 var authToken = "";
 
                 var apiKey = "9a5713f1-2b58-4aeb-96ca-6c7ea803a0c6";
-                var apiSecret = "kmohN4EvajUyvWKsTuG2aT/WSZp6XawD";
+                //  var apiSecret = "kmohN4EvajUyvWKsTuG2aT/WSZp6XawD";
+                var apiSecret = "Cicpass2019#";
+
                 var accountApiCredentials = $"{apiKey}:{apiSecret}";
 
                 var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(accountApiCredentials);
@@ -593,6 +598,66 @@ namespace CICLatest.Controllers
                 return "";
             }
         }
+
+        public static string sendOTPSMS(string textToEncode, string body)
+        {
+            try
+            {
+                var client = new RestClient("https://rest.smsportal.com");
+                var authToken = "";
+
+                //var apiKey = "9a5713f1-2b58-4aeb-96ca-6c7ea803a0c6";
+                //var apiSecret = "kmohN4EvajUyvWKsTuG2aT/WSZp6XawD";
+
+                var apiKey = "9a5713f1-2b58-4aeb-96ca-6c7ea803a0c6";
+                var apiSecret = "Cicpass2019#";
+
+                var accountApiCredentials = $"{apiKey}:{apiSecret}";
+
+                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(accountApiCredentials);
+                var base64Credentials = Convert.ToBase64String(plainTextBytes);
+
+                var authRequest = new RestRequest("/v1/Authentication", Method.Get);
+
+                authRequest.AddHeader("Authorization", $"Basic {base64Credentials}");
+
+                var authResponse = client.Execute(authRequest);
+                if (authResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    var authResponseBody = JObject.Parse(authResponse.Content);
+                    authToken = authResponseBody["token"].ToString();
+                }
+                else
+                {
+                    Console.WriteLine(authResponse.ErrorMessage);
+                }
+                var sendRequest = new RestRequest("/v1/bulkmessages", Method.Post);
+
+                var authHeader = $"Bearer {authToken}";
+                sendRequest.AddHeader("Authorization", $"{authHeader}");
+
+                sendRequest.AddJsonBody(new
+                {
+                    Messages = new[]
+                    {
+                  new
+                     {
+                      content = body,
+                     destination = textToEncode
+                     }
+                 }
+                });
+
+                var sendResponse = client.Execute(sendRequest);
+
+                return "";
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
 
 
         public static string Base64Encode(string textToEncode)

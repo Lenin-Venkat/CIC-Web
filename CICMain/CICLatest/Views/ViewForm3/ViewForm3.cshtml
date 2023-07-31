@@ -277,7 +277,7 @@
                                                                 <td>@Model.SubContractorModel[i].CountryyofOrigin</td>
                                                                 <td>@Model.SubContractorModel[i].CICRegistrationNo</td>
                                                                 <td>@Model.SubContractorModel[i].DescriptionOfWork</td>
-                                                                <td>@Model.SubContractorModel[i].ContractValueOfWork</td>
+                                                                <td>@Model.SubContractorModel[i].ContractValueOfWork.ToString("N2")</td>
                                                             </tr>
                                                         }
                                                     </tbody>
@@ -323,7 +323,7 @@
 
                                     <div class="row">
                                         <div class="col-lg form-group">Contract Value (E)</div>
-                                        <div class="col-lg form-group">@Model.ContractValue</div>
+                                        <div class="col-lg form-group">@Model.ContractValue.ToString("N2")</div>
                                     </div>
 
                                 </div>

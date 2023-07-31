@@ -102,7 +102,7 @@
                                                                 <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].NameofClient" class="text-danger"></span></div>
                                                                 <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].ServiceProvided" class="text-danger"></span></div>
                                                                 <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].DateOrPeriod" class="text-danger"></span></div>
-                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].ContractValue" class="text-danger"></span></div>
+                                                                <div class="validationmsg"><span asp-validation-for="listOfPrevousClent[i].ContractValue" class="text-danger decimal-field"></span></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,7 +135,7 @@
                                                                         <input asp-for="listOfPrevousClent[i].DateOrPeriod" class="form-control" type="text" id="DateOrPeriod" />
                                                                     </td>
                                                                     <td class="row3">
-                                                                        <input asp-for="listOfPrevousClent[i].ContractValue" class="form-control" type="text" />
+                                                                            <input asp-for="listOfPrevousClent[i].ContractValue" class="form-control decimal-field" type="text" />
 
 
                                                                     </td>
@@ -205,7 +205,7 @@
                                                                                                             <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].DateOrPeriod" id ="DateOrPeriod${counterProject}" value=" " />
                                                                                                             </td>
                                                                                                             <td class="row3">
-                                                                                                            <input type="text" class="form-control" name="listOfPrevousClent[${counterProject}].ContractValue" value=" " />
+                                                                                                                                                                    <input type="text" class="form-control decimal-field" name="listOfPrevousClent[${counterProject}].ContractValue" value=" " />
                                                                                                             </td>
                                                                                                              <td>
                                                                                                             <button type="button" class="remove"><img src="/images/trush.svg" alt="remove row" /></button>
@@ -280,6 +280,25 @@
                                                         });
                                                     });
                                                 </script>
+
+                                                    <script>
+                                                        $(document).ready(function () {
+                                                            // Function to format decimal value to two decimal places
+                                                            function formatDecimal(value) {
+                                                                //return parseFloat(value).toFixed(2);
+                                                                return (Math.round(value * 100) / 100).toFixed(2);
+                                                            }
+
+                                                            // Attach event listeners to the decimal input fields
+                                                            // This will update the value with decimal places as the user types
+                                                            $(document).on('blur', '.decimal-field', function () {
+                                                                //$('.decimal-field').on('blur', function () {
+                                                                var inputValue = $(this).val();
+                                                                var formattedValue = formatDecimal(inputValue);
+                                                                $(this).val(formattedValue);
+                                                            });
+                                                        });
+                                                    </script>
 
                                                 <ul class="cic-form-action-block">
                                                     <li>

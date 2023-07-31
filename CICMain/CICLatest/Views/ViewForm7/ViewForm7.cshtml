@@ -230,7 +230,7 @@
                                                             <td>@Model.listOfPrevousClent[i].NameofClient</td>
                                                             <td>@Model.listOfPrevousClent[i].ServiceProvided</td>
                                                             <td>@Model.listOfPrevousClent[i].DateOrPeriod</td>
-                                                            <td>@Model.listOfPrevousClent[i].ContractValue</td>
+                                                            <td>@Model.listOfPrevousClent[i].ContractValue.ToString("N2")</td>
                                                         </tr>
                                                     }
                                                 </tbody>
@@ -243,15 +243,15 @@
                                 <div class="fieldset">
                                     <div class="row">
                                         <div class="col-lg form-group">Financial Year 1 end Total Turnover</div>
-                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear1</div>
+                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear1.ToString("N2")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg form-group">Financial Year 2 end Total Turnover</div>
-                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear2</div>
+                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear2.ToString("N2")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg form-group">Financial Year 3 end Total Turnover</div>
-                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear3</div>
+                                        <div class="col-lg form-group">@Model.AnnualTurnoverYear3.ToString("N2")</div>
                                     </div>
                                     @if (Model.companyBank.Count != 0)
                                         {

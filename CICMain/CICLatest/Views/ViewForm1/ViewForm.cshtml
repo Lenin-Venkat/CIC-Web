@@ -256,19 +256,19 @@
                                     <div class="fieldset">
                                         <div class="row">
                                             <div class="col-lg form-group">Financial Year 1 end Total Turnover</div>
-                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear1</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear1.ToString("N2")</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Financial Year 2 end Total Turnover</div>
-                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear2</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear2.ToString("N2")</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Financial Year 3 end Total Turnover</div>
-                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear3</div>
+                                            <div class="col-lg form-group vals">@Model.AnnualTurnoverYear3.ToString("N2")</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Financial Value of surety if any: E</div>
-                                            <div class="col-lg form-group vals">@Model.FinancialValue</div>
+                                        <div class="col-lg form-group vals">@Model.FinancialValue.ToString("N2")</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Indicate the name of the Financial Institution(s)</div>
@@ -276,7 +276,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Available Capital E</div>
-                                            <div class="col-lg form-group vals">@Model.AvailableCapital</div>
+                                        <div class="col-lg form-group vals">@Model.AvailableCapital.ToString("N2")</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg form-group">Signature</div>
@@ -351,7 +351,7 @@
                                                                 <td>@Model.worksCapability[i].Location</td>
                                                                 <td>@Model.worksCapability[i].RegistationNo</td>
                                                                 <td>@Model.worksCapability[i].CompletionDate</td>
-                                                                <td>@Model.worksCapability[i].ContractSum</td>
+                                                            <td>@Model.worksCapability[i].ContractSum.ToString("N2")</td>
                                                                 <td>@Model.worksCapability[i].TelephoneNo</td>
                                                                 <td>@Model.worksCapability[i].TypeofInvolvement</td>
                                                             </tr>
@@ -785,3 +785,22 @@
 
 
     </script>
+
+<script>
+    $(document).ready(function () {
+        // Function to format decimal value to two decimal places
+        function formatDecimal(value) {
+            //return parseFloat(value).toFixed(2);
+            return (Math.round(value * 100) / 100).toFixed(2);
+        }
+
+        // Attach event listeners to the decimal input fields
+        // This will update the value with decimal places as the user types
+        $(document).on('blur', '.decimal-field', function () {
+            //$('.decimal-field').on('blur', function () {
+            var inputValue = $(this).val();
+            var formattedValue = formatDecimal(inputValue);
+            $(this).val(formattedValue);
+        });
+    });
+</script>

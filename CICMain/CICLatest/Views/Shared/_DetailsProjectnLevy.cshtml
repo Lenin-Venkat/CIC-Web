@@ -133,12 +133,12 @@
         <div class="row">
             <div class="col-lg form-group">
                 <label>Contract Value Excluding Levy (E)</label>
-                <input asp-for="@Model.tab4.ContractVAlue" id="ContractVAlue" type="text" class="form-control" placeholder="" />
+                <input asp-for="@Model.tab4.ContractVAlue" id="ContractVAlue" type="text" class="form-control decimal-field" placeholder="" />
                 <span asp-validation-for="@Model.tab4.ContractVAlue" class="text-danger"></span>
             </div>
             <div class="col-lg form-group">
                 <label>Percentage Levy Payable</label>
-                <input asp-for="@Model.tab4.LevyPaybale" id="LevyPaybale" type="text" class="form-control" readonly />
+                <input asp-for="@Model.tab4.LevyPaybale" id="LevyPaybale" type="text" class="form-control decimal-field" readonly />
                 <span asp-validation-for="@Model.tab4.LevyPaybale" class="text-danger"></span>
             </div>
 
@@ -147,14 +147,14 @@
         <div class="row">
             <div class="col-lg form-group">
                 <label>Levy Amount Payable</label>
-                <input asp-for="@Model.tab4.TotalProjectCost" id="TotalProjectCost" type="text" class="form-control" readonly />
+                <input asp-for="@Model.tab4.TotalProjectCost" id="TotalProjectCost" type="text" class="form-control decimal-field" readonly />
                 <span asp-validation-for="@Model.tab4.TotalProjectCost" class="text-danger"></span>
             </div>
             <div class="col-lg form-group">
                 <label>
                     Total Project Cost Including Levy (E)
                 </label>
-                <input asp-for="@Model.tab4.TotalProjectCostIncludingLevy" id="TotalProjectCostIncludingLevy" type="text" readonly class="form-control" placeholder="" />
+                <input asp-for="@Model.tab4.TotalProjectCostIncludingLevy" id="TotalProjectCostIncludingLevy" type="text" readonly class="form-control decimal-field" placeholder="" />
                 <span asp-validation-for="@Model.tab4.TotalProjectCostIncludingLevy" class="text-danger"></span>
             </div>
 
@@ -363,4 +363,23 @@
             }
         });
     }
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Function to format decimal value to two decimal places
+        function formatDecimal(value) {
+            //return parseFloat(value).toFixed(2);
+            return (Math.round(value * 100) / 100).toFixed(2);
+        }
+
+        // Attach event listeners to the decimal input fields
+        // This will update the value with decimal places as the user types
+        $(document).on('blur', '.decimal-field', function () {
+            //$('.decimal-field').on('blur', function () {
+            var inputValue = $(this).val();
+            var formattedValue = formatDecimal(inputValue);
+            $(this).val(formattedValue);
+        });
+    });
 </script>

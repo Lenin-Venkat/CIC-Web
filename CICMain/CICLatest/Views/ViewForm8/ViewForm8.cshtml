@@ -376,7 +376,7 @@
                                     }
                                     <div class="row">
                                         <div class="col-lg form-group">Contract Value Excluding Levy (E)</div>
-                                        <div class="col-lg form-group vals">@Model.ContractVAlue</div>
+                                        <div class="col-lg form-group vals">@Model.ContractVAlue.ToString("N2")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg form-group">Percentage Levy Payable</div>
@@ -385,11 +385,11 @@
                                     <div class="row">
                                        @* <div class="col-lg form-group">Total Project Cost</div>*@
                                         <div class="col-lg form-group">Total Levy</div>
-                                        <div class="col-lg form-group vals">@Model.TotalProjectCost</div>
+                                        <div class="col-lg form-group vals">@Model.TotalProjectCost.ToString("N2")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg form-group">Total Project Cost Including Levy (E)</div>
-                                        <div class="col-lg form-group vals">@Model.TotalProjectCostIncludingLevy</div>
+                                        <div class="col-lg form-group vals">@Model.TotalProjectCostIncludingLevy.ToString("N2")</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg form-group">Levy payment options</div>
