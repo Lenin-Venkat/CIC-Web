@@ -273,7 +273,7 @@ namespace CICLatest.Controllers
                         accessToken = view1Form.GetAccessToken();
                         for (int i = 0; i < cntJson; i++)
                         {
-                            UpdateRegistrationDetails(myJObject, i, invoice, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee));
+                            UpdateRegistrationDetails(myJObject, i, invoice, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.Phyaddress);
                         }
 
                         break;
@@ -424,7 +424,7 @@ namespace CICLatest.Controllers
             return subName;
         }
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee)
+        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee,string postalAddress)
         {
             string custno = (string)myJObject["value"][i]["CustNo"];
             DateTime createdDate = DateTime.Now;
@@ -452,7 +452,8 @@ namespace CICLatest.Controllers
                     typeofPay = "EFT",
                     bank = (string)myJObject["value"][i]["BankName"],
                     category = (string)myJObject["value"][i]["Category"],
-                    monthofReg = createdDate.ToString("MMMM")
+                    monthofReg = createdDate.ToString("MMMM"),
+                    postalAddress = postalAddress
                 });
                 var json = JsonConvert.SerializeObject(data1);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");

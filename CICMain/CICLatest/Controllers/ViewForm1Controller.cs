@@ -573,7 +573,7 @@ namespace CICLatest.Controllers
 
                     for (int i = 0; i < cntJson; i++)
                     {
-                       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee));
+                       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress);
                     }
                 }
                 var responseR = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform1", JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), model.PartitionKey, model.RowKey);
@@ -936,7 +936,7 @@ namespace CICLatest.Controllers
         }
 
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee)
+        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress)
         {
             GetAccessToken();
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -968,7 +968,8 @@ namespace CICLatest.Controllers
                     bank = (string)myJObject["value"][i]["BankName"],
                     category = (string)myJObject["value"][i]["Category"],
                     monthofReg = createdDate.ToString("MMMM"),
-                    grade = (string)myJObject["value"][i]["Grade"]
+                    grade = (string)myJObject["value"][i]["Grade"],
+                    postalAddress = postalAddress
                 }) ;
                 var json = JsonConvert.SerializeObject(data1);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
