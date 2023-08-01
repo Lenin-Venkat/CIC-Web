@@ -161,7 +161,7 @@ namespace CICLatest.Helper
                     awardDate = ((DateTime)myJObject["value"][i]["DateofAward"]).ToString("yyyy-MM-dd"),
                     startDate = ((DateTime)myJObject["value"][i]["ProposedCommencmentDate"]).ToString("yyyy-MM-dd"),
                     completionDate = ((DateTime)myJObject["value"][i]["ProposedCompleteDate"]).ToString("yyyy-MM-dd"),
-                    tradeName = (string)myJObject["value"][i]["Oraganization"],
+                    tradeName = (string)myJObject["value"][i]["Oraganization"]
                 });
 
                 var json = JsonConvert.SerializeObject(data1);
