@@ -606,6 +606,7 @@ namespace CICLatest.Controllers
         {
             string custno = (string)myJObject["value"][i]["CustNo"];
             DateTime createdDate = DateTime.Now;
+            string regID = "";
             if (myJObject["value"][i]["CreatedDate"] != null)
             {
                 createdDate = (DateTime)myJObject["value"][i]["CreatedDate"];
@@ -631,8 +632,7 @@ namespace CICLatest.Controllers
                     bank = (string)myJObject["value"][i]["BankName"],
                     category = (string)myJObject["value"][i]["Category"],
                     monthofReg = createdDate.ToString("MMMM"),
-                    grade = (string)myJObject["value"][i]["JVGrade"],
-                    postalAddress = postalAddress
+                    grade = (string)myJObject["value"][i]["JVGrade"]
                 });
                 var json = JsonConvert.SerializeObject(data1);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -648,14 +648,48 @@ namespace CICLatest.Controllers
                     if (response.IsSuccessStatusCode)
                     {
                         string str = response.Content.ReadAsStringAsync().Result;
-
+                        JObject myProjectJObject = JObject.Parse(str);
+                        regID = (string)myProjectJObject["id"];
                     }
+                }
+                //updating Blob Postal Address
+                using (var httpClient = new HttpClient())
+                {
+                    string BCUrl2 = _azureConfig.BCURL + "/customersContract(" + regID + ")/pocPostalAddress";
+                    Uri u = new Uri(BCUrl2);
+                    var t = Task.Run(() => PatchData(u, postalAddress, "text/plain", accessToken));
+                    t.Wait();
                 }
                 return custno;
             }
             catch
             { return ""; }
 
+        }
+        static async Task<HttpResponseMessage> PatchData(Uri u, string json, string appType, string accessToken)
+        {
+            HttpClient client1 = new HttpClient();
+            client1.DefaultRequestHeaders.Clear();
+            client1.DefaultRequestHeaders.Add("If-Match", "*");
+            client1.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpContent c = new StringContent(json, Encoding.UTF8, appType);
+
+            var method = "PATCH";
+            var httpVerb = new HttpMethod(method);
+            var httpRequestMessage =
+                new HttpRequestMessage(httpVerb, u)
+                {
+                    Content = c
+                };
+
+            var response = await client1.SendAsync(httpRequestMessage);
+            if (!response.IsSuccessStatusCode)
+            {
+                var responseCode = response.StatusCode;
+                var responseJson = response.Content.ReadAsStringAsync();
+            }
+            return response;
         }
     }
 }
