@@ -573,7 +573,7 @@ namespace CICLatest.Controllers
 
                     for (int i = 0; i < cntJson; i++)
                     {
-                       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress);
+                       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress,model.TradingStyle);
                     }
                 }
                 var responseR = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform1", JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), model.PartitionKey, model.RowKey);
@@ -936,7 +936,7 @@ namespace CICLatest.Controllers
         }
 
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress)
+        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle)
         {
             GetAccessToken();
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -954,7 +954,7 @@ namespace CICLatest.Controllers
                     externalDocumentNo = (string)myJObject["value"][i]["RowKey"],
                     invoiceNo = invoiceNo,
                     businessName = (string)myJObject["value"][i]["BusinessName"],
-                    tradeName = (string)myJObject["value"][i]["TradingStyle"],
+                    tradeName = tradeStyle,
                     certificateNo = (string)myJObject["value"][i]["CertificateNo"],
                     registration = registratinFee,
                     renewal = reFee,

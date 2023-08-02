@@ -440,6 +440,7 @@ namespace CICLatest.Controllers
                     customerNo = (string)myJObject["value"][i]["CustNo"],
                     externalDocumentNo = (string)myJObject["value"][i]["RowKey"],
                     invoiceNo = invoiceNo,
+                    tradeName = (string)myJObject["value"][i]["NameOFJoinVenture"],
                     businessName = (string)myJObject["value"][i]["BusinessName"],
                     certificateNo = (string)myJObject["value"][i]["CertificateNo"],
                     registration = registratinFee,
