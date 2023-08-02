@@ -790,7 +790,7 @@
     function handleClick(myRadio)
     {
         var value = myRadio.value;
-        if (value == 'Renewal') {
+        if (value == 'Renewal' || value == 'Upgrading') {
             $('#newcheklist').hide();
             $('#renewcheklist').show();
             window.location.href = '/Cicform7/GetData?apptype=' + value;

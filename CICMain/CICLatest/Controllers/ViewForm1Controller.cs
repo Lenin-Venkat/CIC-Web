@@ -992,7 +992,7 @@ namespace CICLatest.Controllers
                 //updating Blob Postal Address
                 using (var httpClient = new HttpClient())
                 {
-                    string BCUrl2 = _azureConfig.BCURL + "/customersContract(" + regID + ")/pocPostalAddress";
+                    string BCUrl2 = _azureConfig.BCURL + "/customersContract1(" + regID + ")/PostalAddress";
                     Uri u = new Uri(BCUrl2);
                     var t = Task.Run(() => PatchData(u, postalAddress, "text/plain", accessToken));
                     t.Wait();

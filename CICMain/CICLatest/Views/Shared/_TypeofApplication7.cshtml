@@ -46,6 +46,13 @@
                                 <span class="checkmark"></span>
                             </label>
                         </li>
+                        <li>
+                            <label class="custom-radio">
+                                Upgrading
+                                <input type="radio" asp-for="@Model.App.AppType" value="Upgrading" onclick="handleClick(this);" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </li>
                     </ul>
 
                 </div>
