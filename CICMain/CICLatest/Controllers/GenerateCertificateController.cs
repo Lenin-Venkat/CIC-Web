@@ -10,6 +10,12 @@ using Newtonsoft.Json;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using CICLatest.MappingConfigurations;
+using Azure.Core;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text;
+using iTextSharp.text.pdf;
 
 namespace CICLatest.Controllers
 {
@@ -21,6 +27,7 @@ namespace CICLatest.Controllers
         static string StorageKey = "";
         private IHostingEnvironment Environment;
         private readonly AzureStorageConfiguration _azureConfig;
+        public static string accessToken;
 
         public GenerateCertificateController(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment)
         {
@@ -95,6 +102,7 @@ namespace CICLatest.Controllers
                 PKey = form1Model.PartitionKey;
                 RKey = form1Model.RowKey;
                 form1Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form1Model.RowKey, rdata.RNo.ToString(), "cicform1");
                 CertMasterModel data1 = new CertMasterModel();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "RegistrationNumber");
@@ -122,6 +130,7 @@ namespace CICLatest.Controllers
                 PKey = form2Model.PartitionKey;
                 RKey = form2Model.RowKey;
                 form2Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form2Model.RowKey, rdata.RNo.ToString(), "cicform1");
                 CertMasterModel data1 = new CertMasterModel();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form2");
@@ -150,6 +159,7 @@ namespace CICLatest.Controllers
                 PKey = form4Model.PartitionKey;
                 RKey = form4Model.RowKey;
                 form4Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form4Model.RowKey, rdata.RNo.ToString(), "cicform4");
                 CertForm4Model data1 = new CertForm4Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form4");
@@ -179,6 +189,7 @@ namespace CICLatest.Controllers
                 RKey = form7Model.RowKey;
                 form7Model.ReceiptNo = rdata.RNo.ToString();
                 CertForm7Model data1 = new CertForm7Model();
+                UpdateRegistrationDetails(form7Model.RowKey, rdata.RNo.ToString(), "cicform7");
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form7");
                 var response1 = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform7", JsonConvert.SerializeObject(form7Model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), form7Model.PartitionKey, form7Model.RowKey);
@@ -205,6 +216,7 @@ namespace CICLatest.Controllers
                 PKey = form6Model.PartitionKey;
                 RKey = form6Model.RowKey;
                 form6Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form6Model.RowKey, rdata.RNo.ToString(), "cicform6");
                 CertForm6Model data1 = new CertForm6Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form6");
@@ -232,6 +244,7 @@ namespace CICLatest.Controllers
                 PKey = form8Model.PartitionKey;
                 RKey = form8Model.RowKey;
                 form8Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form8Model.RowKey, rdata.RNo.ToString(), "cicform8");
                 var response1 = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform8", JsonConvert.SerializeObject(form8Model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), form8Model.PartitionKey, form8Model.RowKey);
 
                 ////post release updates: invoice generation and update Project Details
@@ -260,6 +273,7 @@ namespace CICLatest.Controllers
                 PKey = form3Model.PartitionKey;
                 RKey = form3Model.RowKey;
                 form3Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form3Model.RowKey, rdata.RNo.ToString(), "cicform3");
                 CertForm3Model data3 = new CertForm3Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data3);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data3, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form3");
@@ -286,6 +300,7 @@ namespace CICLatest.Controllers
                 PKey = form5Model.PartitionKey;
                 RKey = form5Model.RowKey;
                 form5Model.ReceiptNo = rdata.RNo.ToString();
+                UpdateRegistrationDetails(form5Model.RowKey, rdata.RNo.ToString(), "cicform5");
                 CertForm3Model data3 = new CertForm3Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data3);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data3, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form3");
@@ -684,6 +699,103 @@ namespace CICLatest.Controllers
             comment = "CEO comment - " + comment;
             RemoveCertFromServer(model, comment);
             return RedirectToAction("ReviewerDashboard", "ReviewerDashboard");
+        }
+
+        public void UpdateRegistrationDetails(string Rowkey,string ReceiptNumber,string formName)
+        {
+            string jsonProjectData;
+            AzureTablesData.GetEntity(StorageName, StorageKey, formName, Rowkey, out jsonProjectData);
+
+            JObject myJObject = JObject.Parse(jsonProjectData);
+            int cntJson = myJObject["value"].Count();
+         
+            GetAccessToken();
+            for (int i = 0; i < cntJson; i++)
+            {
+                string regID = (string)myJObject["value"][i]["RegistrationID"];
+                string BCUrl2 = "";
+                try
+                {
+                    //updating Blob Postal Address
+                    using (var httpClient = new HttpClient())
+                    {
+                        if (formName == "cicform8")
+                        {
+                             BCUrl2 = _azureConfig.BCURL + "/customersContract(" + regID + ")";
+                        }
+                        else {
+                            BCUrl2 = _azureConfig.BCURL + "/customersContract1(" + regID + ")";
+                        }
+
+                        Uri u = new Uri(BCUrl2);
+                        var t = Task.Run(() => PatchData(u, ReceiptNumber, "application/json", accessToken));
+                        t.Wait();
+                    }
+                }
+                catch (Exception) { }
+            }
+
+        }
+
+
+        static async Task<HttpResponseMessage> PatchData(Uri u, string json, string appType, string accessToken)
+        {
+            HttpClient client1 = new HttpClient();
+            client1.DefaultRequestHeaders.Clear();
+            client1.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            client1.DefaultRequestHeaders.Add("If-Match", "*");
+            client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            var payload = new Dictionary<string, String>
+                {
+                  {"receiptNo", json}
+                };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+
+            var method = "PATCH";
+            var httpVerb = new HttpMethod(method);
+            var httpRequestMessage =
+                new HttpRequestMessage(httpVerb, u)
+                {
+                    Content = c
+                };
+
+            var response = await client1.SendAsync(httpRequestMessage);
+            if (!response.IsSuccessStatusCode)
+            {
+                var responseCode = response.StatusCode;
+                var responseJson = response.Content.ReadAsStringAsync();
+            }
+            return response;
+        }
+
+
+        public string GetAccessToken()
+        {
+            //Get new token from Azure for BC
+            string url = _azureConfig.TokenURL;
+
+            //ConfigurationSettings.AzureAccessToken
+            Uri uri = new Uri(_azureConfig.Authority.Replace("{AadTenantId}", _azureConfig.AadTenantId));
+            Dictionary<string, string> requestBody = new Dictionary<string, string>
+                {
+                    {"grant_type", "client_credentials" },
+                    {"client_id" , _azureConfig.ClientId },
+                    {"client_secret", _azureConfig.ClientSecret },
+                    {"scope", @"https://api.businesscentral.dynamics.com/.default" }
+                };
+
+            var content = new FormUrlEncodedContent(requestBody);
+            HttpClient client = new HttpClient();
+            var response = client.PostAsync(url, content);
+            var rescontent = response.Result.Content.ReadAsStringAsync();
+
+            dynamic jsonresult = JsonConvert.DeserializeObject(rescontent.Result);
+            accessToken = jsonresult.access_token;
+            return accessToken;
         }
     }
 }

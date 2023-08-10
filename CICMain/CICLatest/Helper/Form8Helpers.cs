@@ -45,6 +45,7 @@ namespace CICLatest.Helper
             int cntJson1 = myJObject1["value"].Count();
             for (int i = 0; i < cntJson1; i++)
                 UpdateProjectDetails(myJObject1, i, model.RowKey, invoiceNo);
+
         }
         private string CreateInvoiceERP(string cust, string AppNo, out string invoiceNo, string partitionKey, string FormName)
         {

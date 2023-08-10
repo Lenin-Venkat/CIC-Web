@@ -468,7 +468,7 @@ namespace CICLatest.Controllers
 
                     case "Ops Manager":
                         model.Reviewer = "Ops Manager";
-                       // model.Reviewer = "CEO"; //AK changed "Ops Manager" to CEO
+                        // model.Reviewer = "CEO"; //AK changed "Ops Manager" to CEO
                         model.FormStatus = "Completed";
 
                         string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved.</br>Comment:" + comment + "</br>Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
@@ -479,7 +479,7 @@ namespace CICLatest.Controllers
                         CICFees fees = null;
                         string invoiceNo;
 
-                        string i_id = CreateInvoiceERP(model.CustNo, model.RowKey, out invoiceNo,model.PartitionKey,model.FormName);
+                        string i_id = CreateInvoiceERP(model.CustNo, model.RowKey, out invoiceNo, model.PartitionKey, model.FormName);
 
                         if (model.Grade.Contains(','))
                         {
@@ -502,19 +502,19 @@ namespace CICLatest.Controllers
                                     model.RegistrationFee = 0;
                                 }
 
-                                
-                                if (model.AdminFee !=0)
+
+                                if (model.AdminFee != 0)
                                 {
                                     model.AdminFee = model.AdminFee + fees.AdminFees;
                                     model.RegistrationFee = model.RegistrationFee + fees.RegistrationFees;
                                     model.RenewalFee = model.RenewalFee + fees.RenewalFees;
-                                }                                                               
+                                }
                             }
                         }
                         else
                         {
                             fees = calculateFees(model.FormName, model.Grade);
-                            
+
                             if (model.AppType == "NewApplication")
                             {
                                 model.AdminFee = fees.AdminFees;
@@ -539,10 +539,10 @@ namespace CICLatest.Controllers
 
                         DateTime allowedGracePeriod = (DateTime)gracePeriodObject["value"][0]["allowedDate"];
 
-                        if (allowedGracePeriod < DateTime.Now && model.AppType == "Renewal"){
+                        if (allowedGracePeriod < DateTime.Now && model.AppType == "Renewal") {
                             penalty = (model.RenewalFee * 10) / 100;
-                                                    
-                        }else
+
+                        } else
                         {
                             penalty = 0;
                         }
@@ -551,6 +551,20 @@ namespace CICLatest.Controllers
 
 
                         model.InvoiceNo = invoiceNo;
+                        string jsonProjectData;
+                        if (invoiceNo != "")
+                        {
+                            AzureTablesData.GetEntity(StorageName, StorageKey, "cicform1", model.RowKey, out jsonProjectData);
+
+                            JObject myJObject = JObject.Parse(jsonProjectData);
+                            int cntJson = myJObject["value"].Count();
+
+                            for (int i = 0; i < cntJson; i++)
+                            {
+                                model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress, model.TradingStyle, Convert.ToDecimal(penalty));
+                            }
+                        }
+
                         break;
                        
                 }
@@ -563,20 +577,20 @@ namespace CICLatest.Controllers
                 model.ScoreStr = combinedStringforscore;
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform1", JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),model.PartitionKey,model.RowKey);
 
-                string jsonProjectData;
-                if (model.InvoiceNo != "")
-                {
-                    AzureTablesData.GetEntity(StorageName, StorageKey, "cicform1", model.RowKey, out jsonProjectData);
+                //string jsonProjectData;
+                //if (model.InvoiceNo != "")
+                //{
+                //    AzureTablesData.GetEntity(StorageName, StorageKey, "cicform1", model.RowKey, out jsonProjectData);
 
-                    JObject myJObject = JObject.Parse(jsonProjectData);
-                    int cntJson = myJObject["value"].Count();
+                //    JObject myJObject = JObject.Parse(jsonProjectData);
+                //    int cntJson = myJObject["value"].Count();
 
-                    for (int i = 0; i < cntJson; i++)
-                    {
-                       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress,model.TradingStyle);
-                    }
-                }
-                var responseR = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform1", JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), model.PartitionKey, model.RowKey);
+                //    for (int i = 0; i < cntJson; i++)
+                //    {
+                //       model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress,model.TradingStyle, Convert.ToDecimal(penalty));
+                //    }
+                //}
+                //var responseR = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform1", JsonConvert.SerializeObject(model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), model.PartitionKey, model.RowKey);
 
                 string jsond = "";
                
@@ -936,7 +950,7 @@ namespace CICLatest.Controllers
         }
 
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle)
+        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle,decimal penaltyFee)
         {
             GetAccessToken();
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -959,7 +973,7 @@ namespace CICLatest.Controllers
                     registration = registratinFee,
                     renewal = reFee,
                     adminFee = adminFee,
-                    penalty = 0,
+                    penalty = penaltyFee,
                     credit = 0,
                     owing = 0,
                     total = 0,

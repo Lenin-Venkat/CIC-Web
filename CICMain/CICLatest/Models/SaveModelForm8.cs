@@ -170,5 +170,6 @@ namespace CICLatest.Models
         public int CreateClearenceCertificate { get; set; }
         public int projectCertificateCreated { get; set; }
         public int NoOfPartialCertificateCreated { get; set; }
+        public string RegistrationID { get; set; }
     }
 }

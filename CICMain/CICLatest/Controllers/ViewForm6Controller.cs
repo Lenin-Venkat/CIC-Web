@@ -255,7 +255,7 @@ namespace CICLatest.Controllers
 
                         for (int i = 0; i < cntJson; i++)
                         {
-                            view1Form.UpdateRegistrationDetails(myJObject, i, invoiceno, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.ResidentialAddress, model.Name + " " + model.Surname);
+                         model.RegistrationID = view1Form.UpdateRegistrationDetails(myJObject, i, invoiceno, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.ResidentialAddress, model.Name + " " + model.Surname, Convert.ToDecimal(penalty));
                         }
 
                         break;

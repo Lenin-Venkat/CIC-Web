@@ -123,5 +123,6 @@ namespace CICLatest.Models
         public int RenewalFee { get; set; }
 
         public string InvoiceNo { get; set; }
+        public string RegistrationID { get; set; }
     }
 }

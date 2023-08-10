@@ -465,7 +465,14 @@ namespace CICLatest.Controllers
 
                         if (allowedGracePeriod < DateTime.Now && model.AppType == "Renewal")
                         {
-                            penalty = (model.RenewalFee * 10) / 100;
+                            if (model.TypeofJoointVenture == "foreign")
+                            {
+                                penalty = (model.RenewalFee * 10) / 100;
+                            }
+                            else
+                            {
+                                penalty = (model.RenewalFee * 10) / 100;
+                            }
 
                         }
                         else
@@ -485,7 +492,7 @@ namespace CICLatest.Controllers
                         accessToken = view1Form.GetAccessToken();
                         for (int i = 0; i < cntJson; i++)
                         {
-                            UpdateRegistrationDetails(myJObject, i, invoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.Phyaddress);
+                           model.RegistrationID =  UpdateRegistrationDetails(myJObject, i, invoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.Phyaddress, Convert.ToDecimal(penalty));
                         }
 
                         break;
@@ -602,7 +609,7 @@ namespace CICLatest.Controllers
             return gradesList;
         }
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress)
+        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress,decimal penaltyFee)
         {
             string custno = (string)myJObject["value"][i]["CustNo"];
             DateTime createdDate = DateTime.Now;
@@ -624,7 +631,7 @@ namespace CICLatest.Controllers
                     registration = registratinFee,
                     renewal = reFee,
                     adminFee = adminFee,
-                    penalty = 0,
+                    penalty = penaltyFee,
                     credit = 0,
                     owing = 0,
                     total = 0,
@@ -661,7 +668,7 @@ namespace CICLatest.Controllers
                     var t = Task.Run(() => PatchData(u, postalAddress, "text/plain", accessToken));
                     t.Wait();
                 }
-                return custno;
+                return regID;
             }
             catch
             { return ""; }

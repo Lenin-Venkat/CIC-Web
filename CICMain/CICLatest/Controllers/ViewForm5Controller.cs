@@ -273,7 +273,7 @@ namespace CICLatest.Controllers
                         accessToken = view1Form.GetAccessToken();
                         for (int i = 0; i < cntJson; i++)
                         {
-                            UpdateRegistrationDetails(myJObject, i, invoice, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.Phyaddress);
+                            model.RegistrationID = UpdateRegistrationDetails(myJObject, i, invoice, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.Phyaddress, Convert.ToDecimal(penalty));
                         }
 
                         break;
@@ -424,7 +424,7 @@ namespace CICLatest.Controllers
             return subName;
         }
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee,string postalAddress)
+        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee,string postalAddress,decimal penaltyFee)
         {
             string custno = (string)myJObject["value"][i]["CustNo"];
             DateTime createdDate = DateTime.Now;
@@ -446,7 +446,7 @@ namespace CICLatest.Controllers
                     registration = registratinFee,
                     renewal = reFee,
                     adminFee = adminFee,
-                    penalty = 0,
+                    penalty = penaltyFee,
                     credit = 0,
                     owing = 0,
                     total = 0,
@@ -482,7 +482,7 @@ namespace CICLatest.Controllers
                     var t = Task.Run(() => PatchData(u, postalAddress, "text/plain", accessToken));
                     t.Wait();
                 }
-                return custno;
+                return regID;
             }
             catch
             { return ""; }
