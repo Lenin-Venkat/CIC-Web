@@ -1031,7 +1031,7 @@ namespace CICLatest.Controllers
             JObject suppliersObject1 = JObject.Parse(jsonDataSubcontractor);
 
             var suppliers1 = suppliersObject1["value"]
-                .Where(x => ((string)x["FormStatus"]).ToLower() == "finished" && (string)x["CertificateNo"] != null && (string)x["CertificateNo"] != "")
+                .Where(x => (x["FormStatus"])?.ToString().ToLower() == "finished" && x["CertificateNo"]?.ToString() != null && x["CertificateNo"]?.ToString() != "")
                 .GroupBy(x => x["BusinessName"])
                 .Select(x => x.OrderByDescending(y => y["Timestamp"]).FirstOrDefault())
                 .OrderBy(x => x["BusinessName"])
@@ -1061,7 +1061,7 @@ namespace CICLatest.Controllers
             JObject certificatesObject = JObject.Parse(jsonDataCertificates);
 
             var certificates = certificatesObject["value"]
-                .Where(x => ((string)x["CreatedBy"]).ToLower() == loggedInUserEmail.ToLower() && x["CertificateNo"] != null)
+                .Where(x => (x["CreatedBy"])?.ToString().ToLower() == loggedInUserEmail.ToLower() && x["CertificateNo"] != null)
                 .GroupBy(x => x["CertificateNo"])
                 .Select(x => x.OrderBy(y => y["CertificateNo"]).FirstOrDefault())
                 .ToList();
@@ -1072,9 +1072,8 @@ namespace CICLatest.Controllers
             {
                 certificatesList.Add(new CertificatesList()
                 {
-                    CertificateNoValue = (string)certificates[i]["CertificateNo"]
-                    ,
-                    CertificateNoText = (string)certificates[i]["CertificateNo"]
+                    CertificateNoValue = certificates[i]["CertificateNo"]?.ToString(),
+                    CertificateNoText = certificates[i]["CertificateNo"]?.ToString()
                 });
             }
 
