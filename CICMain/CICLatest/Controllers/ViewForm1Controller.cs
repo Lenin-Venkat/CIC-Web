@@ -489,26 +489,18 @@ namespace CICLatest.Controllers
                             for (int k = 0; k < len1; k++)
                             {
                                 fees = calculateFees(model.FormName, GradeList[k]);
-                                if (model.AppType == "NewApplication")
-                                {
-                                    model.AdminFee = fees.AdminFees;
-                                    model.RenewalFee = fees.RenewalFees;
-                                    model.RegistrationFee = fees.RegistrationFees;
-                                }
-                                else
-                                {
-                                    model.AdminFee = fees.AdminFees;
-                                    model.RenewalFee = fees.RenewalFees;
-                                    model.RegistrationFee = 0;
-                                }
-
-
-                                if (model.AdminFee != 0)
-                                {
+                                //if (model.AppType == "NewApplication")
+                                //{
                                     model.AdminFee = model.AdminFee + fees.AdminFees;
-                                    model.RegistrationFee = model.RegistrationFee + fees.RegistrationFees;
                                     model.RenewalFee = model.RenewalFee + fees.RenewalFees;
-                                }
+                                    model.RegistrationFee = model.RegistrationFee + fees.RegistrationFees;
+                                //}
+                                //else
+                                //{
+                                //    model.AdminFee = model.AdminFee + fees.AdminFees;
+                                //    model.RenewalFee = model.RenewalFee + fees.RenewalFees;
+                                //    model.RegistrationFee = 0;
+                                //}
                             }
                         }
                         else

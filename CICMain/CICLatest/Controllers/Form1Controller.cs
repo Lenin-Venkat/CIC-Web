@@ -3087,15 +3087,16 @@ namespace CICLatest.Controllers
                 int cntJson = myJObject["value"].Count();
                 int tempRegNo;
 
+
+
                 if (cntJson != 0)
                 {
                     tempMax = (int)myJObject["value"][0]["FirmRegistrationNo"];
                 }
-
-
                 for (int i = 0; i < cntJson; i++)
                 {
-                    tempRegNo = (int)myJObject["value"][i]["FirmRegistrationNo"];
+                    var regNo = myJObject["value"][i]["FirmRegistrationNo"];
+                    tempRegNo = regNo == null ? 0 : (int)regNo;
 
                     if (tempRegNo > tempMax)
                     {
@@ -3103,6 +3104,7 @@ namespace CICLatest.Controllers
                     }
                 }
                 tempMax++;
+
             }
 
             return tempMax;
