@@ -59,27 +59,69 @@
                         </tr>
                     </thead>
                     <tbody id="tbody2">
-                        @for (int i = 0; i < Model.worksCapability.Count; i++)
+                        @if (Model.ReadOnlyField1)
                         {
-                            <tr id="@i">
-                                <td class="row1"><input class="form-control" type="text" asp-for="worksCapability[i].ProjectName" id="title_@i"/></td>
-                                <td class="row2"><input class="form-control" type="text" asp-for="worksCapability[i].Location" id="loc_@i"/></td>
-                                <td class="row3"><input class="form-control" type="text" style="cursor:pointer" placeholder="" asp-for="worksCapability[i].RegistationNo" id="Work_@i" data-toggle="modal" data-target="#registrationnumber" data-id="Work_@i" /></td>
-                                <td class="row4"><input class="form-control datepicker" type="text" asp-for="worksCapability[i].CompletionDate" id="workdate_@i"/></td>
-                                <td class="row5"><input class="form-control decimal-field" type="text" asp-for="worksCapability[i].ContractSum" id="sum_@i" /></td>
-                                <td class="row6"><input class="form-control" type="text" asp-for="worksCapability[i].TelephoneNo" id="no_@i"/></td>
-                                <td class="row7"><input class="form-control" type="text" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i"/><input type="hidden" asp-for="cWork" /></td>
-                                @*<td class="row8">
+                            @for (int i = 0; i < Model.worksCapability.Count; i++)
+                            {
+                                <tr id="@i">
+                                    <td class="row1"><input class="form-control" type="text" asp-for="worksCapability[i].ProjectName" id="title_@i" readonly /></td>
+                                    <td class="row2"><input class="form-control" type="text" asp-for="worksCapability[i].Location" id="loc_@i" readonly /></td>
+                                    <td class="row3"><input class="form-control" type="text" style="cursor:pointer" placeholder="" asp-for="worksCapability[i].RegistationNo" id="Work_@i" data-toggle="modal" data-target="#registrationnumber" data-id="Work_@i" readonly /></td>
+                                    <td class="row4"><input class="form-control datepicker" type="text" asp-for="worksCapability[i].CompletionDate" id="workdate_@i" readonly /></td>
+                                    <td class="row5"><input class="form-control decimal-field" type="text" asp-for="worksCapability[i].ContractSum" id="sum_@i" readonly /></td>
+                                    <td class="row6"><input class="form-control" type="text" asp-for="worksCapability[i].TelephoneNo" id="no_@i"/></td>
+                                    @*<td class="row7"><input class="form-control" type="text" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i"/><input type="hidden" asp-for="cWork" /></td>*@
+                                    <td class="row7">
+                                        <select class="custom-select form-control" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i" readonly>
+                                            <option required>Select Account</option>
+                                            <option value="MainContractor">Main Contractor</option>
+                                            <option value="SubContractor">Sub-Contractor</option>
+                                        </select>
+                                    </td>
+                                    @*<td class="row8">
                                         <div class="browse-box">
                                             <input type="file" asp-for="worksCapability[i]." id="Browsebox" class="inputfile inputfile-1" />
                                             <label for="Browsebox"><span>Browse </span></label>
 
                                         </div>
                                     </td>*@
-                                <td><button class="removeWork" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+                                    <td><button class="removeWork" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
 
-                            </tr>
+                                </tr>
 
+                            }
+                        }
+                        else
+                        {
+                            @for (int i = 0; i < Model.worksCapability.Count; i++)
+                            {
+                                <tr id="@i">
+                                    <td class="row1"><input class="form-control" type="text" asp-for="worksCapability[i].ProjectName" id="title_@i" /></td>
+                                    <td class="row2"><input class="form-control" type="text" asp-for="worksCapability[i].Location" id="loc_@i" /></td>
+                                    <td class="row3"><input class="form-control" type="text" style="cursor:pointer" placeholder="" asp-for="worksCapability[i].RegistationNo" id="Work_@i" data-toggle="modal" data-target="#registrationnumber" data-id="Work_@i" /></td>
+                                    <td class="row4"><input class="form-control datepicker" type="text" asp-for="worksCapability[i].CompletionDate" id="workdate_@i" /></td>
+                                    <td class="row5"><input class="form-control decimal-field" type="text" asp-for="worksCapability[i].ContractSum" id="sum_@i" /></td>
+                                    <td class="row6"><input class="form-control" type="text" asp-for="worksCapability[i].TelephoneNo" id="no_@i"/></td>
+                                    @*<td class="row7"><input class="form-control" type="text" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i"/><input type="hidden" asp-for="cWork" /></td>*@
+                                    <td class="row7">
+                                        <select class="custom-select form-control" asp-for="worksCapability[i].TypeofInvolvement" id="type_@i">
+                                            <option required>Select Account</option>
+                                            <option value="MainContractor">Main Contractor</option>
+                                            <option value="SubContractor">Sub-Contractor</option>
+                                        </select>
+                                    </td>
+                                    @*<td class="row8">
+                                        <div class="browse-box">
+                                            <input type="file" asp-for="worksCapability[i]." id="Browsebox" class="inputfile inputfile-1" />
+                                            <label for="Browsebox"><span>Browse </span></label>
+
+                                        </div>
+                                    </td>*@
+                                    <td><button class="removeWork" type="button"> <img src="~/images/trush.svg" alt="remove row" /> </button></td>
+
+                                </tr>
+
+                            }                            
                         }
                     </tbody>
                     <tfoot>
@@ -117,9 +159,14 @@
                                                                             <td class="row6">
                                                                             <input type="text" class="form-control" name="worksCapability[${counter2}].TelephoneNo" value="0" id="no_${counter2}" />
                                                                             </td>
-                                                                            <td class="row7">
-                                                                            <input type="text" class="form-control" name="worksCapability[${counter2}].TypeofInvolvement" value="0"  id="type_${counter2}"/>
+                                                                            //<td class="row7">
+                                                                            //<input type="text" class="form-control" name="worksCapability[${counter2}].TypeofInvolvement" value="0"  id="type_${counter2}"/>
+                                                                            //</td>
+
+                                                                            <td class="row-index6">
+                                                                             <select class="custom-select class="form-control" name="worksCapability[${counter2}].TypeofInvolvement" id="type_${counter2}"><option required>Select Type of Involvement</option><option value="MainContractor">Main Contractor</option><option value="SubContractor">Sub-Contractor</option></select >
                                                                             </td>
+
                                                                             <td>
                                                                             <button type="button" class="removeWork"><img src="/images/trush.svg" alt="remove row" /></button>
                                                                             </td>

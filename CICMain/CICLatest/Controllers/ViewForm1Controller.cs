@@ -553,7 +553,7 @@ namespace CICLatest.Controllers
 
                             for (int i = 0; i < cntJson; i++)
                             {
-                                model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress, model.TradingStyle, Convert.ToDecimal(penalty));
+                                model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress, model.TradingStyle, Convert.ToDecimal(penalty),model.AppType);
                             }
                         }
 
@@ -942,7 +942,7 @@ namespace CICLatest.Controllers
         }
 
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle,decimal penaltyFee)
+        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle,decimal penaltyFee, string typeofApplication)
         {
             GetAccessToken();
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -974,7 +974,8 @@ namespace CICLatest.Controllers
                     bank = (string)myJObject["value"][i]["BankName"],
                     category = (string)myJObject["value"][i]["Category"],
                     monthofReg = createdDate.ToString("MMMM"),
-                    grade = (string)myJObject["value"][i]["Grade"]
+                    grade = (string)myJObject["value"][i]["Grade"],
+                    typeofApplication = typeofApplication
                 }) ;
                 var json = JsonConvert.SerializeObject(data1);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");

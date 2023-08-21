@@ -2531,6 +2531,10 @@ namespace CICLatest.Controllers
             AList = ViewBag.ListofAssociation;
             memoryCache.Set("listAssociation", AList);
             memoryCache.Set("Form1", model);
+            if (model.App.AppType == "NewApplication")
+            {
+                model.ReadOnlyField1 = true;
+            }
             return RedirectToAction("Index", "Form1", new { id = model.FormName });
         }
 
