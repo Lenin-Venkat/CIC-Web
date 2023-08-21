@@ -518,6 +518,30 @@ namespace CICLatest.Controllers
                 string CertName = "LEVY_CLEARANCE_CERTIFICATE_" + regNoName + ".pdf";
                 files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = grade });
                 model.FormStatus = "Finished";
+
+                string jsonData1;
+                string tablename1 = "cicform8rcptdetails";
+
+                AzureTablesData.GetEntity(StorageName, StorageKey, tablename1, rowkey, out jsonData1);
+                JObject myJObject1 = JObject.Parse(jsonData1);
+                int cntJson1 = myJObject1["value"].Count();
+
+                for (int k = 0; k < cntJson1; k++)
+                {
+                    var tempReceiptNo = (string)myJObject1["value"][k]["ReceiptNo"];
+                    if (tempReceiptNo == "1")
+                    {
+                        var PartiKey = (string)myJObject1["value"][k]["PartitionKey"];
+                        var RowKey = (string)myJObject1["value"][k]["RowKey"];
+                        ReceiptNoDetails ReceiptNoDetailsmodel = new ReceiptNoDetails();
+                        ReceiptNoDetailsmodel.ReceiptNo = RNo;
+                        ReceiptNoDetailsmodel.CertificateNo = model.CertificateNo;
+                        ReceiptNoDetailsmodel.Amount = (decimal)myJObject1["value"][k]["Amount"];
+                        var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, tablename1, JsonConvert.SerializeObject(ReceiptNoDetailsmodel, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), PartiKey, RowKey);
+
+                        updateReceiptNoDetails(ReceiptNoDetailsmodel.ReceiptNo, PartiKey, RowKey, ReceiptNoDetailsmodel.Amount, model.CertificateNo);
+                    }
+                }
             }
 
             memoryCache.Set("CertFiles", files);
