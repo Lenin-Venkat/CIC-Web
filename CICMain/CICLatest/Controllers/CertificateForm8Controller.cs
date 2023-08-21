@@ -2,6 +2,7 @@
 using CICLatest.Helper;
 using CICLatest.Migrations;
 using CICLatest.Models;
+using DocumentFormat.OpenXml.EMMA;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Asn1.X500;
 using Org.BouncyCastle.Crypto.Tls;
 using System;
 using System.Collections.Generic;
@@ -402,6 +404,30 @@ namespace CICLatest.Controllers
                     string CertName = "Partial_Certificate_" + regNoName + "-" + i + ".pdf";
                     files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = grade });
                     model.NoOfPartialCertificateCreated = i;
+
+                    string jsonData1;
+                    string tablename1 = "cicform8rcptdetails";
+
+                    AzureTablesData.GetEntity(StorageName, StorageKey, tablename1, rowkey, out jsonData1);
+                    JObject myJObject1 = JObject.Parse(jsonData1);
+                    int cntJson1 = myJObject1["value"].Count();
+
+                    for (int k = 0; k < cntJson1; k++)
+                    {
+                        var tempReceiptNo = (string)myJObject1["value"][k]["ReceiptNo"];
+                        if (tempReceiptNo == "1")
+                        {
+                            var PartiKey = (string)myJObject1["value"][k]["PartitionKey"];
+                            var RowKey = (string)myJObject1["value"][k]["RowKey"];
+                            ReceiptNoDetails ReceiptNoDetailsmodel = new ReceiptNoDetails();
+                            ReceiptNoDetailsmodel.ReceiptNo = RNo;
+                            ReceiptNoDetailsmodel.CertificateNo = model.CertificateNo;
+                            ReceiptNoDetailsmodel.Amount = (decimal)myJObject1["value"][k]["Amount"];
+                            var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, tablename1, JsonConvert.SerializeObject(ReceiptNoDetailsmodel, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), PartiKey, RowKey);
+
+                            updateReceiptNoDetails(ReceiptNoDetailsmodel.ReceiptNo, PartiKey, RowKey, ReceiptNoDetailsmodel.Amount, model.CertificateNo);
+                        }
+                    }
                 }                
             }
             if (model.CreateClearenceCertificate == 1)
@@ -501,7 +527,72 @@ namespace CICLatest.Controllers
             return RedirectToAction("Index", "GenerateCertificate");
         }
 
-      
+        private string updateReceiptNoDetails(string Rno, string PartiKey, string rowkey,decimal amount,string CertificateNo)
+        {
+            string istr = "";
+            GetAccessToken();
+            try
+            {
+                var data1 = JObject.FromObject(new
+                {
+                    invoiceNo = PartiKey,
+                    prnno = rowkey,
+                    certificatenumber = CertificateNo,
+                    recieptnumber = Rno,
+                    amount = amount
+                });
+
+                var json = JsonConvert.SerializeObject(data1);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Clear();
+                    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    string u = _azureConfig.BCURL + "/cicprojectCertificates";
+                    HttpResponseMessage response = httpClient.PostAsync(@u, data).Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string str = response.Content.ReadAsStringAsync().Result;
+
+                        JObject myProjJObject = JObject.Parse(str);
+                        istr = (string)myProjJObject["id"];
+                    }
+                }
+                return istr;
+            }
+            catch
+            { return ""; }
+        }
+        public string GetAccessToken()
+        {
+            //Get new token from Azure for BC
+            string url = _azureConfig.TokenURL;
+
+            //ConfigurationSettings.AzureAccessToken
+            Uri uri = new Uri(_azureConfig.Authority.Replace("{AadTenantId}", _azureConfig.AadTenantId));
+            Dictionary<string, string> requestBody = new Dictionary<string, string>
+                {
+                    {"grant_type", "client_credentials" },
+                    {"client_id" , _azureConfig.ClientId },
+                    {"client_secret", _azureConfig.ClientSecret },
+                    {"scope", @"https://api.businesscentral.dynamics.com/.default" }
+                };
+
+            var content = new FormUrlEncodedContent(requestBody);
+            HttpClient client = new HttpClient();
+            var response = client.PostAsync(url, content);
+            var rescontent = response.Result.Content.ReadAsStringAsync();
+
+            dynamic jsonresult = JsonConvert.DeserializeObject(rescontent.Result);
+            accessToken = jsonresult.access_token;
+            return accessToken;
+        }
+
+
+
         public string GetCertificateData(string name)
         {
 
