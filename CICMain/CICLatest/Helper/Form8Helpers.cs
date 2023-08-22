@@ -44,7 +44,7 @@ namespace CICLatest.Helper
             JObject myJObject1 = JObject.Parse(jsonData1);
             int cntJson1 = myJObject1["value"].Count();
             for (int i = 0; i < cntJson1; i++)
-                UpdateProjectDetails(myJObject1, i, model.RowKey, invoiceNo);
+                UpdateProjectDetails(myJObject1, i, model.RowKey, invoiceNo,model.ProjectType);
 
         }
         private string CreateInvoiceERP(string cust, string AppNo, out string invoiceNo, string partitionKey, string FormName)
@@ -126,7 +126,7 @@ namespace CICLatest.Helper
         }
 
         //AK Project Details
-        private string UpdateProjectDetails(JObject myJObject, int i, string rowkey, string invoiceNo)
+        private string UpdateProjectDetails(JObject myJObject, int i, string rowkey, string invoiceNo, string ProjectType)
         {
 
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -162,7 +162,8 @@ namespace CICLatest.Helper
                     awardDate = ((DateTime)myJObject["value"][i]["DateofAward"]).ToString("yyyy-MM-dd"),
                     startDate = ((DateTime)myJObject["value"][i]["ProposedCommencmentDate"]).ToString("yyyy-MM-dd"),
                     completionDate = ((DateTime)myJObject["value"][i]["ProposedCompleteDate"]).ToString("yyyy-MM-dd"),
-                    tradeName = (string)myJObject["value"][i]["Oraganization"]
+                    tradeName = (string)myJObject["value"][i]["Oraganization"],
+                    typeofApplication = ProjectType
                 });
 
                 var json = JsonConvert.SerializeObject(data1);

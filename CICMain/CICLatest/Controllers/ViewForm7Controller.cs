@@ -282,7 +282,10 @@ namespace CICLatest.Controllers
 
                         model.AdminFee = fees.AdminFees;
                         model.RenewalFee = fees.RenewalFees;
-                        model.RegistrationFee = fees.RegistrationFees;
+                        if (model.AppType != "Renewal")
+                        {
+                            model.RegistrationFee = fees.RegistrationFees;
+                        }
 
                        // AK
                         id = viewForm2.CreateInvoiceERP(model.CustNo, model.RowKey, out invoiceno, model.PartitionKey,model.FormName);

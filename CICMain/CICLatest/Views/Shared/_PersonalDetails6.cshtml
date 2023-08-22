@@ -35,7 +35,14 @@
                         </div>
                         <div class="col-lg form-group">
                             <label class="required" for="lname">Nationality <span class="asterisk">*</span></label>
-                            <input asp-for="personelDetails.Nationality" class="form-control" type="text" placeholder="Please enter Nationality" />
+                            
+                            <select class="custom-select form-control" asp-for="personelDetails.Nationality" placeholder="Please enter Nationality">
+                                <option required>Select Nationality</option>
+                                <option value="Swazi">Swazi</option>
+                                <option value="Foreign">Foreign</option>
+                            </select>
+                            
+                            @*<input asp-for="personelDetails.Nationality" class="form-control" type="text" placeholder="Please enter Nationality" />*@
                             <span asp-validation-for="personelDetails.Nationality" class="text-danger"></span>
                         </div>
                     </div>

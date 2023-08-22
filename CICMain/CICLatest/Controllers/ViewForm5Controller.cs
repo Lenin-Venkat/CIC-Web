@@ -234,7 +234,11 @@ namespace CICLatest.Controllers
                         }
 
                         model.AdminFee = fees.AdminFees;
-                        model.RenewalFee = fees.RenewalFees;
+
+                        if (model.CountryOfOrigin != "Swazi")
+                        {
+                            model.RenewalFee = fees.RenewalFees;
+                        }
                         model.RegistrationFee = fees.RegistrationFees;
 
                         ///AK
@@ -253,7 +257,7 @@ namespace CICLatest.Controllers
 
                         if (allowedGracePeriod < DateTime.Now && model.AppType == "Renewal")
                         {
-                            penalty = (model.RenewalFee * 10) / 100;
+                            penalty = (model.AdminFee * 10) / 100;
 
                         }
                         else
