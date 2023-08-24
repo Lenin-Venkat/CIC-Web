@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -555,6 +556,7 @@ namespace CICLatest.Controllers
         {
             string istr = "";
             GetAccessToken();
+            string u = _azureConfig.BCURL + "/cicprojectCertificates";
             try
             {
                 var data1 = JObject.FromObject(new
@@ -574,7 +576,7 @@ namespace CICLatest.Controllers
                     httpClient.DefaultRequestHeaders.Clear();
                     httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    string u = _azureConfig.BCURL + "/cicprojectCertificates";
+                   // string u = _azureConfig.BCURL + "/cicprojectCertificates";
                     HttpResponseMessage response = httpClient.PostAsync(@u, data).Result;
 
                     if (response.IsSuccessStatusCode)
@@ -582,13 +584,49 @@ namespace CICLatest.Controllers
                         string str = response.Content.ReadAsStringAsync().Result;
 
                         JObject myProjJObject = JObject.Parse(str);
-                        istr = (string)myProjJObject["id"];
+                        istr = (string)myProjJObject["SystemId"];
                     }
                 }
+
+                var data2 = JObject.FromObject(new
+                {
+                    print = true
+                });
+
+                var json1 = JsonConvert.SerializeObject(data2);
+
+                Uri url = new Uri(u+"("+istr+")");
+                var t = Task.Run(() => patchReceiptDetails(url, json1, "application/json", accessToken));
+                t.Wait();
                 return istr;
             }
             catch
             { return ""; }
+        }
+        static async Task<HttpResponseMessage> patchReceiptDetails(Uri u, string json, string appType, string accessToken)
+        {
+            HttpClient client1 = new HttpClient();
+            client1.DefaultRequestHeaders.Clear();
+            client1.DefaultRequestHeaders.Add("If-Match", "*");
+            client1.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
+            client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpContent c = new StringContent(json, Encoding.UTF8, appType);
+
+            var method = "PATCH";
+            var httpVerb = new HttpMethod(method);
+            var httpRequestMessage =
+                new HttpRequestMessage(httpVerb, u)
+                {
+                    Content = c
+                };
+
+            var response = await client1.SendAsync(httpRequestMessage);
+            if (!response.IsSuccessStatusCode)
+            {
+                var responseCode = response.StatusCode;
+                var responseJson = response.Content.ReadAsStringAsync();
+            }
+            return response;
         }
         public string GetAccessToken()
         {
