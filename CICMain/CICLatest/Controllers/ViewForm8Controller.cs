@@ -110,6 +110,7 @@ namespace CICLatest.Controllers
                 model.RevisedDate = (DateTime)myJObject["value"][i]["RevisedDate"];
                 model.ContractVAlue = (decimal)myJObject["value"][i]["ContractVAlue"];
                 model.LevyPaybale = (decimal)myJObject["value"][i]["LevyPaybale"];
+                model.PoPostalAddress = (string)myJObject["value"][i]["PoPostalAddress"];
 
                 model.TotalProjectCost = (decimal)myJObject["value"][i]["TotalProjectCost"];
                 model.TotalProjectCostIncludingLevy = (decimal)myJObject["value"][i]["TotalProjectCostIncludingLevy"];
