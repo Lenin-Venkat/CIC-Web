@@ -55,6 +55,7 @@ namespace CICLatest.Models
 
         public string PostalAddress { get; set; }
 
+        public string PoPostalAddress { get; set; }
         public string PhysicalAddress { get; set; }
 
 

@@ -1552,13 +1552,13 @@ namespace CICLatest.Controllers
             saveModelForm8.FaxNo = p1.tabb1.FaxNo;
             saveModelForm8.MobileNo = p1.tabb1.MobileNo;
             saveModelForm8.EmailAddress = p1.tabb1.EmailAddress;
-            //saveModelForm8.PostalAddress = p1.tabb1.Form1PostalAddress;
+            saveModelForm8.PostalAddress = p1.tabb1.Form1PostalAddress;
 
             //2 tab details
             saveModelForm8.Name = p1.tab2.Name;
             saveModelForm8.IDNO = p1.tab2.IDNO;
             saveModelForm8.PassportNo = p1.tab2.PassportNo;
-            saveModelForm8.PostalAddress = $"{p1.tabb1.Form1PostalAddress}|{p1.tab2.PostalAddress}" ;
+            saveModelForm8.PoPostalAddress = p1.tab2.PostalAddress;
             saveModelForm8.PhysicalAddress = p1.tab2.PhysicalAddress;
             saveModelForm8.PhysicalAddress = p1.tab2.PhysicalAddress;
             saveModelForm8.TelephoneWorkdiscipline = p1.tab2.Telephone;
@@ -2169,7 +2169,8 @@ namespace CICLatest.Controllers
                     FaxNo = (string)myJObject["value"][i]["FaxNo"],
                     MobileNo = (string)myJObject["value"][i]["MobileNo"],
                     EmailAddress = (string)myJObject["value"][i]["EmailAddress"],
-                    Form1PostalAddress = GetPostalAddress(myJObject, i, 0),
+                    //Form1PostalAddress = GetPostalAddress(myJObject, i, 0),
+                    Form1PostalAddress = (string)myJObject["value"][i]["PostalAddress"]
                 };
 
 
@@ -2180,7 +2181,8 @@ namespace CICLatest.Controllers
                     Name = (string)myJObject["value"][i]["Name"],
                     IDNO = (string)myJObject["value"][i]["IDNO"],
                     PassportNo = (string)myJObject["value"][i]["PassportNo"],
-                    PostalAddress = GetPostalAddress(myJObject, i, 1),
+                    //PostalAddress = GetPostalAddress(myJObject, i, 1),
+                    PostalAddress = (string)myJObject["value"][i]["PoPostalAddress"],
                     PhysicalAddress = (string)myJObject["value"][i]["PhysicalAddress"],
                     Telephone = (string)myJObject["value"][i]["TelephoneWorkdiscipline"],
                     FaxNo = (string)myJObject["value"][i]["FaxNoWorkdiscipline"],
