@@ -889,6 +889,33 @@ namespace CICLatest.Controllers
             int tempPercentage = 0;
             bool DFlag = false;
 
+            //Add BusinessName and Type combo validation
+            if (p.FormName == "Form1")
+            {
+                AzureTablesData.GetEntitybyBusinessName(StorageName, StorageKey, "cicform1", p.businessModel.BusinessName, out string data);
+                if (!string.IsNullOrEmpty(data)) 
+                {
+                    var myJObject = JObject.Parse(data);
+                    var cntJson = myJObject["value"].Count();
+
+                    for (int i = 0; i < cntJson; i++)
+                    {
+                        var formStatus = (string)myJObject["value"][i]["FormStatus"];
+                        if (formStatus == "Completed")
+                        {
+                            var categoryString = (string)myJObject["value"][i]["Category"];
+                            var categoryList = categoryString.Split(',');
+                            DFlag = ValidateBusinessCategory(categoryList, p.businessModel.Category.Where(cat => cat.Selected).ToList());
+
+                            if (DFlag) 
+                                ModelState.AddModelError("businessModel.businessName", "Application already exists for the selected Categories and Business Name. Cannot proceed further.");
+
+                            break;
+                        }
+                    }
+                }
+            }
+
             if (p.FormName == "Form2")
             {
                 for (int k = 0; k < p.businessModel.Category.Count; k++)
@@ -1017,6 +1044,16 @@ namespace CICLatest.Controllers
                 DFlag = true;
             }
             return DFlag;
+        }
+
+        private bool ValidateBusinessCategory(string[] existingCategories, List<categoryType> selectedCategories)
+        {
+            if (existingCategories.Any())
+            {
+                var matchingCategories = selectedCategories.Where(scat => existingCategories.Any(ecat => scat.CategoryName.Trim().Equals(ecat.Trim(), StringComparison.InvariantCultureIgnoreCase)));
+                return matchingCategories.Any();
+            }
+            return false;
         }
 
         public bool WorkModelValidations(CICForm1Model p)
@@ -3073,9 +3110,9 @@ namespace CICLatest.Controllers
             return p;
         }
 
-        public int getRegNo(CICForm1Model p)
+        public Int64 getRegNo(CICForm1Model p)
         {
-            int tempMax = 0;
+            Int64 tempMax = 0;
 
             if (p.formval == "Edit")
             {
@@ -3089,25 +3126,34 @@ namespace CICLatest.Controllers
 
                 JObject myJObject = JObject.Parse(jsonData);
                 int cntJson = myJObject["value"].Count();
-                int tempRegNo;
+                Int64 tempRegNo;
 
 
-
-                if (cntJson != 0)
+                try
                 {
-                    tempMax = (int)myJObject["value"][0]["FirmRegistrationNo"];
-                }
-                for (int i = 0; i < cntJson; i++)
-                {
-                    var regNo = myJObject["value"][i]["FirmRegistrationNo"];
-                    tempRegNo = regNo == null ? 0 : (int)regNo;
-
-                    if (tempRegNo > tempMax)
+                    if (cntJson != 0)
                     {
-                        tempMax = tempRegNo;
+                        tempMax = (int)myJObject["value"][0]["FirmRegistrationNo"];
                     }
+                    for (int i = 0; i < cntJson; i++)
+                    {
+                        var regNo = myJObject["value"][i]["FirmRegistrationNo"];
+                        Console.WriteLine(regNo);
+                        tempRegNo = regNo == null ? 0 : (Int64)regNo;
+
+                        if (tempRegNo > tempMax)
+                        {
+                            tempMax = tempRegNo;
+                        }
+                    }
+                    tempMax++;
                 }
-                tempMax++;
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
 
             }
 
@@ -3115,7 +3161,7 @@ namespace CICLatest.Controllers
            
         }
 
-        public void UploadBlob(CICForm1Model p, int tempMax)
+        public void UploadBlob(CICForm1Model p, Int64 tempMax)
         {
             if (p.App.ImagePath == "NA" || p.App.ImagePath == "-")
             {
@@ -3167,7 +3213,7 @@ namespace CICLatest.Controllers
             Form1Mapper k = new Form1Mapper();
             
             //string jsonData;
-            int tempMax = 0;
+            Int64 tempMax = 0;
 
             if (model.formval == "Edit")
             {

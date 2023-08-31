@@ -90,6 +90,46 @@ namespace CICLatest.Helper
             }
         }
 
+        public static int GetEntitybyBusinessName(string storageAccount, string accessKey, string resourcePath, string businessName, out string jsonData)
+        {
+            string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "?$filter=BusinessName%20eq%20'" + businessName + "'";
+
+            // Web request 
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+
+            int query = 0;// resourcePath.IndexOf("?");
+            if (query > 0)
+            {
+                resourcePath = resourcePath.Substring(0, query);
+            }
+
+            request = getRequestHeaders("GET", request, storageAccount, accessKey, resourcePath);
+
+            // Execute the request
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (System.IO.StreamReader r = new System.IO.StreamReader(response.GetResponseStream()))
+                    {
+                        jsonData = r.ReadToEnd();
+                        return (int)response.StatusCode;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                // get the message from the exception response
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(ex.Response.GetResponseStream()))
+                {
+                    jsonData = sr.ReadToEnd();
+                    // Log res if required
+                }
+
+                return (int)ex.Status;
+            }
+        }
+
         public static int GetEntitybyRowPartition(string storageAccount, string accessKey, string resourcePath, string partitionkey, string rowkey, out string jsonData)
         {
             string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "?$filter=PartitionKey%20eq%20'" + partitionkey + "'%20and%20RowKey%20eq%20'" + rowkey+ "'";

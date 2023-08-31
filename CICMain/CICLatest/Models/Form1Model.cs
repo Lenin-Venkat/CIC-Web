@@ -15,7 +15,7 @@ namespace CICLatest.Models
        public string FormName { get; set; }
         public string FormStatus { get; set; }
         public string Reviewer { get; set; }
-        public int FirmRegistrationNo { get; set; }
+        public Int64 FirmRegistrationNo { get; set; }
         //public DateTime Timestamp { get; set; }
         public string AppType { get; set; }
         public string AssociationName { get; set; }

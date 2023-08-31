@@ -39,7 +39,7 @@ namespace CICLatest.Models
 
         public int cWork { get; set; }
 
-        public int FirmRegistrationNo { get; set; }
+        public Int64 FirmRegistrationNo { get; set; }
 
         public string FormStatus { get; set; }
 
