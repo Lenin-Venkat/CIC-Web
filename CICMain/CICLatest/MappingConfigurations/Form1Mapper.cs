@@ -10,7 +10,7 @@ namespace CICLatest.MappingConfigurations
     public class Form1Mapper
     {
         string tempCategory = null;
-        public Form1Model mapData(CICForm1Model CModel, Form1Model m, int registrationNo)
+        public Form1Model mapData(CICForm1Model CModel, Form1Model m, Int64 registrationNo)
         {
             if(CModel.App.AppType == null)
             {
@@ -102,7 +102,7 @@ namespace CICLatest.MappingConfigurations
             return m;
         }
 
-        public DirectorshipShareDividends mapShareDetails(DirectorshipShareDividends m, DirectorshipShareDividends p, int registrationNo)
+        public DirectorshipShareDividends mapShareDetails(DirectorshipShareDividends m, DirectorshipShareDividends p, Int64 registrationNo)
         {
             
                 m.PartitionKey = p.DirectorName;
@@ -116,7 +116,7 @@ namespace CICLatest.MappingConfigurations
                 return m;
         }
 
-        public ApplicantBank mapBankDetails(ApplicantBank m, ApplicantBank p, int registrationNo)
+        public ApplicantBank mapBankDetails(ApplicantBank m, ApplicantBank p, Int64 registrationNo)
         {
 
             m.PartitionKey = p.BankName;
@@ -131,7 +131,7 @@ namespace CICLatest.MappingConfigurations
             return m;
         }
 
-        public WorksCapability mapWorkDetails(WorksCapability m, WorksCapability p, int registrationNo)
+        public WorksCapability mapWorkDetails(WorksCapability m, WorksCapability p, Int64 registrationNo)
         {
 
             m.PartitionKey = p.ProjectName;
