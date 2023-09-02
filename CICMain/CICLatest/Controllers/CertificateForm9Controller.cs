@@ -1,4 +1,5 @@
-﻿using CICLatest.Helper;
+﻿using CICLatest.Contracts;
+using CICLatest.Helper;
 using CICLatest.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -25,8 +26,10 @@ namespace CICLatest.Controllers
         private readonly EmailConfiguration _emailcofig;
         private IHostingEnvironment Environment;
         static int ManufacturersCnt = 0, SuppliersCnt = 0;
-        
-        public CertificateForm9Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment)
+        public readonly IBlobStorageService _blobStorageService;
+
+        public CertificateForm9Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context
+            , AzureStorageConfiguration azureConfig, IHostingEnvironment _environment, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -35,6 +38,7 @@ namespace CICLatest.Controllers
             _context = context;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _blobStorageService = blobStorageService;
         }
         public IActionResult Index(string rowkey)
         {
@@ -181,9 +185,7 @@ namespace CICLatest.Controllers
                 pdfStamper.Close();
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-                BlobStorageService objBlobService = new BlobStorageService();
-
-                string filepath = objBlobService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
+                string filepath = _blobStorageService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
 
                 string pdfnameServer = filepdfpath + @"\Files\Certificate_" + regNoName + ".pdf";
                 string CertName = "Certificate_" + regNoName + ".pdf";

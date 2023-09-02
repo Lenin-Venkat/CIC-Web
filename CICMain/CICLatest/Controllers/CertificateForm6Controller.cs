@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using CICLatest.Contracts;
 using CICLatest.Helper;
 using CICLatest.Models;
 using iTextSharp.text;
@@ -31,8 +32,10 @@ namespace CICLatest.Controllers
         private IHostingEnvironment Environment;
         static int ArtisanCnt = 0;
         public static string accessToken;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public CertificateForm6Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment)
+        public CertificateForm6Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context
+            , AzureStorageConfiguration azureConfig, IHostingEnvironment _environment, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -41,6 +44,7 @@ namespace CICLatest.Controllers
             _context = context;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _blobStorageService = blobStorageService;
         }
         public IActionResult Index(string rowkey)
         {
@@ -209,9 +213,8 @@ namespace CICLatest.Controllers
             pdfStamper.Close();
             byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-            BlobStorageService objBlobService = new BlobStorageService();
 
-            string filepath = objBlobService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
+            string filepath = _blobStorageService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
 
             UpdateDB();
             
@@ -283,7 +286,7 @@ namespace CICLatest.Controllers
         public string getReceiptNo(string cust)
         {
             string RNo = "";
-            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache, _emailcofig, _azureConfig, Environment);
+            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache, _emailcofig, _azureConfig, Environment, _blobStorageService);
             accessToken = certificateForm1.GetAccessToken();
             try
             {

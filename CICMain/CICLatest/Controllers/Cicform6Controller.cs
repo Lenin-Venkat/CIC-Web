@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -29,7 +30,6 @@ namespace CICLatest.Controllers
         int cnt = 1;
       
         Cicf6Model form1Model = new Cicf6Model();
-        BlobStorageService objBlobService = new BlobStorageService();
         static string filepath = "NA";
         static string StorageName = "";
         static string StorageKey = "";
@@ -38,11 +38,13 @@ namespace CICLatest.Controllers
 
         private readonly AzureStorageConfiguration _azureConfig;
         static string path = "";
-        BlobStorageService b = new BlobStorageService();
         private readonly IMemoryCache memoryCache;
         Regex regex = new Regex(@"((\d\d)(0[1-9]|1[0-2])((0|1)[0-9]|2[0-9]|3[0-1]))$");
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public Cicform6Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache, UserManager<UserModel> userManager)
+        public Cicform6Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache
+            , UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             _context = context;
             _azureConfig = azureConfig;
@@ -50,6 +52,8 @@ namespace CICLatest.Controllers
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
             _userManager = userManager;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
 
@@ -734,7 +738,7 @@ namespace CICLatest.Controllers
                 path = (string)myJObject["value"][i]["ImagePath"];
                 model.CustNo = (string)myJObject["value"][i]["CustNo"];
                 string key, value;
-                AllFileList = b.GetBlobList(path);
+                AllFileList = _blobStorageService.GetBlobList(path);
                 string Signature = null, fileupload1 = null, fileupload2 = null, fileupload3 = null, File = null, NatureofTradeUpload = null, fileupload6 = null, fileupload4 = null;
 
                 if (AllFileList != null)
@@ -1287,7 +1291,8 @@ namespace CICLatest.Controllers
                 {
                     if (!filepath.Contains("https"))
                     {
-                        saveModelForm6.ImagePath = @"https:\cicdatastorage.blob.core.windows.net\uploads\2022-02-21\" + filepath;
+                        var imagepath = _appSettingsReader.Read("ImagePath");
+                        saveModelForm6.ImagePath = imagepath + @"2022-02-21\" + filepath;
                     }
                 }
 
@@ -1482,18 +1487,19 @@ namespace CICLatest.Controllers
             ViewBag.Result = result;
             ViewBag.sts = text;
             ViewBag.yr = yr;
+            var domain = _appSettingsReader.Read("Domain");
             if (text == "Draft")
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='" + domain + "'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been saved as draft";
             }
             else
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='" + domain + "'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been successfully submitted";
             }
             memoryCache.TryGetValue("emailto", out emailto);
-            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
             viewForm1.sendNotification(emailto, subject, body);
             memoryCache.Remove("emailto");
             return View();
@@ -1530,12 +1536,10 @@ namespace CICLatest.Controllers
 
             string mimeType = tempFile.ContentType;
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
             // path = objBlobService.UploadFileToBlob(tempFile.FileName, fileData, mimeType);
 
 
-            filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+            filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
             #endregion
         }
 
@@ -1916,9 +1920,7 @@ namespace CICLatest.Controllers
 
                 string mimeType = tempFile.ContentType;
 
-                BlobStorageService objBlobService = new BlobStorageService();
-
-                filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+                filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
                 #endregion
             }
             return filepath;

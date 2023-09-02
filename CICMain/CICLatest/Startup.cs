@@ -15,6 +15,8 @@ using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
 using Azure.Storage.Blobs;
 using Azure.Core.Extensions;
+using CICLatest.Contracts;
+using CICLatest.Helper;
 
 namespace CICLatest
 {
@@ -59,6 +61,8 @@ namespace CICLatest
                .GetSection("EmailConfiguration")
                .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
+            services.AddScoped<IAppSettingsReader, AppSettingsReader>();
+            services.AddScoped<IBlobStorageService, BlobStorageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

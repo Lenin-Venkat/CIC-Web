@@ -17,6 +17,7 @@ using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -28,6 +29,7 @@ namespace CICLatest.Controllers
         static string StorageKey = "";
         private IHostingEnvironment Environment;
         private readonly EmailConfiguration _emailcofig;
+        public readonly IBlobStorageService _blobStorageService;
 
         public string accessToken = "";
         
@@ -40,12 +42,13 @@ namespace CICLatest.Controllers
             return View(model);
         }
 
-        public PaymentController(AzureStorageConfiguration azureConfig, EmailConfiguration emailconfig)
+        public PaymentController(AzureStorageConfiguration azureConfig, EmailConfiguration emailconfig, IBlobStorageService blobStorageService)
         {
             _azureConfig = azureConfig;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
             _emailcofig = emailconfig;
+            _blobStorageService = blobStorageService;   
         }
 
         [HttpPost]
@@ -93,9 +96,8 @@ namespace CICLatest.Controllers
                 
                 string mimeType = tempFile.ContentType;
 
-                BlobStorageService objBlobService = new BlobStorageService();
 
-                filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+                filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
                 string extension = System.IO.Path.GetExtension(TempFilename);
                 SendEmailNotification(TempFilename, fileData, path, extension, invoiceNo);
                 sendNotificationToBC(invoiceNo, path, TempFilename);

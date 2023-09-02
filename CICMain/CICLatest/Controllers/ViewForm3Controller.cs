@@ -14,6 +14,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -26,16 +27,21 @@ namespace CICLatest.Controllers
         private readonly ApplicationContext _context;
         private readonly UserManager<UserModel> _userManager;
         public static string accessToken;
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public ViewForm3Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context, UserManager<UserModel> userManager)
+        public ViewForm3Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context
+            , UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
             _context = context;
             _userManager = userManager;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
-        public IActionResult ViewForm3(string rowkey)
+    public IActionResult ViewForm3(string rowkey)
         {
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
@@ -114,7 +120,7 @@ namespace CICLatest.Controllers
             }
 
             string catname = "";
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context, _userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
             if (model.Subcatogory != 0)
             {
                 ViewBag.SubCategory = vf4.GetSubCategorybyName(model.Subcatogory);
@@ -266,8 +272,7 @@ namespace CICLatest.Controllers
 
 
             List<FileList> AllFileList = new List<FileList>();
-            BlobStorageService b = new BlobStorageService();
-            AllFileList = b.GetBlobList(model.ImagePath);
+            AllFileList = _blobStorageService.GetBlobList(model.ImagePath);
 
             if (AllFileList != null)
             {
@@ -437,7 +442,7 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Ops Manager";
                         model.FormStatus = "Completed";
 
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
                         //viewForm1.sendNotification(model.BusinessEmail, "Request for invoice", body);
                         viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
@@ -448,7 +453,7 @@ namespace CICLatest.Controllers
                         viewForm1.sendNotification(model.CreatedBy, "CIC registration has been approved", body);
 
 
-                        ViewForm1Controller viewForm2 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller viewForm2 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         string invoiceNo;
                         //AK
                         string id = viewForm2.CreateInvoiceERP(model.CustNo, model.RowKey, out invoiceNo, model.PartitionKey, model.FormName);
@@ -483,7 +488,7 @@ namespace CICLatest.Controllers
                         viewForm2.CreateInvoiceLineItemERP(id, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), Convert.ToDecimal(penalty));
 
 
-                        ViewForm1Controller view1Form = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller view1Form = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         string jsonRegistrationDetails;
                         AzureTablesData.GetEntity(StorageName, StorageKey, "cicform3", model.RowKey, out jsonRegistrationDetails);
                         JObject myJObject = JObject.Parse(jsonRegistrationDetails);
@@ -526,13 +531,13 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Contractor";
                         model.FormStatus = "Rejected";
                         model.comment = "Clerk comment - " + comment;
-
-                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
-                        ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        var domain = _appSettingsReader.Read("Domain");
+                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='" + domain + "'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
+                        ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         view1Controller.sendNotification(model.CreatedBy, "Your Form is Rejected", body);
 
                         CICCommonService commService = new CICCommonService(_userManager);
-                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: https://constructioncouncil.azurewebsites.net/ Thank you, CIC Team";
+                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: "+ domain +" Thank you, CIC Team";
                         commService.sendSMS(model.CreatedBy, body);
                         break;
 
@@ -572,7 +577,7 @@ namespace CICLatest.Controllers
         [HttpPost]
         public IActionResult Preview(CICForm3Model model)  //model plan
         {
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context, _userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
             if (model.businessModel.selectedsubcategory != 0)
             {
                 ViewBag.SubCategory = vf4.GetSubCategorybyName(model.businessModel.selectedsubcategory);

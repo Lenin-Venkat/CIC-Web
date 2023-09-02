@@ -20,6 +20,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -41,11 +42,13 @@ namespace CICLatest.Controllers
 
         private readonly AzureStorageConfiguration _azureConfig;
         static string path = "";
-        BlobStorageService b = new BlobStorageService();
         private readonly IMemoryCache memoryCache;
         CustomValidations cv = new CustomValidations();
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public Form8Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache, UserManager<UserModel> userManager)
+        public Form8Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache
+            , UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             _context = context;
             _azureConfig = azureConfig;
@@ -53,6 +56,8 @@ namespace CICLatest.Controllers
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
             _userManager = userManager;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
         // [HttpGet]
@@ -821,18 +826,19 @@ namespace CICLatest.Controllers
             ViewBag.Result = result;
             ViewBag.sts = text;
             ViewBag.yr = yr;
+            var domain = _appSettingsReader.Read("Domain");
             if (text == "Draft")
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='"+ domain +"'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been saved as draft";
             }
             else
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='"+ domain +"'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been successfully submitted";
             }
             memoryCache.TryGetValue("emailto", out emailto);
-            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
             viewForm1.sendNotification(emailto, subject, body);
             memoryCache.Remove("emailto");
             return View();
@@ -1693,8 +1699,9 @@ namespace CICLatest.Controllers
             {
                 if (!filepath.Contains("https"))
                 {
-                    //saveModelForm8.path = @"https:\cicdatastorage.blob.core.windows.net\uploads\2022-02-21\" + filepath;
-                    saveModelForm8.path = @"https:\cicdatastorage.blob.core.windows.net\uploads\" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + filepath;
+                    //saveModelForm8.path = @"https:\cicdatastorageprod.blob.core.windows.net\uploads\2022-02-21\" + filepath;
+                    var imgPath = _appSettingsReader.Read("ImagePath");
+                    saveModelForm8.path = imgPath + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + filepath;
                 }
             }
 
@@ -2055,12 +2062,10 @@ namespace CICLatest.Controllers
 
             string mimeType = tempFile.ContentType;
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
             // path = objBlobService.UploadFileToBlob(tempFile.FileName, fileData, mimeType);
 
 
-            filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+            filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
             #endregion
         }
 
@@ -2124,8 +2129,8 @@ namespace CICLatest.Controllers
                 var AllFileList = new List<FileList>();
 
                 //AllFileList.Add(new FileList { FileKey = "WitnessSignature1", FileValue = "1690450871216.png" });
-                AllFileList = b.GetBlobList(path);
-                AllFileList = b.GetBlobList(path);
+                AllFileList = _blobStorageService.GetBlobList(path);
+                AllFileList = _blobStorageService.GetBlobList(path);
                 string Signature1 = null, WitnessSignature = null, WitnessSignature1 = null, LetterOfContract = null,
                     SummaryPage = null, Letterindicating = null, Signedletterupload = null;
 

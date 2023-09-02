@@ -1,4 +1,5 @@
-﻿using CICLatest.Helper;
+﻿using CICLatest.Contracts;
+using CICLatest.Helper;
 using CICLatest.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,19 +16,23 @@ namespace CICLatest.Controllers
     {
         private IHostingEnvironment Environment;
         private readonly UserManager<UserModel> _userManager;
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public InvoiceController(IHostingEnvironment _environment, UserManager<UserModel> userManager)
+        public InvoiceController(IHostingEnvironment _environment, UserManager<UserModel> userManager
+            , IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             Environment = _environment;
             _userManager = userManager;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
         public IActionResult Index()
         {
             List<FileModel> files = new List<FileModel>();
-            BlobStorageService b = new BlobStorageService();
             string usr = _userManager.GetUserAsync(User).Result.CustNo;
-            files = b.GetInvoices(usr);
+            files = _blobStorageService.GetInvoices(usr);
                         
             return View(files);
         }
@@ -36,7 +41,7 @@ namespace CICLatest.Controllers
         {
             string usr = _userManager.GetUserAsync(User).Result.CustNo;
             string tempPath = "Files/" + usr + "/";
-            string path = Path.Combine("https://cicdatastorage.blob.core.windows.net/invoices/", tempPath) + fileName;
+            string path = Path.Combine(_appSettingsReader.Read("InvoicePath"), tempPath) + fileName;
 
             //Read the File data into Byte Array.
             byte[] bytes = System.IO.File.ReadAllBytes(path);

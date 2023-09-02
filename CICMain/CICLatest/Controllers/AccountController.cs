@@ -20,6 +20,7 @@ using iTextSharp.text.pdf.codec.wmf;
 using Org.BouncyCastle.Asn1.Crmf;
 using System.Net;
 using RestSharp;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -32,17 +33,23 @@ namespace CICLatest.Controllers
         private readonly IMemoryCache memoryCache;
         private readonly AzureStorageConfiguration _azureConfig;
         private readonly ApplicationContext _context;
+        public readonly IAppSettingsReader _appSettingsReader;
         public static string accessToken;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public AccountController(AzureStorageConfiguration azureConfig ,IMemoryCache memoryCache,ILogger<HomeController> logger, ApplicationContext context, UserManager<UserModel> userManager, SignInManager<UserModel> loginManager, RoleManager<IdentityRole> roleManager)
+
+        public AccountController(AzureStorageConfiguration azureConfig ,IMemoryCache memoryCache,ILogger<HomeController> logger, ApplicationContext context, UserManager<UserModel> userManager
+            , SignInManager<UserModel> loginManager, RoleManager<IdentityRole> roleManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             _logger = logger;
+            _appSettingsReader = appSettingsReader;
             _userManager = userManager;
             _loginManager = loginManager;
             _roleManager = roleManager;
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
             _context = context;
+            _blobStorageService = blobStorageService;
         }
 
         public IActionResult Registration()
@@ -95,11 +102,12 @@ namespace CICLatest.Controllers
                         {
                             rolename = isFound.Name;
                         }
+                        string domain = _appSettingsReader.Read("Domain");
                         string body = "<p>Hi " + obj.FirstName + ",<br/><br/>Thanks for creating an account on CIC portal. Your username is <b>" + obj.Email +
-                                         "</b>. Customer Number- " +custno + ". </br>You can access CIC portal at: <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
+                                         "</b>. Customer Number- " +custno + ". </br>You can access CIC portal at: <a href='" + domain + "'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
                         _userManager.AddToRoleAsync(user, rolename).Wait();
                         //Email email = new Email();
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
                         viewForm1.sendNotification(user.Email, "Your CIC account has been created!", body);
                         return RedirectToAction("RegistrationResult", "Account", new { text = custno });
                     }
@@ -310,7 +318,7 @@ namespace CICLatest.Controllers
                 {                    
                     var result = await _userManager.AddClaimAsync(user, claim);
                     string body = "<p>Hi " + user.Firstname + ",<br/><br/>Please enter this One Time Password:" + randomNumber + "</br> <br/>Thank you,<br/>CIC Team</p>";
-                    ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache,_azureConfig, _context,_userManager);
+                    ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache,_azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
                     view1Controller.sendNotification(forgotPasswordModel.EmailPhoneNumber, "Reset password OTP", body);
                 }
                 else

@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
+
 namespace CICLatest.Controllers
 {
 
@@ -30,11 +32,14 @@ namespace CICLatest.Controllers
         static string filepath = "NA";
         private readonly AzureStorageConfiguration _azureConfig;
         static string path = "";
-        BlobStorageService b = new BlobStorageService();
         private readonly IMemoryCache memoryCache;
         private readonly UserManager<UserModel> _userManager;
+        public readonly IAppSettingsReader _appSettingsReader;
         public static string accessToken;
-        public Cicform5Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache, UserManager<UserModel> userManager)
+        public readonly IBlobStorageService _blobStorageService;
+
+        public Cicform5Controller(ApplicationContext context, AzureStorageConfiguration azureConfig, IMemoryCache memoryCache
+            , UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             _context = context;
             _azureConfig = azureConfig;
@@ -42,6 +47,8 @@ namespace CICLatest.Controllers
             _userManager = userManager;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
         public Cicf5Model loadData(Cicf5Model m, int CategoryID = 0)
         {
@@ -863,9 +870,7 @@ namespace CICLatest.Controllers
 
                 string mimeType = tempFile.ContentType;
 
-                BlobStorageService objBlobService = new BlobStorageService();
-
-                filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+                filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
                 #endregion
             }
             return filepath;
@@ -917,18 +922,19 @@ namespace CICLatest.Controllers
             ViewBag.Result = result;
             ViewBag.sts = text;
             ViewBag.yr = yr;
+            var domain = _appSettingsReader.Read("Domain");
             if (text == "Draft")
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year "+ yr +" CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year "+ yr +" CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='"+ domain + "'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been saved as draft";
             }
             else
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='" + domain + "'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been successfully submitted";
             }
             memoryCache.TryGetValue("emailto", out emailto);
-            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
             viewForm1.sendNotification(emailto, subject, body);
             memoryCache.Remove("emailto");
             return View();
@@ -1246,7 +1252,7 @@ namespace CICLatest.Controllers
             AzureTablesData.GetEntity(StorageName, StorageKey, "cicform5", FormRegNo, out jsonData1);//Get data
             JObject myJObject2 = JObject.Parse(jsonData1);
             int cntJson2 = myJObject2["value"].Count();
-            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
             accessToken = viewForm1.GetAccessToken();
             for (int i = 0; i < cntJson2; i++)
                 updateContractDetails(myJObject2, i);
@@ -1289,12 +1295,10 @@ namespace CICLatest.Controllers
 
             string mimeType = tempFile.ContentType;
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
             // path = objBlobService.UploadFileToBlob(tempFile.FileName, fileData, mimeType);
 
 
-            filepath = objBlobService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
+            filepath = _blobStorageService.UploadFileToBlob(TempFilename, fileData, mimeType, path);
             #endregion
         }
         public JsonResult GetSubCategory1(int CategoryID)
@@ -1345,7 +1349,7 @@ namespace CICLatest.Controllers
                 path = (string)myJObject["value"][i]["ImagePath"];
 
                 string key, value;
-                AllFileList = b.GetBlobList(path);
+                AllFileList = _blobStorageService.GetBlobList(path);
                 string BusineesParticularsfile1 = null, BusineesParticularsfile2 = null,Signature=null, Signature1= null ;
 
                 if (AllFileList != null)

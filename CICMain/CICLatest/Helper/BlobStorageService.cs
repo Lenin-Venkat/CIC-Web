@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using CICLatest.Contracts;
 using CICLatest.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.WindowsAzure.Storage;
@@ -14,12 +15,15 @@ using System.Threading.Tasks;
 
 namespace CICLatest.Helper
 {
-    public class BlobStorageService
+    public class BlobStorageService : IBlobStorageService
     {
-        string accessKey = string.Empty;
-        public BlobStorageService()
+        private readonly AzureStorageConfiguration _azureConfig;
+        public readonly IAppSettingsReader _appSettingsReader;
+
+        public BlobStorageService(AzureStorageConfiguration azureConfig, IAppSettingsReader appSettingsReader)
         {
-            this.accessKey = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
+            _azureConfig = azureConfig;
+            _appSettingsReader = appSettingsReader;
         }
         public string UploadFileToBlob(string strFileName, byte[] fileData, string fileMimeType, string path)
         {
@@ -44,7 +48,7 @@ namespace CICLatest.Helper
                 Uri uriObj = new Uri(fileUrl);
                 string BlobName = Path.GetFileName(uriObj.LocalPath);
                 
-                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
+                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                 CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
                 string strContainerName = "uploads";
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(strContainerName);
@@ -96,7 +100,7 @@ namespace CICLatest.Helper
         {
             try
             {
-                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(accessKey);
+                CloudStorageAccount cloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                 CloudBlobClient cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
                 string strContainerName = "uploads";
                 CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(strContainerName);
@@ -135,8 +139,7 @@ namespace CICLatest.Helper
 
                 //string folderName = @"C:\CICFiles\" + RegNo;
                 string folderName = @"C:";
-                string storageAccount_connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
-                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(storageAccount_connectionString);
+                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                 CloudBlobClient blobClient = mycloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer container = blobClient.GetContainerReference("uploads");
 
@@ -148,7 +151,7 @@ namespace CICLatest.Helper
                 //}
                 folderName = folderName + @"\";
 
-                BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
+                BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
                 string fName = "";
                 var blobs1 = containerClient.GetBlobs();
                 foreach (BlobItem blobItem in blobs1)
@@ -177,8 +180,7 @@ namespace CICLatest.Helper
                 RegNo = pathlist[4];
 
                 string folderName = folderPath + RegNo;
-                string storageAccount_connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
-                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(storageAccount_connectionString);
+                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                 CloudBlobClient blobClient = mycloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer container = blobClient.GetContainerReference("uploads");
 
@@ -190,7 +192,7 @@ namespace CICLatest.Helper
                 }
                 folderName = folderName + @"\";
 
-                BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
+                BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
                 string fName = "";
                 var blobs1 = containerClient.GetBlobs();
                 foreach (BlobItem blobItem in blobs1)
@@ -226,8 +228,7 @@ namespace CICLatest.Helper
                         RegNo = pathlist[4];
 
                         string folderName = @"C:\CICFiles\" + RegNo;
-                        string storageAccount_connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
-                        CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(storageAccount_connectionString);
+                        CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                         CloudBlobClient blobClient = mycloudStorageAccount.CreateCloudBlobClient();
                         CloudBlobContainer container = blobClient.GetContainerReference("uploads");
 
@@ -239,7 +240,7 @@ namespace CICLatest.Helper
                         //}
                         folderName = folderName + @"\";
 
-                        BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
+                        BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
                         string fName = "";
                         var blobs1 = containerClient.GetBlobs();
 
@@ -277,13 +278,12 @@ namespace CICLatest.Helper
         public List<FileModel> GetInvoices(string custno)
         {
             List<FileModel> filelist = new List<FileModel>();
-            string connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
             List<string> subs3 = new List<string>();
-            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+            BlobServiceClient blobServiceClient = new BlobServiceClient(_azureConfig.StorageConnectionString);
             string containerName = "invoices";
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
             var blobs = containerClient.GetBlobs(prefix: custno);
-            string filepath = @"https://cicdatastorage.blob.core.windows.net/invoices/";
+            string filepath = _appSettingsReader.Read("InvoicePath");
 
             foreach (var blob in blobs)
             {
@@ -313,8 +313,7 @@ namespace CICLatest.Helper
                 RegNo = pathlist[4];
 
                 string folderName = @"C:\CICFiles\" + RegNo;
-                string storageAccount_connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
-                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(storageAccount_connectionString);
+                CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
                 CloudBlobClient blobClient = mycloudStorageAccount.CreateCloudBlobClient();
                 CloudBlobContainer container = blobClient.GetContainerReference("uploads");
 
@@ -323,7 +322,7 @@ namespace CICLatest.Helper
 
                 folderName = folderName + @"\";
 
-                BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
+                BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
 
                 CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(filename);
                 FileStream uploadFileStream = System.IO.File.OpenWrite(folderName + filename);
@@ -338,16 +337,15 @@ namespace CICLatest.Helper
         public List<FileList> DownloadPdf(string custno, string filename)
         {
             List<FileList> filelist = new List<FileList>();
-            string storageAccount_connectionString = "DefaultEndpointsProtocol=https;AccountName=cicdatastorage;AccountKey=zqLOsWBjeQh7mUZV1aWprp+YxMqZvPErlaO88tQ69kaIfD/BRQ8xtmSAYllZjxpukVHgq3435E8MVvZcftAlZQ==;EndpointSuffix=core.windows.net";
-            CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(storageAccount_connectionString);
+            CloudStorageAccount mycloudStorageAccount = CloudStorageAccount.Parse(_azureConfig.StorageConnectionString);
             CloudBlobClient blobClient = mycloudStorageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference("invoices");
 
             string containerName = "invoices";
 
-            string filepath = @"https://cicdatastorage.blob.core.windows.net/invoices/"+custno + "/"+filename;
+            string filepath = @"https://cicdatastorageprod.blob.core.windows.net/invoices/"+custno + "/"+filename;
 
-            BlobContainerClient containerClient = new BlobContainerClient(storageAccount_connectionString, containerName);
+            BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
 
             CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(filename);
             FileStream uploadFileStream = System.IO.File.OpenWrite(filepath);
