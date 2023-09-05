@@ -595,7 +595,6 @@ namespace CICLatest.Helper
 
         public static string DeleteEntity(string storageAccount, string accessKey, string resourcePath, string partitionKey, string rowKey, string jsonData)
         {
-            accessKey = "GUwAMfw3hGl2XWoL52GM/VQ0siGAXJrsiqkUNtr5lsLGYAY5spzXM0GrcdQdk4C91qa+TU9eHhVjUhCRVPOJSw==";
             string jsonResponse = "";
             string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "(PartitionKey='" + partitionKey +"',RowKey='" + rowKey +"')";            
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(uri);

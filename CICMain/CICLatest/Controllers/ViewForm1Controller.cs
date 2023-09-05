@@ -117,7 +117,7 @@ namespace CICLatest.Controllers
                 model.WitnessedName = (string)myJObject["value"][i]["WitnessedName"];
                 model.WitnessedTitle = (string)myJObject["value"][i]["WitnessedTitle"];
                 model.Title = (string)myJObject["value"][i]["Title"];
-                model.FirmRegistrationNo = (Int64)myJObject["value"][i]["FirmRegistrationNo"];
+                model.FirmRegistrationNo = (long)myJObject["value"][i]["FirmRegistrationNo"];
                 model.path = (string)myJObject["value"][i]["path"];
                 model.Reviewer = (string)myJObject["value"][i]["Reviewer"];
                 model.Grade = (string)myJObject["value"][i]["Grade"];
