@@ -1926,7 +1926,7 @@ namespace CICLatest.Controllers
             JObject myJObject = JObject.Parse(jsonData);
 
             var latestRecord = (from p in myJObject["value"]
-                             orderby (int)p["FirmRegistrationNo"] descending
+                             orderby (long)p["FirmRegistrationNo"] descending
                              select p).FirstOrDefault();
 
             if(latestRecord !=null)
@@ -2385,7 +2385,7 @@ namespace CICLatest.Controllers
                 model.FormStatus = (string)myJObject["value"][i]["FormStatus"];
                 model.Grade = (string)myJObject["value"][i]["Grade"];
                 model.CreatedDate = (string)myJObject["value"][i]["CreatedDate"];
-                model.FirmRegistrationNo = (int)myJObject["value"][i]["FirmRegistrationNo"];
+                model.FirmRegistrationNo = (long)myJObject["value"][i]["FirmRegistrationNo"];
                 // model.path = (string)myJObject["value"][i]["path"];
             }
 
@@ -3140,7 +3140,7 @@ namespace CICLatest.Controllers
                 {
                     if (cntJson != 0)
                     {
-                        tempMax = (int)myJObject["value"][0]["FirmRegistrationNo"];
+                        tempMax = (long)myJObject["value"][0]["FirmRegistrationNo"];
                     }
                     for (int i = 0; i < cntJson; i++)
                     {
@@ -3220,7 +3220,7 @@ namespace CICLatest.Controllers
             Form1Mapper k = new Form1Mapper();
             
             //string jsonData;
-            Int64 tempMax = 0;
+            long tempMax = 0;
 
             if (model.formval == "Edit")
             {
