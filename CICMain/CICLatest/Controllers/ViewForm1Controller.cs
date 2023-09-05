@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using CICLatest.Contracts;
 using CICLatest.Helper;
 using CICLatest.MappingConfigurations;
 using CICLatest.Models;
@@ -36,20 +37,26 @@ namespace CICLatest.Controllers
     [Authorize]
     public class ViewForm1Controller : Controller
     {
-        static string StorageName = "";//"cicdatastorage";
+        static string StorageName = "";//"cicdatastorageprod";
         static string StorageKey = "";
         private readonly IMemoryCache memoryCache;
         private readonly ApplicationContext _context;
         private readonly AzureStorageConfiguration _azureConfig;
         private readonly UserManager<UserModel> _userManager;
         public static string accessToken;
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public ViewForm1Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context, UserManager<UserModel> userManager)
+
+        public ViewForm1Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context
+            , UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
             _context = context;
             _userManager = userManager;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
         public IActionResult ViewForm(string rowkey)
@@ -140,7 +147,7 @@ namespace CICLatest.Controllers
             }
 
             string subcategory = "";
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
             if (model.FormName == "Form2")
             {
                 if (subcategory == "")
@@ -307,8 +314,7 @@ namespace CICLatest.Controllers
             ViewBag.gradeSCore = gsStr;
 
             List<FileList> AllFileList = new List<FileList>();
-            BlobStorageService b = new BlobStorageService();
-            AllFileList = b.GetBlobList(model.path);
+            AllFileList = _blobStorageService.GetBlobList(model.path);
 
             if (AllFileList != null)
             {
@@ -613,12 +619,12 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Contractor";
                         model.FormStatus = "Rejected";
                         model.comment = "Clerk comment - " + comment;
-
-                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
+                        var domain = _appSettingsReader.Read("Domain");
+                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='"+ domain +"'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
                         sendNotification(model.CreatedBy, "Your Form is Rejected", body);
 
                         CICCommonService commService = new CICCommonService(_userManager);
-                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: https://constructioncouncil.azurewebsites.net/ Thank you, CIC Team";
+                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: "+ domain +" Thank you, CIC Team";
                         commService.sendSMS(model.CreatedBy, body);
                         break;
 
@@ -686,12 +692,11 @@ namespace CICLatest.Controllers
         public void DownloadFile()
         {
             Form1Model model = new Form1Model();
-            BlobStorageService objBlobService = new BlobStorageService();
             
             bool isExist = memoryCache.TryGetValue("Form1Data", out model);
             if(isExist)
             {
-                objBlobService.DownloadBlob(model.path);                
+                _blobStorageService.DownloadBlob(model.path);                
             }
 
             
@@ -750,7 +755,7 @@ namespace CICLatest.Controllers
                 ViewBag.category = "";
             }
             string subcategory = "";
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
 
             if (model.FormName == "Form2")
             {

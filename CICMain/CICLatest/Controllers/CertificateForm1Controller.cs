@@ -15,6 +15,7 @@ using iTextSharp.text;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -31,8 +32,10 @@ namespace CICLatest.Controllers
         static string BGrade = "", CGrade = "", EGrade = "", MGrade = "";
         static string filepdfpath = "";
         public static string accessToken;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public CertificateForm1Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment)
+        public CertificateForm1Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig
+            , IHostingEnvironment _environment, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -40,6 +43,7 @@ namespace CICLatest.Controllers
             _emailcofig = emailconfig;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _blobStorageService = blobStorageService;
         }
 
 
@@ -334,9 +338,7 @@ namespace CICLatest.Controllers
             pdfStamper.Close();
             byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
-            string filepath = objBlobService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
+            string filepath = _blobStorageService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
 
             
             return regNoName;

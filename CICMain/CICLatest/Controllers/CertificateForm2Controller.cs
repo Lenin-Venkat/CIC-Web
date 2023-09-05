@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -33,7 +34,13 @@ namespace CICLatest.Controllers
         string filepdfpath = "";
         private readonly UserManager<UserModel> _userManager;
         public static string accessToken;
-        public CertificateForm2Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment, ApplicationContext context,UserManager<UserModel> userManager)
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
+
+
+        public CertificateForm2Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig
+            , IHostingEnvironment _environment, ApplicationContext context
+            ,UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -43,6 +50,8 @@ namespace CICLatest.Controllers
             StorageKey = _azureConfig.StorageKey1;
             _userManager = userManager;
             _context = context;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
 
 
@@ -144,7 +153,7 @@ namespace CICLatest.Controllers
             string wwwrootpath = "";
 
             string subcategory = "";
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
             string numericgrade = "";
             string BGrade = "", CGrade = "", EGrade = "", MGrade = "", BCat = "", CCat = "", ECat = "", MCat = "";
 
@@ -323,7 +332,7 @@ namespace CICLatest.Controllers
                 files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = CGrade });
             }
 
-            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache,_emailcofig,_azureConfig, Environment);
+            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache,_emailcofig,_azureConfig, Environment, _blobStorageService);
             certificateForm1.UpdateRegNumberToBC(regNoName, model.RegistrationID);
 
             memoryCache.Set("CertFiles",files);
@@ -428,9 +437,7 @@ namespace CICLatest.Controllers
             pdfStamper.Close();
             byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
-            string filepath = objBlobService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
+            string filepath = _blobStorageService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
 
             return regNoName;
         }
@@ -534,7 +541,7 @@ namespace CICLatest.Controllers
         public string getReceiptNo(string cust)
         {
             string RNo = "";
-            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache, _emailcofig, _azureConfig, Environment);
+            CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache, _emailcofig, _azureConfig, Environment, _blobStorageService);
             accessToken = certificateForm1.GetAccessToken();
             try
             {

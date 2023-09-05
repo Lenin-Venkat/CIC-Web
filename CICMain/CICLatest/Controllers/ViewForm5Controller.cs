@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -34,14 +35,20 @@ namespace CICLatest.Controllers
         private readonly ApplicationContext _context;
         private readonly UserManager<UserModel> _userManager;
         public static string accessToken;
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public ViewForm5Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context,IHostingEnvironment env, UserManager<UserModel> userManager)
+
+        public ViewForm5Controller(IMemoryCache memoryCache, AzureStorageConfiguration azureConfig, ApplicationContext context
+            ,IHostingEnvironment env, UserManager<UserModel> userManager, IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             _context = context;
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
             _userManager = userManager;
             _env = env;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
         public IActionResult ViewForm5(string rowkey)
         {
@@ -154,8 +161,7 @@ namespace CICLatest.Controllers
             }
             model.subConsultantDetail = a;
             List<FileList> AllFileList = new List<FileList>();
-            BlobStorageService b = new BlobStorageService();
-            AllFileList = b.GetBlobList(model.ImagePath);
+            AllFileList = _blobStorageService.GetBlobList(model.ImagePath);
 
             if (AllFileList != null)
             {
@@ -212,7 +218,7 @@ namespace CICLatest.Controllers
                     case "Ops Manager":
                         model.Reviewer = "Ops Manager";
                         model.FormStatus = "Completed";
-                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         string body = "<p>Hello Team,<br/><br/>Form: " + model.RowKey + " is approved. :</br>Comment:" + comment + "</br></br> Requesting you to create invoice for this customer <br/><br/>Thank you,<br/>CIC Team</p>";
                         viewForm1.sendNotification("makhosazane@cic.co.sz", "Request for invoice", body);
                         viewForm1.sendNotification("sikhumbuzo@cic.co.sz", "Request for invoice", body);
@@ -242,7 +248,7 @@ namespace CICLatest.Controllers
                         model.RegistrationFee = fees.RegistrationFees;
 
                         ///AK
-                        ViewForm1Controller viewForm2 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller viewForm2 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         id = viewForm2.CreateInvoiceERP(model.CustNo, model.RowKey, out invoice, model.PartitionKey,model.FormName);
                         model.InvoiceNo = invoice;
                         // viewForm2.CreateInvoiceLineItemERP(id, model.RegistrationFee, model.AdminFee, model.RenewalFee);
@@ -268,7 +274,7 @@ namespace CICLatest.Controllers
                         viewForm2.CreateInvoiceLineItemERP(id, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), Convert.ToDecimal(penalty));
 
 
-                        ViewForm1Controller view1Form = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        ViewForm1Controller view1Form = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         string jsonProjectData;
                         AzureTablesData.GetEntity(StorageName, StorageKey, "cicform5", model.RowKey, out jsonProjectData);
                         JObject myJObject = JObject.Parse(jsonProjectData);
@@ -349,13 +355,13 @@ namespace CICLatest.Controllers
                         model.Reviewer = "Contractor";
                         model.FormStatus = "Rejected";
                         model.comment = "Clerk comment - " + comment;
-
-                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='https://constructioncouncil.azurewebsites.net/'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
-                        ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager);
+                        var domain = _appSettingsReader.Read("Domain");
+                        string body = "<p>Hi " + RepresentativeName + ",<br/><br/>Your form is rejected due to following reason:</br>" + comment + "</br></br>To access CIC portal you can login at: <a href='" + domain + "'>CIC Portal</a> <br/><br/>Thank you,<br/>CIC Team</p>";
+                        ViewForm1Controller view1Controller = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
                         view1Controller.sendNotification(model.CreatedBy, "Your Form is Rejected", body);
 
                         CICCommonService commService = new CICCommonService(_userManager);
-                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: https://constructioncouncil.azurewebsites.net/ Thank you, CIC Team";
+                        body = "Hi " + RepresentativeName + ", Your form is rejected due to reason:" + comment + ".To access CIC portal you can login at: "+ domain +" Thank you, CIC Team";
                         commService.sendSMS(model.CreatedBy, body);
                         break;
 
@@ -396,14 +402,13 @@ namespace CICLatest.Controllers
         public string DownloadFile()
         {
             SaveModelForm5 model = new SaveModelForm5();
-            BlobStorageService objBlobService = new BlobStorageService();
             
             bool isExist = memoryCache.TryGetValue("Form5Data", out model);
             if (isExist)
             {
                 var webRoot = _env.WebRootPath;
                 var fileP = System.IO.Path.Combine(webRoot, @"CIC\");
-                objBlobService.DownloadBlob1(model.ImagePath, fileP);
+                _blobStorageService.DownloadBlob1(model.ImagePath, fileP);
 
                 return fileP;
             }

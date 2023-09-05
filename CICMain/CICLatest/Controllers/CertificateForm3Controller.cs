@@ -1,4 +1,5 @@
-﻿using CICLatest.Helper;
+﻿using CICLatest.Contracts;
+using CICLatest.Helper;
 using CICLatest.Models;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -31,7 +32,13 @@ namespace CICLatest.Controllers
         private readonly UserManager<UserModel> _userManager;
         static int JVCnt = 0;
         public static string accessToken;
-        public CertificateForm3Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment, UserManager<UserModel> userManager)
+        public readonly IAppSettingsReader _appSettingsReader;
+        public readonly IBlobStorageService _blobStorageService;
+
+
+        public CertificateForm3Controller(IMemoryCache memoryCache, EmailConfiguration emailconfig, ApplicationContext context, AzureStorageConfiguration azureConfig
+            , IHostingEnvironment _environment, UserManager<UserModel> userManager
+            , IAppSettingsReader appSettingsReader, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -41,6 +48,8 @@ namespace CICLatest.Controllers
             _userManager = userManager;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _appSettingsReader = appSettingsReader;
+            _blobStorageService = blobStorageService;
         }
         public IActionResult Index(string rowkey)
         {
@@ -180,7 +189,7 @@ namespace CICLatest.Controllers
             }
             
             string CategoryName = "";
-            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager);
+            ViewForm4Controller vf4 = new ViewForm4Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
             if (model.CategoryId != 0)
             {
                 CategoryName = vf4.GetCategorybyName(model.CategoryId);
@@ -426,9 +435,7 @@ namespace CICLatest.Controllers
             pdfStamper.Close();
             byte[] bytes = System.IO.File.ReadAllBytes(path);
 
-            BlobStorageService objBlobService = new BlobStorageService();
-
-            string filepath = objBlobService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
+            string filepath = _blobStorageService.UploadFileToBlob(tempPath, bytes, "application/pdf", filepdfpath);
 
             UpdateDB();
             

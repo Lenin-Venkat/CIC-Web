@@ -16,6 +16,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using iTextSharp.text.pdf;
+using CICLatest.Contracts;
 
 namespace CICLatest.Controllers
 {
@@ -28,8 +29,11 @@ namespace CICLatest.Controllers
         private IHostingEnvironment Environment;
         private readonly AzureStorageConfiguration _azureConfig;
         public static string accessToken;
+        public readonly IBlobStorageService _blobStorageService;
 
-        public GenerateCertificateController(IMemoryCache memoryCache, EmailConfiguration emailconfig, AzureStorageConfiguration azureConfig, IHostingEnvironment _environment)
+
+        public GenerateCertificateController(IMemoryCache memoryCache, EmailConfiguration emailconfig
+            , AzureStorageConfiguration azureConfig, IHostingEnvironment _environment, IBlobStorageService blobStorageService)
         {
             this.memoryCache = memoryCache;
             _azureConfig = azureConfig;
@@ -37,6 +41,7 @@ namespace CICLatest.Controllers
             _emailcofig = emailconfig;
             StorageName = _azureConfig.StorageAccount;
             StorageKey = _azureConfig.StorageKey1;
+            _blobStorageService = blobStorageService;
         }
 
         public IActionResult Index()
@@ -72,7 +77,6 @@ namespace CICLatest.Controllers
         public IActionResult Index(List<CertificateModel> model)
         {
             string PKey = "", RKey = "";
-            BlobStorageService objBlobService = new BlobStorageService();
             string tempPath = "Files/";
             string body = "";
             string yr = GetFinancialYear();
@@ -319,7 +323,6 @@ namespace CICLatest.Controllers
         public IActionResult RemoveCert(List<CertificateModel> model)
         {
             Form1Model form1Model = new Form1Model();
-            BlobStorageService objBlobService = new BlobStorageService();
             bool isexist = memoryCache.TryGetValue("Form1Model", out form1Model);
 
             if (isexist)
@@ -472,7 +475,6 @@ namespace CICLatest.Controllers
         public void RemoveCertFromServer(List<CertificateModel> model, string comment)
         {
             Form1Model form1Model = new Form1Model();
-            BlobStorageService objBlobService = new BlobStorageService();
             bool isexist = memoryCache.TryGetValue("Form1Model", out form1Model);
 
             if (isexist)
