@@ -201,7 +201,7 @@ namespace CICLatest.Controllers
 
                     }
 
-                    if ((string)item["FormStatus"] == "Draft" || (string)item["FormStatus"] == "Rejected" || (string)item["FormStatus"] == "Submit" || (string)item["FormStatus"] == "Completed" || (string)item["FormStatus"] == "Finished")
+                    if ((string)item["FormStatus"] == "Draft" || (string)item["FormStatus"] == "Rejected" || (string)item["FormStatus"] == "Submit" || (string)item["FormStatus"] == "Completed" || (string)item["FormStatus"] == "Finished" || (string)item["FormStatus"] == "Approve")
                     {
                         stsFlag = true;
                     }
