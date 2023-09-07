@@ -343,7 +343,7 @@ namespace CICLatest.Helper
 
             string containerName = "invoices";
 
-            string filepath = @"https://cicdatastorageprod.blob.core.windows.net/invoices/"+custno + "/"+filename;
+            string filepath = _appSettingsReader.Read("ImagePath")+custno + "/"+filename;
 
             BlobContainerClient containerClient = new BlobContainerClient(_azureConfig.StorageConnectionString, containerName);
 

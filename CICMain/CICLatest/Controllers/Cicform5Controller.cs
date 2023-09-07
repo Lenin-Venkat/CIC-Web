@@ -1090,7 +1090,7 @@ namespace CICLatest.Controllers
                 if (!filepath.Contains("https"))
                 {
                    
-                    saveModelForm5.ImagePath = @"https:\cicdatastorage.blob.core.windows.net\uploads\" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + filepath;
+                    saveModelForm5.ImagePath = _appSettingsReader.Read("ImagePath") + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + filepath;
                 }
             }
             if (p1.formval == "Edit")
