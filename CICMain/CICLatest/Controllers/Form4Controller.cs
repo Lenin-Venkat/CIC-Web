@@ -1836,7 +1836,7 @@ namespace CICLatest.Controllers
             {
                 if (!path.Contains("https"))
                 {
-                    filepath = @"https:\cicdatastorage.blob.core.windows.net\uploads\" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + path;
+                    filepath = _appSettingsReader.Read("ImagePath") + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd") + @"\" + path;
                 }
                 else
                 {
