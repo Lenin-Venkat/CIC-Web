@@ -327,7 +327,7 @@ namespace CICLatest.Controllers
 
                         //AK - 24052023
                         //post release updates: invoice generation and update Project Details
-                        Form8Helpers form8Helpers = new Form8Helpers();
+                        Form8Helpers form8Helpers = new Form8Helpers(_appSettingsReader);
                         form8Helpers.PostReleaseUpdates(model, StorageName, StorageKey);                      
 
                         break;
@@ -369,7 +369,7 @@ namespace CICLatest.Controllers
                     httpClient.DefaultRequestHeaders.Clear();
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    string u = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/cic/cic/v1.0/companies(048a694f-7727-ed11-97e8-0022481386b1)/cicSalesInvoices";
+                    string u =  _appSettingsReader.Read("BCURL") + "/cicSalesInvoices";
                     HttpResponseMessage response = httpClient.PostAsync(@u, data).Result;
 
                     if (response.IsSuccessStatusCode)
@@ -412,7 +412,7 @@ namespace CICLatest.Controllers
                     });
                     var json2 = JsonConvert.SerializeObject(data2);
                     var data3 = new StringContent(json2, Encoding.UTF8, "application/json");
-                    string uitemline = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/v2.0/companies(048a694f-7727-ed11-97e8-0022481386b1)/cicSalesInvoices(" + istr + ")/cicSalesInvoiceLines";
+                    string uitemline = _appSettingsReader.Read("BCURL") + "/cicSalesInvoices(" + istr + ")/cicSalesInvoiceLines";
                     HttpResponseMessage response1 = httpClient.PostAsync(@uitemline, data3).Result;
                     if (response1.IsSuccessStatusCode)
                     {
@@ -474,7 +474,7 @@ namespace CICLatest.Controllers
                     httpClient.DefaultRequestHeaders.Clear();
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    string u = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/cic/cic/v1.0/companies(048a694f-7727-ed11-97e8-0022481386b1)/customersContract";
+                    string u = _appSettingsReader.Read("BCURL") + "/customersContract";
                     HttpResponseMessage response = httpClient.PostAsync(@u, data).Result;
 
                     if (response.IsSuccessStatusCode)
@@ -490,7 +490,7 @@ namespace CICLatest.Controllers
                 //updating Blob Physical Address
                 using (var httpClient = new HttpClient())
                 {
-                    string BCUrl2 = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/cic/cic/v1.0/companies(048a694f-7727-ed11-97e8-0022481386b1)/customersContract(" + istr + ")/pocPhysicalAddress";
+                    string BCUrl2 = _appSettingsReader.Read("BCURL") + "/customersContract(" + istr + ")/pocPhysicalAddress";
                     Uri u = new Uri(BCUrl2);
                     var t = Task.Run(() => PatchData(u, (string)myJObject["value"][i]["PhysicalAddress"], "text/plain"));
                     t.Wait();
@@ -499,7 +499,7 @@ namespace CICLatest.Controllers
                 //updating Blob Postal Address
                 using (var httpClient = new HttpClient())
                 {
-                    string BCUrl2 = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/cic/cic/v1.0/companies(048a694f-7727-ed11-97e8-0022481386b1)/customersContract(" + istr + ")/pocPostalAddress";
+                    string BCUrl2 = _appSettingsReader.Read("BCURL") + "/customersContract(" + istr + ")/pocPostalAddress";
                     Uri u = new Uri(BCUrl2);
                     var t = Task.Run(() => PatchData(u, (string)myJObject["value"][i]["PostalAddress"], "text/plain"));
                     t.Wait();

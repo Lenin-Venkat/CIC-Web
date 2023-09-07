@@ -14,18 +14,31 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Azure.Core;
 using System.Collections.Generic;
+using CICLatest.Contracts;
 
 namespace CICLatest.Helper
 {
     public class Form8Helpers
     {
         public string accessToken = "";
-        public string ClientId = "45afa890-e6c4-46e7-851d-67f8c74fd3b7";
-        public string ClientSecret = "WUt8Q~zD1u2TkDDuOHnICa~CugNHjTXpqiz2capS";
-        public string AadTenantId = "0e1ed69c-0381-4157-9f35-d57e9facd3b1";
-        public string Authority = "https://login.microsoftonline.com/{AadTenantId}/oauth2/v2.0/token";
-        public string BCURL = "https://api.businesscentral.dynamics.com/v2.0/0e1ed69c-0381-4157-9f35-d57e9facd3b1/Sandbox/api/cic/cic/v1.0/companies(048a694f-7727-ed11-97e8-0022481386b1)";
-        public string TokenURL = "https://login.microsoftonline.com/0e1ed69c-0381-4157-9f35-d57e9facd3b1/oauth2/v2.0/token";
+        public string ClientId;
+        public string ClientSecret;
+        public string AadTenantId;
+        public string Authority;
+        public string BCURL;
+        public string TokenURL;
+        public readonly IAppSettingsReader _appSettingsReader;
+
+        public Form8Helpers(IAppSettingsReader appSettingsReader) 
+        {
+            _appSettingsReader = appSettingsReader;
+            ClientId = _appSettingsReader.Read("ClientId");
+            ClientSecret = _appSettingsReader.Read("ClientSecret");
+            AadTenantId = _appSettingsReader.Read("AadTenantId");
+            Authority = _appSettingsReader.Read("Authority");
+            BCURL = _appSettingsReader.Read("BCURL");
+            TokenURL = _appSettingsReader.Read("TokenURL");
+        }
        
         public void PostReleaseUpdates(SaveModelForm8 model, string StorageName, string StorageKey)
         {
