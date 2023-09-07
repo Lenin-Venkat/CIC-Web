@@ -908,7 +908,7 @@ namespace CICLatest.Controllers
                     for (int i = 0; i < cntJson; i++)
                     {
                         var formStatus = (string)myJObject["value"][i]["FormStatus"];
-                        if (formStatus == "Completed")
+                        if (formStatus == "Finished")
                         {
                             var categoryString = (string)myJObject["value"][i]["Category"];
                             var categoryList = categoryString.Split(',');
