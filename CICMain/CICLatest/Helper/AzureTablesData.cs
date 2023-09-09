@@ -1,15 +1,84 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Table;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 
 namespace CICLatest.Helper
 {
     public class AzureTablesData
     {
-        
+        //public static int GetAllEntitiesWithContToken()
+        //{
+        //    var acc = new CloudStorageAccount(
+        //                 new StorageCredentials("account name", "account key"), true);
+        //    var tableClient = acc.CreateCloudTableClient();
+        //    var table = tableClient.GetTableReference("table name");
+        //    TableContinuationToken token = null;
+        //    var entities = new List<object>();
+        //    do
+        //    {
+        //        var queryResult = table.ExecuteQuerySegmentedAsync(new TableQ uery<>(), token);
+        //        entities.AddRange(queryResult.Results);
+        //        token = queryResult.ContinuationToken;
+        //    } while (token != null);
+        //}
+        public static EntityResponse GetAllEntityWithContinuationToken(string storageAccount, string accessKey, string resourcePath)
+        {
+            string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath;
+            // Web request 
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+
+            int query = resourcePath.IndexOf("?");
+            if (query > 0)
+            {
+                resourcePath = resourcePath.Substring(0, query);
+            }
+
+            request = getRequestHeaders("GET", request, storageAccount, accessKey, resourcePath);
+
+            var entityResponse = new EntityResponse
+            {
+                Code = HttpStatusCode.RequestTimeout,
+                Data = string.Empty,
+                Message = string.Empty,
+                NextPartitionKey = string.Empty,
+                NextRowKey = string.Empty
+            };
+
+            // Execute the request
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    entityResponse.NextPartitionKey = response.Headers["x-ms-continuation-NextPartitionKey"];
+                    entityResponse.NextRowKey = response.Headers["x-ms-continuation-NextRowKey"];
+                    using (System.IO.StreamReader r = new System.IO.StreamReader(response.GetResponseStream()))
+                    {
+                        entityResponse.Data = r.ReadToEnd();
+                        return entityResponse;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                // get the message from the exception response
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(ex.Response.GetResponseStream()))
+                {
+                    entityResponse.Data = sr.ReadToEnd();
+                    // Log res if required
+                }
+
+                return entityResponse;
+            }
+        }
+
         public static int GetAllEntity(string storageAccount, string accessKey, string resourcePath, out string jsonData)
         {
             //string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "?$filter=RowKey%20eq%20" + "'form2'";
@@ -170,6 +239,55 @@ namespace CICLatest.Helper
             }
         }
 
+        public static EntityResponse GetEntitybyNextRowPartition(string storageAccount, string accessKey, string resourcePath, string partitionkey, string rowkey)
+        {
+            string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "?NextPartitionKey=" + partitionkey + "&NextRowKey=" + rowkey;
+
+            // Web request 
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+
+            int query = 0;// resourcePath.IndexOf("?");
+            if (query > 0)
+            {
+                resourcePath = resourcePath.Substring(0, query);
+            }
+
+            request = getRequestHeaders("GET", request, storageAccount, accessKey, resourcePath);
+
+            var entityResponse = new EntityResponse
+            {
+                Code = HttpStatusCode.RequestTimeout,
+                Data = string.Empty,
+                Message = string.Empty,
+                NextPartitionKey = string.Empty,
+                NextRowKey = string.Empty
+            };
+            // Execute the request
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    entityResponse.NextPartitionKey = response.Headers["x-ms-continuation-NextPartitionKey"];
+                    entityResponse.NextRowKey = response.Headers["x-ms-continuation-NextRowKey"];
+                    using (System.IO.StreamReader r = new System.IO.StreamReader(response.GetResponseStream()))
+                    {
+                        entityResponse.Data = r.ReadToEnd();
+                        return entityResponse;
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                // get the message from the exception response
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(ex.Response.GetResponseStream()))
+                {
+                    entityResponse.Data = sr.ReadToEnd();
+                    // Log res if required
+                }
+
+                return entityResponse;
+            }
+        }
         public static int GetEntitybyLoginId(string storageAccount, string accessKey, string resourcePath, string CreatedBy, out string jsonData)
         {
             string uri = @"https://" + storageAccount + ".table.core.windows.net/" + resourcePath + "?$filter=CreatedBy%20eq%20'" + CreatedBy + "'%20and%20CreatedDate%20gt%20''";

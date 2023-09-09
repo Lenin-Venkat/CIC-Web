@@ -693,7 +693,7 @@ namespace CICLatest.Controllers
                 ViewBag.BType = "checked";
             }
 
-            p.FormRegistrationNo = getRegNo(p);
+            p.FormRegistrationNo = GenericHelper.GetRegNo(p.FormRegistrationNo, p.formval, _azureConfig);
 
             switch (name)
             {
@@ -1513,23 +1513,37 @@ namespace CICLatest.Controllers
             }
             else
             {
-                string jsonData;
+                var res = AzureTablesData.GetAllEntityWithContinuationToken(StorageName, StorageKey, "cicform");
+                var firstPageObj = JObject.Parse(res.Data);
 
-                AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
+                var jTokens = new List<JToken> ();
+                var nextPartitionKey = res.NextPartitionKey;
+                var nextRowKey = res.NextRowKey;
+                while (nextPartitionKey != null && nextRowKey != null)
+                {
+                    var response = AzureTablesData.GetEntitybyNextRowPartition(_azureConfig.StorageAccount, _azureConfig.StorageKey1, "cicform", res.NextPartitionKey, res.NextRowKey);
 
-                JObject myJObject = JObject.Parse(jsonData);
-                int cntJson = myJObject["value"].Count();
+                    var nextPageObj = JObject.Parse(response.Data);
+                    jTokens = firstPageObj["value"].Concat(nextPageObj["value"]).ToList();
+
+                    nextPartitionKey = response.NextPartitionKey;
+                    nextRowKey = response.NextRowKey;
+                }
+                
+                //var finalObj = new JObject();
+
+                int cntJson = jTokens.Count();
                 int tempRegNo;
 
                 if (cntJson != 0)
                 {
-                    tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"];
+                    tempMax = (int)jTokens[0]["ProjectRegistrationNo"];
                 }
 
 
                 for (int i = 0; i < cntJson; i++)
                 {
-                    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
+                    tempRegNo = (int)jTokens[i]["ProjectRegistrationNo"];
 
                     if (tempRegNo > tempMax)
                     {
@@ -1662,64 +1676,16 @@ namespace CICLatest.Controllers
             Form4Model newModel = new Form4Model();
 
             Form4Wrapper k = new Form4Wrapper();
-
-            string jsonData;
-            AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
-
-            JObject myJObject = JObject.Parse(jsonData);
-            int cntJson = myJObject["value"].Count();
-            int tempRegNo;
-            int tempMax = 0;
-
-            if (model.formval == "Edit")
-            {
-                tempMax = model.FormRegistrationNo;
-            }
-            else
-            {
-                if (cntJson != 0)
-                {
-                    tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"];
-                }
-
-
-                for (int i = 0; i < cntJson; i++)
-                {
-                    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
-
-                    if (tempRegNo > tempMax)
-                    {
-                        tempMax = tempRegNo;
-                    }
-                }
-                tempMax++;
-               // model.App.ImagePath = "PRN" + tempMax; //AK
-                model.App.ImagePath = "Form" + tempMax;
-                AddNewRegistrationNo addNew = new AddNewRegistrationNo();
-                addNew.PartitionKey = tempMax.ToString();
-               // addNew.RowKey = "PRN" + tempMax.ToString(); //AK
-                addNew.RowKey = "Form" + tempMax.ToString();
-                addNew.ProjectRegistrationNo = tempMax.ToString();
-                response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
-            }
-
-
-            //uploadFiles1(model.App.Filesignature, model.App.ImagePath, "Filesignature");
-            //uploadFiles1(model.businessModel.Businesssignature, model.App.ImagePath, "Businesssignature");
-            //uploadFiles1(model.docs.BusinessFile1, model.App.ImagePath, "BusinessFile1");
-            //uploadFiles1(model.docs.BusinessFile2, model.App.ImagePath, "BusinessFile2");
-            //uploadFiles1(model.docs.BusinessFile3, model.App.ImagePath, "BusinessFile3");
-            //uploadFiles1(model.docs.BusinessFile4, model.App.ImagePath, "BusinessFile4");
-            //uploadFiles1(model.docs.BusinessFile5, model.App.ImagePath, "BusinessFile5");
-            //uploadFiles1(model.docs.BusinessFile6, model.App.ImagePath, "BusinessFile6");
-            //uploadFiles1(model.docs.BusinessFile7, model.App.ImagePath, "BusinessFile7");
-            //uploadFiles1(model.docs.ShareholdersFile1, model.App.ImagePath, "ShareholdersFile1");
-            //uploadFiles1(model.docs.Signature1, model.App.ImagePath, "Signature1");
-            //uploadFiles1(model.docs.Signature2, model.App.ImagePath, "Signature2");
-            //uploadFiles1(model.docs.TaxLaw, model.App.ImagePath, "TaxLaw");
-            //uploadFiles1(model.docs.Evidence, model.App.ImagePath, "Evidence");
-            //uploadFiles1(model.docs.Compliance, model.App.ImagePath, "Compliance");
-
+            int regNumber = model.FormRegistrationNo;
+            // model.App.ImagePath = "PRN" + tempMax; //AK
+            model.App.ImagePath = "Form" + regNumber;
+            AddNewRegistrationNo addNew = new AddNewRegistrationNo();
+            addNew.PartitionKey = regNumber.ToString();
+            // addNew.RowKey = "PRN" + tempMax.ToString(); //AK
+            addNew.RowKey = "Form" + regNumber.ToString();
+            addNew.ProjectRegistrationNo = regNumber.ToString();
+            response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
+  
             if (filepath != "NA")
             {
                 model.App.ImagePath = filepath;
@@ -1735,7 +1701,7 @@ namespace CICLatest.Controllers
             model.CustNo = HttpContext.Session.GetString("CustNo");
             model.CreatedBy = User.Identity.Name;
             memoryCache.Set("emailto", User.Identity.Name);
-            k.mapData(model, newModel, tempMax);
+            k.mapData(model, newModel, regNumber);
             string firmNo = newModel.RowKey;
             if (model.formval == "Edit")
             {
@@ -1759,7 +1725,7 @@ namespace CICLatest.Controllers
                     if (DFlag == false)
                     {
                         string Data;
-                        k.mapShareDetails(d, model.Sharelist[i], tempMax);
+                        k.mapShareDetails(d, model.Sharelist[i], regNumber);
                         AzureTablesData.GetEntitybyRowPartition(StorageName, StorageKey, "cicform1ShareDividends", d.PartitionKey, d.RowKey, out Data);
 
                         JObject myJObject1 = JObject.Parse(Data);
