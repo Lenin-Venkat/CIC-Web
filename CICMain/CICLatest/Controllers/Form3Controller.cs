@@ -561,7 +561,10 @@ namespace CICLatest.Controllers
             //if (p.FormRegistrationNo == 0)
             //{
             //    p.FormRegistrationNo = getRegNo(p);
+
             //}
+
+            p.FormRegistrationNo = GenericHelper.GetRegNo(p.FormRegistrationNo, p.formval, _azureConfig); //AK
 
             switch (name)
             {
@@ -1750,23 +1753,17 @@ namespace CICLatest.Controllers
             Form3Model ModelForm3 = new Form3Model();
             Form3Mapper k = new Form3Mapper();
             string TableName = "CicForm3()";
-            string FormRegNo = "";
-            string jsonData;
-            int tempMax = 0;
+
             
-            if (p3.formval == "Edit")
-            {
-                tempMax = p3.FormRegistrationNo;
-                ModelForm3.PartitionKey = p3.PartitionKey;
-                ModelForm3.RowKey = p3.RowKey;
-                ModelForm3.FormStatus = p3.FormStatus;
-                FormRegNo = p3.RowKey;
-            }
-            else
-            {
-                p3.FormRegistrationNo = getRegNo(p3);
-            }
-            tempMax = p3.FormRegistrationNo;
+            int tempMax = p3.FormRegistrationNo;
+            // model.App.ImagePath = "PRN" + tempMax; //AK
+            AddNewRegistrationNo addNew = new AddNewRegistrationNo();
+            addNew.PartitionKey = tempMax.ToString();
+            // addNew.RowKey = "PRN" + tempMax.ToString(); //AK
+            addNew.RowKey = "Form" + tempMax.ToString();
+            addNew.ProjectRegistrationNo = tempMax.ToString();
+            response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
+
             p3.CustNo = HttpContext.Session.GetString("CustNo");
             p3.CreatedBy = User.Identity.Name;
             memoryCache.Set("emailto", User.Identity.Name);

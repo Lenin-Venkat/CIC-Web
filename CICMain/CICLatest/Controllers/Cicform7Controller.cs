@@ -558,6 +558,10 @@ namespace CICLatest.Controllers
             }
 
             //p.FirmRegistrationNo = getRegNo(p);
+
+
+            p.FirmRegistrationNo = GenericHelper.GetRegNo(p.FirmRegistrationNo, p.formval, _azureConfig); //AK
+
             ModelState.Remove("financialCapabilityForm7.AnnualTurnoverYear2");
             ModelState.Remove("financialCapabilityForm7.AnnualTurnoverYear3");
             //if (p.App.AssociationName == "Select association name")
@@ -1262,58 +1266,22 @@ namespace CICLatest.Controllers
 
             string response = "";
             string FormRegNo = "";
-            int tempMax;
             SaveForm7Model saveModel = new SaveForm7Model();
-            if (model.formval == "Edit")
-            {
-                saveModel.PartitionKey = model.PartitionKey;
-                saveModel.RowKey = model.RowKey;
-                saveModel.FormStatus = model.FormStatus;
 
-                FormRegNo = model.RowKey;
-                tempMax = model.FirmRegistrationNo;
-            }
-            else
-            {
-                string jsonData;
-                AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
-
-                JObject myJObject = JObject.Parse(jsonData);
-                int cntJson = myJObject["value"].Count();
-                int tempRegNo;
-
-                tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
-                for (int i = 0; i < cntJson; i++)
-                {
-
-                    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
-                    if (tempRegNo > tempMax)
-                    {
-                        tempMax = tempRegNo;
-                    }
-                }
-                tempMax++;
-
-                //Adding new rEgistration no 
-                AddNewRegistrationNo addNew = new AddNewRegistrationNo();
-
-                addNew.PartitionKey = tempMax.ToString();
-                addNew.RowKey = "Form" + tempMax.ToString(); //AK
-                FormRegNo = "Form" + tempMax.ToString(); //AK
-                 
-                addNew.ProjectRegistrationNo = tempMax.ToString();
-
-                response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
-                saveModel.PartitionKey = model.App.AssociationName;
-                saveModel.RowKey = "Form" + tempMax.ToString(); //AK
-            }
+            int tempMax = model.FirmRegistrationNo;
+            AddNewRegistrationNo addNew = new AddNewRegistrationNo();
+            addNew.PartitionKey = tempMax.ToString();
+            addNew.RowKey = "Form" + tempMax.ToString();
+            addNew.ProjectRegistrationNo = tempMax.ToString();
+            response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
 
             saveModel.FormRegistrationNo = tempMax;
             saveModel.FormStatus = model.FormStatus;
             saveModel.AppType = model.App.AppType;
             saveModel.AssociationName = model.App.AssociationName;
             saveModel.AuthorisedOfficerName = model.App.AuthorisedOfficerName;
-           
+
+            FormRegNo = "Form" + tempMax.ToString();
             //2nd tab details
             saveModel.FormName = "Form7";
             saveModel.BusinessName = model.businessModel.BusinessName;
