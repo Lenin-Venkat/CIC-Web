@@ -192,7 +192,9 @@ namespace CICLatest.Controllers
 
             setDefault(p);
             fileDefault(p);
-            p.FormRegistrationNo = getRegNo(p);
+            //p.FormRegistrationNo = getRegNo(p);
+
+            p.FormRegistrationNo = GenericHelper.GetRegNo(p.FormRegistrationNo, p.formval, _azureConfig); //AK
 
             // Model state no valid &next / Prev btn cicked -stay on same tab
             switch (name)

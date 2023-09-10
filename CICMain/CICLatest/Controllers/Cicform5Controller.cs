@@ -432,6 +432,9 @@ namespace CICLatest.Controllers
             
             fileDefault(p);
             //p.FormRegistrationNo = getRegNo(p);
+
+            p.FormRegistrationNo = GenericHelper.GetRegNo(p.FormRegistrationNo, p.formval, _azureConfig); //AK
+
             CustomValidations cv = new CustomValidations();
             switch (name)
             {
@@ -1015,6 +1018,7 @@ namespace CICLatest.Controllers
                 FormRegNo = "Form" + tempMax.ToString(); ;
 
             }
+
             saveModelForm5.FormRegistrationNo = tempMax;
             saveModelForm5.FormName = "Form5";
 

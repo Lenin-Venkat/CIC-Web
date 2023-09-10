@@ -1703,6 +1703,7 @@ namespace CICLatest.Controllers
             memoryCache.Set("emailto", User.Identity.Name);
             k.mapData(model, newModel, regNumber);
             string firmNo = newModel.RowKey;
+
             if (model.formval == "Edit")
             {
                 response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform4", JsonConvert.SerializeObject(newModel, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), model.PartitionKey, model.RowKey);
