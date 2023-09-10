@@ -1162,25 +1162,27 @@ namespace CICLatest.Controllers
             else
             {
 
-                string jsonData;
-                AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
+                //string jsonData;
+                //AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
 
-                JObject myJObject = JObject.Parse(jsonData);
-                int cntJson = myJObject["value"].Count();
-                int tempRegNo;
+                //JObject myJObject = JObject.Parse(jsonData);
+                //int cntJson = myJObject["value"].Count();
+                //int tempRegNo;
 
-                tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
-                for (int i = 0; i < cntJson; i++)
-                {
+                //tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
+                //for (int i = 0; i < cntJson; i++)
+                //{
 
-                    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
-                    if (tempRegNo > tempMax)
-                    {
-                        tempMax = tempRegNo;
-                    }
-                }
+                //    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
+                //    if (tempRegNo > tempMax)
+                //    {
+                //        tempMax = tempRegNo;
+                //    }
+                //}
 
-                tempMax++;
+                //tempMax++;
+
+                tempMax = GenericHelper.GetRegNo(p1.FormRegistrationNo, p1.formval, _azureConfig);
 
                 //Adding new rEgistration no 
                 AddNewRegistrationNo addNew = new AddNewRegistrationNo();
