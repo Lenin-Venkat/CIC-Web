@@ -988,8 +988,6 @@ namespace CICLatest.Controllers
                 //}
                 tempMax = GenericHelper.GetRegNo(p1.FormRegistrationNo, p1.formval, _azureConfig);
 
-                tempMax++;
-
                 //Adding new rEgistration no 
                 AddNewRegistrationNo addNew = new AddNewRegistrationNo();
 

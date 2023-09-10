@@ -56,41 +56,41 @@ namespace CICLatest.Controllers
             _appSettingsReader = appSettingsReader;
             _blobStorageService = blobStorageService;
         }
-       
+
         public ActionResult CicForm7()
         {
 
-                  ViewBag.type = "active";
-                  Form7Model.c = cnt;
-                  Form7Model.cFin = cnt;
-                  Form7Model.cWork = cnt;
-               Cicf7Model form7EditModel = new Cicf7Model();
+            ViewBag.type = "active";
+            Form7Model.c = cnt;
+            Form7Model.cFin = cnt;
+            Form7Model.cWork = cnt;
+            Cicf7Model form7EditModel = new Cicf7Model();
 
-               bool isExist = memoryCache.TryGetValue("Form7", out form7EditModel);
-              if (isExist)
-              {
+            bool isExist = memoryCache.TryGetValue("Form7", out form7EditModel);
+            if (isExist)
+            {
                 List<AssociationList> AList = new List<AssociationList>();
 
                 memoryCache.TryGetValue("listAssociation", out AList);
                 ViewBag.ListofAssociation = AList;
                 Form7Model = form7EditModel;
-              }
-                if (!isExist)
-                {
-               
+            }
+            if (!isExist)
+            {
 
-                
+
+
                 Form7Model.Sharelist = new List<DirectorshipShareDividendsSection>();
-                Form7Model.Sharelist.Add(new DirectorshipShareDividendsSection { DirectorName = "", CellphoneNo = "", Country = "", IdNO = "", Nationnality = "", SharePercent = 0,PartitionKey="-" ,RowKey="-"});
+                Form7Model.Sharelist.Add(new DirectorshipShareDividendsSection { DirectorName = "", CellphoneNo = "", Country = "", IdNO = "", Nationnality = "", SharePercent = 0, PartitionKey = "-", RowKey = "-" });
 
                 Form7Model.companyBank = new List<CompanyBank>();
-                Form7Model.companyBank.Add(new CompanyBank { BankName = "", BranchName = "", BranchCode = "", AccountHoulderName = "", AccountNo = 0, AccountTYpe = "", TelephoneNo = "",PartitionKey="-",RowKey="-" });
+                Form7Model.companyBank.Add(new CompanyBank { BankName = "", BranchName = "", BranchCode = "", AccountHoulderName = "", AccountNo = 0, AccountTYpe = "", TelephoneNo = "", PartitionKey = "-", RowKey = "-" });
 
                 Form7Model.listOfPrevousClent = new List<ListOfPreviousClient>();
-                Form7Model.listOfPrevousClent.Add(new ListOfPreviousClient { NameofClient = "", ServiceProvided = "", DateOrPeriod = null, ContractValue = 0,PartitionKey="-",RowKey="-" });
+                Form7Model.listOfPrevousClent.Add(new ListOfPreviousClient { NameofClient = "", ServiceProvided = "", DateOrPeriod = null, ContractValue = 0, PartitionKey = "-", RowKey = "-" });
                 loadData(Form7Model);
-              }
-              return View(Form7Model);
+            }
+            return View(Form7Model);
 
 
 
@@ -356,15 +356,15 @@ namespace CICLatest.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CicForm7(Cicf7Model p, string name, string next, string pre)
         {
-           
-           
-          
+
+
+
             fileDefault(p);
             if (p.formval != "Edit")
             {
                 p.ImagePath = "-";
             }
-            
+
             if (p.formval == "Edit")
             {
                 setGetFileEdit(p);
@@ -375,7 +375,7 @@ namespace CICLatest.Controllers
                 SetandGetFileAdd(p);
 
             }
-            if(p.formval=="Edit")
+            if (p.formval == "Edit")
             {
                 if (p.Sharelist != null)
                 {
@@ -411,7 +411,7 @@ namespace CICLatest.Controllers
 
 
             }
-           else
+            else
             {
                 //Grid work
                 if (p.Sharelist != null)
@@ -452,7 +452,7 @@ namespace CICLatest.Controllers
                 {
                     p.cFin = p.companyBank.Count() + 1;
 
-                    
+
 
                 }
                 else
@@ -494,8 +494,8 @@ namespace CICLatest.Controllers
                 //{
 
                 //    p.cWork = p.listOfPrevousClent.Count() + 1;
-                    
-                   
+
+
                 //}
                 //else
                 //{
@@ -506,7 +506,7 @@ namespace CICLatest.Controllers
 
                 //}
             }
-             else
+            else
             {
                 if (p.listOfPrevousClent != null)
                 {
@@ -531,9 +531,9 @@ namespace CICLatest.Controllers
 
             }
 
-           
 
-            if (p.businessModel.Other ==null)
+
+            if (p.businessModel.Other == null)
             {
 
                 p.businessModel.Other = "-";
@@ -558,10 +558,6 @@ namespace CICLatest.Controllers
             }
 
             //p.FirmRegistrationNo = getRegNo(p);
-
-
-            p.FirmRegistrationNo = GenericHelper.GetRegNo(p.FirmRegistrationNo, p.formval, _azureConfig); //AK
-
             ModelState.Remove("financialCapabilityForm7.AnnualTurnoverYear2");
             ModelState.Remove("financialCapabilityForm7.AnnualTurnoverYear3");
             //if (p.App.AssociationName == "Select association name")
@@ -570,7 +566,7 @@ namespace CICLatest.Controllers
             //Model state no valid & next/Prev btn cicked - stay on same tab
             switch (name)
             {
-                
+
                 case "type":
 
                     bool AppFlag = IsAnyNullOrEmpty(p.App);
@@ -589,7 +585,7 @@ namespace CICLatest.Controllers
 
                 case "business":
 
-                   
+
                     bool BFlag = IsAnyNullOrEmpty(p.businessModel);
 
                     //bool DFlag;
@@ -628,7 +624,7 @@ namespace CICLatest.Controllers
                         if (aFlag == true)
                             break;
                     }
-                    if(FFlag==false && aFlag==true)
+                    if (FFlag == false && aFlag == true)
                     {
                         ViewBag.fin = "active";
                         break;
@@ -643,7 +639,7 @@ namespace CICLatest.Controllers
                         ViewBag.fin = "active";
                         break;
                     }
-                    
+
                     if ((FFlag == false && aFlag == false) && next != null)
                     {
                         ViewBag.work = "active";
@@ -662,12 +658,12 @@ namespace CICLatest.Controllers
                     if ((FFlag == false && aFlag == true) && pre != null)
                     {
                         ViewBag.fin = "active";
-                        break; 
+                        break;
                     }
                     if ((FFlag == true && aFlag == false) && pre != null)
                     {
                         ViewBag.fin = "active";
-                        break; 
+                        break;
                     }
                     if ((FFlag == false && aFlag == false) && pre != null)
                     {
@@ -684,11 +680,11 @@ namespace CICLatest.Controllers
                     break;
 
                 case "work":
-                    
+
 
                     bool WFlag = IsAnyNullOrEmpty(p.financialCapabilityForm7);
                     WFlag = FinanceModelValidations1(p);
-                  
+
                     bool WAFlag = false;
 
                     //for (int i = 0; i < p.companyBank.Count; i++)
@@ -749,8 +745,8 @@ namespace CICLatest.Controllers
 
                 case "doc":
 
-                    
-                   // bool decFlag = IsAnyNullOrEmpty(p.declarationForm7);
+
+                    // bool decFlag = IsAnyNullOrEmpty(p.declarationForm7);
 
 
                     bool docFlag = cv.IsAnyNullOrEmpty(p.declarationForm7);
@@ -783,10 +779,10 @@ namespace CICLatest.Controllers
                     removeDatafromSession();
                     ModelState.Clear();
                     return RedirectToAction("Form7Result", "Cicform7", new { result = result, text = "Draft" });
-               
+
 
                 case "final":
-                  
+
                     ModelState.Remove("p.ImagePath");
                     ModelState.Remove("p.businessModel.FaxNo");
                     ModelState.Remove("p.businessModel.BusinessRepresentativeFax");
@@ -849,7 +845,7 @@ namespace CICLatest.Controllers
                     {
                         p.Reviewer = "Clerk";
                         p.FormStatus = "Submit";
-                      //  UploadBlob(p, p.FirmRegistrationNo);
+                        //  UploadBlob(p, p.FirmRegistrationNo);
                         string result3 = Savedata(p);
                         removeDatafromSession();
                         ModelState.Clear();
@@ -918,7 +914,7 @@ namespace CICLatest.Controllers
 
             return View(p);
         }
-      
+
         public bool DocModelValidation(Cicf7Model p)
         {
             bool AppFlag = false;
@@ -959,7 +955,7 @@ namespace CICLatest.Controllers
         }
         public bool AppModelValidations(Cicf7Model p)
         {
-           
+
             bool AppFlag = false;
 
             if (p.formval != "Edit")
@@ -984,7 +980,7 @@ namespace CICLatest.Controllers
                 AppFlag = true;
                 ModelState.AddModelError("App.AssociationName", "Please select Association Name");
             }
-            if (p.App.AuthorisedOfficerName ==null)
+            if (p.App.AuthorisedOfficerName == null)
             {
                 AppFlag = true;
                 ModelState.AddModelError("App.AuthorisedOfficerName", "Please enter Authorised Officer Name");
@@ -1013,7 +1009,7 @@ namespace CICLatest.Controllers
                     ModelState.AddModelError("businessModel.Signature", "Please upload file");
                 }
             }
-           
+
             bool DFlag1 = false;
 
             for (int i = 0; i < p.Sharelist.Count; i++)
@@ -1074,7 +1070,7 @@ namespace CICLatest.Controllers
                 DFlag = true;
                 ModelState.AddModelError("businessModel.Signature", "Please upload file");
             }
-            if(p.Sharelist.Count>=1)
+            if (p.Sharelist.Count >= 1)
             {
                 for (int i = 0; i < p.Sharelist.Count; i++)
                 {
@@ -1114,7 +1110,7 @@ namespace CICLatest.Controllers
                 }
 
             }
-         
+
             return DFlag;
         }
 
@@ -1160,7 +1156,7 @@ namespace CICLatest.Controllers
             //{
             //    FFlag = true;
             //    ModelState.AddModelError("p.financialCapabilityForm7.FinancialValue", "FinancialValue can not be 0");
-           //}
+            //}
 
 
 
@@ -1206,7 +1202,7 @@ namespace CICLatest.Controllers
             memoryCache.Remove("RenewIdentification");
             memoryCache.Remove("Signature");
             memoryCache.Remove("Signature2");
-           
+
         }
 
 
@@ -1221,16 +1217,16 @@ namespace CICLatest.Controllers
             var domain = _appSettingsReader.Read("Domain");
             if (text == "Draft")
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='"+ domain +"'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been saved as draft. To edit your application, please log in <a href='" + domain + "'>CIC Portal</a> and continue with your application and submit. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been saved as draft";
             }
             else
             {
-                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='"+ domain +"'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
+                body = "<p>Dear Valuable Contractor, your application - " + result + " for the financial year " + yr + " CIC registration/renewal has been successfully submitted. To view your application status, please log in <a href='" + domain + "'>CIC Portal</a> and view your dashboard. <br/><br/>Thank you,<br/>CIC Team</p>";
                 subject = "CIC registration/renewal has been successfully submitted";
             }
             memoryCache.TryGetValue("emailto", out emailto);
-            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context,_userManager, _appSettingsReader, _blobStorageService);
+            ViewForm1Controller viewForm1 = new ViewForm1Controller(memoryCache, _azureConfig, _context, _userManager, _appSettingsReader, _blobStorageService);
             viewForm1.sendNotification(emailto, subject, body);
             memoryCache.Remove("emailto");
             return View();
@@ -1251,29 +1247,68 @@ namespace CICLatest.Controllers
             }
             return false;
         }
-        
+
         public IActionResult AddRow()
         {
             Form7Model.Sharelist = new List<DirectorshipShareDividendsSection>();
-            Form7Model.Sharelist.Add(new DirectorshipShareDividendsSection { DirectorName = "", CellphoneNo = "", Country = "", IdNO = "", Nationnality = "", SharePercent = 0,PartitionKey="-",RowKey="-" });
+            Form7Model.Sharelist.Add(new DirectorshipShareDividendsSection { DirectorName = "", CellphoneNo = "", Country = "", IdNO = "", Nationnality = "", SharePercent = 0, PartitionKey = "-", RowKey = "-" });
             return View(Form7Model);
         }
-      
+
         public string Savedata(Cicf7Model model)
         {
-            
+
             //string TableName = "CicForm7()";
 
             string response = "";
             string FormRegNo = "";
+            int tempMax;
             SaveForm7Model saveModel = new SaveForm7Model();
+            if (model.formval == "Edit")
+            {
+                saveModel.PartitionKey = model.PartitionKey;
+                saveModel.RowKey = model.RowKey;
+                saveModel.FormStatus = model.FormStatus;
 
-            int tempMax = model.FirmRegistrationNo;
-            AddNewRegistrationNo addNew = new AddNewRegistrationNo();
-            addNew.PartitionKey = tempMax.ToString();
-            addNew.RowKey = "Form" + tempMax.ToString();
-            addNew.ProjectRegistrationNo = tempMax.ToString();
-            response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
+                FormRegNo = model.RowKey;
+                tempMax = model.FirmRegistrationNo;
+            }
+            else
+            {
+                //string jsonData;
+                //AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
+
+                //JObject myJObject = JObject.Parse(jsonData);
+                //int cntJson = myJObject["value"].Count();
+                //int tempRegNo;
+
+                //tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
+                //for (int i = 0; i < cntJson; i++)
+                //{
+
+                //    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
+                //    if (tempRegNo > tempMax)
+                //    {
+                //        tempMax = tempRegNo;
+                //    }
+                //}
+                //tempMax++;
+
+                tempMax = GenericHelper.GetRegNo(model.FirmRegistrationNo, model.formval, _azureConfig);
+
+                //Adding new rEgistration no 
+                AddNewRegistrationNo addNew = new AddNewRegistrationNo();
+
+                addNew.PartitionKey = tempMax.ToString();
+                addNew.RowKey = "Form" + tempMax.ToString(); //AK
+                FormRegNo = "Form" + tempMax.ToString(); //AK
+
+                addNew.ProjectRegistrationNo = tempMax.ToString();
+
+                response = AzureTablesData.InsertEntity(StorageName, StorageKey, "cicform", JsonConvert.SerializeObject(addNew));
+                saveModel.PartitionKey = model.App.AssociationName;
+                saveModel.RowKey = "Form" + tempMax.ToString(); //AK
+            }
 
             saveModel.FormRegistrationNo = tempMax;
             saveModel.FormStatus = model.FormStatus;
@@ -1281,7 +1316,6 @@ namespace CICLatest.Controllers
             saveModel.AssociationName = model.App.AssociationName;
             saveModel.AuthorisedOfficerName = model.App.AuthorisedOfficerName;
 
-            FormRegNo = "Form" + tempMax.ToString();
             //2nd tab details
             saveModel.FormName = "Form7";
             saveModel.BusinessName = model.businessModel.BusinessName;
@@ -1311,17 +1345,17 @@ namespace CICLatest.Controllers
             //saveModel.FinancialValue = model.financialCapabilityForm7.FinancialValue;
             //saveModel.FinancialInstitutionName = model.financialCapabilityForm7.FinancialInstitutionName;
             //saveModel.AvailableCapital = model.financialCapabilityForm7.AvailableCapital;
-          
+
             //Declaration section
             saveModel.Namee = model.declarationForm7.Namee;
             saveModel.Namee = model.declarationForm7.Namee;
-            
+
             saveModel.TitleDesignation = model.declarationForm7.TitleDesignation;
 
 
             //technial data 
             saveModel.StateDetailsOfMaterials = model.technicalData.StateDetailsOfMaterials;
-            saveModel.StateOfAttainent = model.technicalData.StateOfAttainent;            
+            saveModel.StateOfAttainent = model.technicalData.StateOfAttainent;
             saveModel.WitnessedTitle = model.documentsUpload.WitnessedTitle;
             saveModel.WitnessedName = model.documentsUpload.WitnessedName;
             saveModel.Reviewer = model.Reviewer.Trim();
@@ -1330,11 +1364,11 @@ namespace CICLatest.Controllers
             model.ImagePath = "Form" + tempMax; //AK
             memoryCache.Set("emailto", User.Identity.Name);
             saveModel.CustNo = HttpContext.Session.GetString("CustNo");
-                       
+
             if (filepath != "NA")
             {
                 saveModel.path = filepath;
-               
+
             }
             else
             {
@@ -1358,14 +1392,14 @@ namespace CICLatest.Controllers
 
             if (response == "Created" || response == "NoContent")
             {
-               // TableName = "cicform1ShareDividends()";
+                // TableName = "cicform1ShareDividends()";
                 DirectorshipShareDividendsSection d = new DirectorshipShareDividendsSection();
-                if(model.Sharelist!=null)
+                if (model.Sharelist != null)
                 {
                     for (int i = 0; i < model.Sharelist.Count; i++)
                     {
                         bool DFlag = cv.IsAnyNullOrEmpty(model.Sharelist[i]);
-                         DFlag = false;
+                        DFlag = false;
                         if (DFlag == false)
                         {
                             string Data;
@@ -1412,16 +1446,16 @@ namespace CICLatest.Controllers
 
                     }
                 }
-               
 
-               // TableName = "CicForm7ListOfPreviousProject()";
+
+                // TableName = "CicForm7ListOfPreviousProject()";
                 ListOfPreviousClient listOfprevious = new ListOfPreviousClient();
-                if(model.listOfPrevousClent != null)
+                if (model.listOfPrevousClent != null)
                 {
                     for (int i = 0; i < model.listOfPrevousClent.Count; i++)
                     {
                         bool DFlag = cv.IsAnyNullOrEmpty(model.listOfPrevousClent[i]);
-                       DFlag = false;
+                        DFlag = false;
                         if (DFlag == false)
                         {
                             // k.mapBankDetails(AppB, model.applicantBank[i], tempMax);
@@ -1457,16 +1491,16 @@ namespace CICLatest.Controllers
 
                     }
                 }
-               
+
                 //TableName = "CicForm7ApplicationBankDetails()";
                 CompanyBank compnyBankDetails = new CompanyBank();
-                if(model.companyBank!=null)
+                if (model.companyBank != null)
                 {
                     for (int i = 0; i < model.companyBank.Count; i++)
                     {
 
                         bool DFlag = cv.IsAnyNullOrEmpty(model.companyBank[i]);
-                       DFlag = false;
+                        DFlag = false;
                         if (DFlag == false)
                         {
                             //k.mapWorkDetails(workdata, model.worksCapability[i], tempMax);
@@ -1514,11 +1548,11 @@ namespace CICLatest.Controllers
 
                     }
                 }
-               
+
 
             }
             //return response;
-            
+
             string jsonData1;
             AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm7", FormRegNo, out jsonData1);//Get data
             JObject myJObject2 = JObject.Parse(jsonData1);
@@ -1676,7 +1710,7 @@ namespace CICLatest.Controllers
             ViewBag.type = "active";
             Cicf7Model model = new Cicf7Model();
             string c = "";
-            
+
             List<FileList> AllFileList = new List<FileList>();
             string jsonData;
             AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm7", rowkey, out jsonData);
@@ -1745,7 +1779,7 @@ namespace CICLatest.Controllers
                             case "RenewIdentification": RenewIdentification = AllFileList[j].FileValue; break;
                             case "Signature": Signature = AllFileList[j].FileValue; break;
                             case "Signature2": Signature2 = AllFileList[j].FileValue; break;
-                           
+
                         }
                     }
                 }
@@ -1756,7 +1790,7 @@ namespace CICLatest.Controllers
                     AssociationName = (string)myJObject["value"][i]["AssociationName"],
                     AuthorisedOfficerName = (string)myJObject["value"][i]["AuthorisedOfficerName"],
                     AssociationCertificateName = AppFile
-                   
+
                 };
 
                 model.App = App;
@@ -1779,15 +1813,15 @@ namespace CICLatest.Controllers
                     TelephoneNumber = (string)myJObject["value"][i]["TelephoneNumber"],
                     FaxNo = (string)myJObject["value"][i]["FaxNo"],
                     Email = (string)myJObject["value"][i]["Email"],
-                    WorkDisciplineType= (string)myJObject["value"][i]["WorkDisciplineType"],
-                   
+                    WorkDisciplineType = (string)myJObject["value"][i]["WorkDisciplineType"],
+
                     BusinessRepresentativeName = (string)myJObject["value"][i]["BusinessRepresentativeName"],
                     BusinessRepresentativePositionNumber = (string)myJObject["value"][i]["BusinessRepresentativePositionNumber"],
                     BusinessRepresentativeCellNo = (string)myJObject["value"][i]["BusinessRepresentativeCellNo"],
                     BusinessRepresentativeFax = (string)myJObject["value"][i]["BusinessRepresentativeFax"],
                     BusinessRepresentativeEmail = (string)myJObject["value"][i]["BusinessRepresentativeEmail"],
                     Other = (string)myJObject["value"][i]["Other"],
-                   
+
                 };
                 model.businessModel = businessModel;
                 model.Signature3 = Signature3;
@@ -1801,7 +1835,7 @@ namespace CICLatest.Controllers
                     //FinancialValue = (long)myJObject["value"][i]["FinancialValue"],
                     //FinancialInstitutionName = (string)myJObject["value"][i]["FinancialInstitutionName"],
                     //AvailableCapital = (long)myJObject["value"][i]["AvailableCapital"],
-                   // statementFilename = StatmentFile
+                    // statementFilename = StatmentFile
                 };
 
                 model.financialCapabilityForm7 = fin;
@@ -1813,23 +1847,23 @@ namespace CICLatest.Controllers
                     Name = (string)myJObject["value"][i]["Name"],
                     Title = (string)myJObject["value"][i]["Title"],
                     WitnessedName = (string)myJObject["value"][i]["WitnessedName"],
-                    WitnessedTitle= (string)myJObject["value"][i]["WitnessedTitle"],
+                    WitnessedTitle = (string)myJObject["value"][i]["WitnessedTitle"],
                     //Signature1=
                     //Signature2
-                   
+
 
 
                 };
                 model.documentsUpload = doc;
-                
+
 
 
                 DeclarationForm7 dec = new DeclarationForm7
                 {
-                   
-                      Namee = (string)myJObject["value"][i]["Namee"],
-                      TitleDesignation = (string)myJObject["value"][i]["TitleDesignation"]
-                     //Images to upload 
+
+                    Namee = (string)myJObject["value"][i]["Namee"],
+                    TitleDesignation = (string)myJObject["value"][i]["TitleDesignation"]
+                    //Images to upload 
 
                 };
                 model.declarationForm7 = dec;
@@ -1855,20 +1889,20 @@ namespace CICLatest.Controllers
 
                 TechnicalData tecData = new TechnicalData
                 {
-                     StateDetailsOfMaterials = (string)myJObject["value"][i]["StateDetailsOfMaterials"],
-                     StateOfAttainent = (string)myJObject["value"][i]["StateOfAttainent"]
+                    StateDetailsOfMaterials = (string)myJObject["value"][i]["StateDetailsOfMaterials"],
+                    StateOfAttainent = (string)myJObject["value"][i]["StateOfAttainent"]
 
                 };
                 model.technicalData = tecData;
-                
+
 
 
                 model.declarationForm7 = dec;
                 model.FormName = (string)myJObject["value"][i]["FormName"];
                 model.FormStatus = (string)myJObject["value"][i]["FormStatus"];
-                
 
-               model.FirmRegistrationNo = (int)myJObject["value"][i]["FormRegistrationNo"];
+
+                model.FirmRegistrationNo = (int)myJObject["value"][i]["FormRegistrationNo"];
                 model.path = (string)myJObject["value"][i]["path"];
                 model.ImagePath = (string)myJObject["value"][i]["path"];
             }
@@ -1891,7 +1925,7 @@ namespace CICLatest.Controllers
                     //ShareFile = 
                     SharePercent = (int)myJObject1["value"][i]["SharePercent"],
                     PartitionKey = (string)myJObject1["value"][i]["PartitionKey"],
-                    RowKey= (string)myJObject1["value"][i]["RowKey"],
+                    RowKey = (string)myJObject1["value"][i]["RowKey"],
 
 
                 });
@@ -1923,24 +1957,24 @@ namespace CICLatest.Controllers
                     ServiceProvided = (string)myJObject2["value"][i]["ServiceProvided"],
                     DateOrPeriod = (DateTime)myJObject2["value"][i]["DateOrPeriod"],
                     ContractValue = (decimal)myJObject2["value"][i]["ContractValue"],
-                    PartitionKey= (string)myJObject2["value"][i]["PartitionKey"],
+                    PartitionKey = (string)myJObject2["value"][i]["PartitionKey"],
                     RowKey = (string)myJObject2["value"][i]["RowKey"]
 
                 });
-             }
-             model.listOfPrevousClent = a;
+            }
+            model.listOfPrevousClent = a;
 
             if (model.listOfPrevousClent.Count == 0)
             {
-              //  model.cFin = 1;
+                //  model.cFin = 1;
                 model.cWork = 1;
                 Form7Model.listOfPrevousClent = new List<ListOfPreviousClient>();
                 Form7Model.listOfPrevousClent.Add(new ListOfPreviousClient { NameofClient = "", ServiceProvided = "", DateOrPeriod = null, ContractValue = 0, PartitionKey = "-", RowKey = "-" });
             }
             else
             {
-               // model.cFin = model.listOfPrevousClent.Count;
-               model.cWork= model.listOfPrevousClent.Count; ;
+                // model.cFin = model.listOfPrevousClent.Count;
+                model.cWork = model.listOfPrevousClent.Count; ;
             }
             string jsonData3;
             AzureTablesData.GetEntity(StorageName, StorageKey, "CicForm7ApplicationBankDetails", rowkey, out jsonData3);
@@ -1976,13 +2010,13 @@ namespace CICLatest.Controllers
             else
             {
                 //model.cWork = model.companyBank.Count;
-               model.cFin = model.companyBank.Count;
+                model.cFin = model.companyBank.Count;
 
             }
 
             loadData(model);
             model.formval = "Edit";
-           
+
             List<AssociationList> AList = new List<AssociationList>();
             AList = ViewBag.ListofAssociation;
 
@@ -1990,7 +2024,7 @@ namespace CICLatest.Controllers
 
             memoryCache.Set("listAssociation", AList);
             memoryCache.Set("Form7", model);
-          
+
             return RedirectToAction("CicForm7", "Cicform7");
         }
 
@@ -1998,7 +2032,7 @@ namespace CICLatest.Controllers
         {
             ViewBag.type = "active";
             Cicf7Model model = new Cicf7Model();
-            string c = "";            
+            string c = "";
             string jsonData;
             AzureTablesData.GetEntitybyLoginId(StorageName, StorageKey, "CicForm7", User.Identity.Name, out jsonData);
 
@@ -2007,7 +2041,7 @@ namespace CICLatest.Controllers
                                 orderby (int)rec["FormRegistrationNo"] descending
                                 select rec).FirstOrDefault();
 
-            if(latestRecord != null)
+            if (latestRecord != null)
             {
                 model.RowKey = (string)latestRecord["RowKey"];
                 model.CustNo = (string)latestRecord["CustNo"];
@@ -2238,7 +2272,7 @@ namespace CICLatest.Controllers
                 {
                     p.App.AssociationCertificateAttachment = fsign;
                 }
-                p.App.AssociationCertificateName =  p.App.AssociationCertificateAttachment.FileName;
+                p.App.AssociationCertificateName = p.App.AssociationCertificateAttachment.FileName;
 
             }
             isExist = memoryCache.TryGetValue("Signature3", out fsign);
@@ -2416,7 +2450,7 @@ namespace CICLatest.Controllers
                 if (p.declarationForm7.RegistrationCertificate != null)
                 {
                     memoryCache.Set("RegistrationCertificate", p.declarationForm7.RegistrationCertificate);
-                    p.RegistrationCertificate= p.declarationForm7.RegistrationCertificate.FileName;
+                    p.RegistrationCertificate = p.declarationForm7.RegistrationCertificate.FileName;
                 }
             }
             else
@@ -2703,7 +2737,7 @@ namespace CICLatest.Controllers
             return p;
         }
 
-     
+
         public void UploadBlob(Cicf7Model model, int tempMax)
         {
             if (model.ImagePath == "NA" || model.ImagePath == "-")
@@ -2733,7 +2767,7 @@ namespace CICLatest.Controllers
             uploadFiles1(model.declarationForm7.Signature, model.ImagePath, "Signature");
             uploadFiles1(model.documentsUpload.Signature2, model.ImagePath, "Signature2");
 
-            if(model.Sharelist!=null)
+            if (model.Sharelist != null)
             {
                 for (int i = 0; i < model.Sharelist.Count; i++)
                 {
@@ -2741,7 +2775,7 @@ namespace CICLatest.Controllers
                     uploadFiles1(model.Sharelist[i].ShareFile, model.ImagePath, tempn);
                 }
             }
-           
+
         }
         public int getRegNo(Cicf7Model p)
         {
@@ -2827,7 +2861,7 @@ namespace CICLatest.Controllers
             p.ReNewFormC = (p.ReNewFormC != "") ? p.ReNewFormC : "-";
             p.RenewFormBMCA = (p.RenewFormBMCA != "") ? p.RenewFormBMCA : "-";
             p.RenewFinancialRequirment = (p.RenewFinancialRequirment != "") ? p.RenewFinancialRequirment : "-";
-          
+
             p.RenewIdentification = (p.RenewIdentification != "") ? p.RenewIdentification : "-";
             p.Signature = (p.Signature != "") ? p.Signature : "-";
             p.Signature2 = (p.Signature2 != "") ? p.Signature2 : "-";
@@ -2850,7 +2884,7 @@ namespace CICLatest.Controllers
             p.ReNewFormC = (p.ReNewFormC != null) ? p.ReNewFormC : "-";
             p.RenewFormBMCA = (p.RenewFormBMCA != null) ? p.RenewFormBMCA : "-";
             p.RenewFinancialRequirment = (p.RenewFinancialRequirment != null) ? p.RenewFinancialRequirment : "-";
-          
+
             p.RenewIdentification = (p.RenewIdentification != null) ? p.RenewIdentification : "-";
             p.Signature = (p.Signature != null) ? p.Signature : "-";
             p.Signature2 = (p.Signature2 != null) ? p.Signature2 : "-";
