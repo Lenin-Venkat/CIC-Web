@@ -1493,24 +1493,26 @@ namespace CICLatest.Controllers
             }
             else
             {
+                int tempRegNo;
+                tempMax = GenericHelper.GetRegNo(p1.FormRegistrationNo, p1.formval, _azureConfig);
                 AzureTablesData.GetAllEntity(StorageName, StorageKey, "cicform", out jsonData);//Get data
 
-                JObject myJObject = JObject.Parse(jsonData);
-                int cntJson = myJObject["value"].Count();
-                int tempRegNo;
+                //JObject myJObject = JObject.Parse(jsonData);
+                //int cntJson = myJObject["value"].Count();
+              
 
-                //int tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
-                tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
-                for (int i = 0; i < cntJson; i++)
-                {
+                ////int tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
+                //tempMax = (int)myJObject["value"][0]["ProjectRegistrationNo"]; ;
+                //for (int i = 0; i < cntJson; i++)
+                //{
 
-                    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
-                    if (tempRegNo > tempMax)
-                    {
-                        tempMax = tempRegNo;
-                    }
-                }
-                tempMax++;
+                //    tempRegNo = (int)myJObject["value"][i]["ProjectRegistrationNo"];
+                //    if (tempRegNo > tempMax)
+                //    {
+                //        tempMax = tempRegNo;
+                //    }
+                //}
+                //tempMax++;
                 //Adding new registration no 
                 AddNewRegistrationNo addNew = new AddNewRegistrationNo();
                 addNew.PartitionKey = tempMax.ToString();

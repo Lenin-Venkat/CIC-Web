@@ -11,7 +11,7 @@ namespace CICLatest.Models
 
         public AppSettingsReader(IConfiguration configuration)
         { 
-            _settings = configuration.GetSection("AppSettings").GetChildren().ToDictionary(x => x.Key, x => x.Value);
+            _settings = configuration.GetSection("AzureStorageConfiguration").GetChildren().ToDictionary(x => x.Key, x => x.Value);
         }
 
         public string Read(string key)

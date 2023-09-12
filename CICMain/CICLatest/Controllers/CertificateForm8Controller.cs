@@ -436,7 +436,7 @@ namespace CICLatest.Controllers
             if (model.CreateClearenceCertificate == 1)
             {
                 //Levy Clearence Certificate
-                tempPath1 = "Files/" + "LEVY CLEARANCE CERTIFICATE_1.pdf";
+                tempPath1 = "Files/" + "LEVY CLEARANCE CERTIFICATE_2.pdf";
 
                 regNoName = "PRN" + model.FormRegistrationNo.ToString().PadLeft(5, '0');
 
@@ -502,8 +502,8 @@ namespace CICLatest.Controllers
                 pdfFormFields.SetField("Text40", year3.Substring(3, 1));
 
 
-                pdfFormFields.SetField("Receipt  No", RNo);
-                pdfFormFields.SetFieldProperty("Receipt  No", "textsize", fontSize, null);
+                pdfFormFields.SetField("Receipt_No", RNo);
+                pdfFormFields.SetFieldProperty("Receipt_No", "textsize", fontSize, null);
 
                 pdfStamper.FormFlattening = true;
 

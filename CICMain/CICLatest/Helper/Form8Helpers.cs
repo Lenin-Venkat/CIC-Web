@@ -256,9 +256,6 @@ namespace CICLatest.Helper
         {
             //Get new token from Azure for BC
             string url = TokenURL;
-
-            //ConfigurationSettings.AzureAccessToken
-            Uri uri = new Uri(Authority.Replace("{AadTenantId}", AadTenantId));
             Dictionary<string, string> requestBody = new Dictionary<string, string>
                 {
                     {"grant_type", "client_credentials" },
