@@ -28,7 +28,7 @@
                     <li>
                         <label class="custom-radio">
                             <span>New Application for Registration</span>
-                            <input type="radio" asp-for="@Model.App.AppType" value="NewApplication" onclick="hideDocSection(this);" />
+                            <input type="radio" asp-for="@Model.App.AppType" value="NewApplication" disabled="@Model.isCertificateExist" onclick="hideDocSection(this);" />
                             <span class="checkmark"></span>
                         </label>
                     </li>
