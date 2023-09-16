@@ -248,7 +248,7 @@ namespace CICLatest.Controllers
                 PKey = form8Model.PartitionKey;
                 RKey = form8Model.RowKey;
                 form8Model.ReceiptNo = rdata.RNo.ToString();
-                UpdateRegistrationDetails(form8Model.RowKey, rdata.RNo.ToString(), "cicform8");
+                //UpdateRegistrationDetails(form8Model.RowKey, rdata.RNo.ToString(), "cicform8");
                 var response1 = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform8", JsonConvert.SerializeObject(form8Model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), form8Model.PartitionKey, form8Model.RowKey);
 
                 ////post release updates: invoice generation and update Project Details

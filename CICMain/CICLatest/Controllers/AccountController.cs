@@ -346,7 +346,7 @@ namespace CICLatest.Controllers
                   
                     var result = await _userManager.AddClaimAsync(user, claim);
            
-                    string body = "CIC - Please enter this One Time Password:" + randomNumber + "  Thank you,CIC Team";
+                    string body = "CIC - Please enter this OTP: " + randomNumber + "  Thank you,CIC Team";
                     sendOTPSMS(forgotPasswordModel.EmailPhoneNumber, body);
                     //var c = new FormUrlEncodedContent(new[]
                     //    {
