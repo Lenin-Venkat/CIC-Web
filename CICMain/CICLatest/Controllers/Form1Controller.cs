@@ -34,7 +34,7 @@ namespace CICLatest.Controllers
         static string formName;
         int cnt = 1;
         static string StorageName = "";
-        static int subcat =0;
+        static int subcat = 0;
         static string StorageKey = "";
         static bool IsProjectExist = false;
         string Grade = "";
@@ -64,13 +64,13 @@ namespace CICLatest.Controllers
 
         public IActionResult Index(string id)
         {
-            CICForm1Model form1EditModel = new CICForm1Model();            
+            CICForm1Model form1EditModel = new CICForm1Model();
             formName = "";
 
             if (id == "Form1")
             {
                 formName = "CONSTRUCTION FIRMS REGISTRATION FORM - CICF 1";
-                
+
             }
             else
             {
@@ -99,7 +99,7 @@ namespace CICLatest.Controllers
                     ViewBag.sType = true;
                 }
                 List<AssociationList> AList = new List<AssociationList>();
-               
+
                 memoryCache.TryGetValue("listAssociation", out AList);
                 ViewBag.ListofAssociation = AList;
             }
@@ -127,10 +127,38 @@ namespace CICLatest.Controllers
                 form1Model.financialCapabilityModel = new FinancialCapability();
                 form1Model.worksCapability = new List<WorksCapability>();
                 form1Model.worksCapability.Add(new WorksCapability { ContractSum = 0, Location = "", PartitionKey = "-", RegistationNo = "", ProjectName = "", TelephoneNo = "", RowKey = "-", TypeofInvolvement = "", CompletionDate = DateTime.MinValue });
-                
+
             }
-            
+
+
+
+            var isCertificateExist = IsCertificateAlreadyExist(form1Model);
+            form1Model.isCertificateExist = isCertificateExist;
             return View(form1Model);
+        }
+
+        private bool IsCertificateAlreadyExist(CICForm1Model p)
+        {
+            //Add CreatedBy validation
+            if (p.FormName == "Form1" || p.FormName == "Form2")
+            {
+                AzureTablesData.GetEntitybyCreatedBy(StorageName, StorageKey, "cicform1", User.Identity.Name, out string data);
+                if (!string.IsNullOrEmpty(data)) 
+                {
+                    var myJObject = JObject.Parse(data);
+                    var cntJson = myJObject["value"].Count();
+
+                    for (int i = 0; i<cntJson; i++)
+                    {
+                        var formStatus = (string)myJObject["value"][i]["FormStatus"];
+                        if (formStatus == "Finished")
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public void setGetFileEdit(CICForm1Model p)

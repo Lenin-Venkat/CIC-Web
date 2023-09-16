@@ -67,6 +67,7 @@ namespace CICLatest.Models
         public string RegistrationID { get; set; }
 
         public Boolean ReadOnlyField1 { get; set; }
+        public bool isCertificateExist { get; set;}
     }
 
     public class ApplicationTypeModel
