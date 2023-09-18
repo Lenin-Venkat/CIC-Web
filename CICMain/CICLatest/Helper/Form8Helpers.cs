@@ -233,7 +233,7 @@ namespace CICLatest.Helper
             client1.DefaultRequestHeaders.Add("If-Match", "*");
             client1.DefaultRequestHeaders.Add("Authorization", "Bearer " + accessToken);
             client1.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpContent c = new StringContent(json, Encoding.UTF8, appType);
+            HttpContent c = new StringContent(json, null, appType);
 
             var method = "PATCH";
             var httpVerb = new HttpMethod(method);

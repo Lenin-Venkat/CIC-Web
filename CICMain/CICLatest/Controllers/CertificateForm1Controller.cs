@@ -236,7 +236,7 @@ namespace CICLatest.Controllers
                 files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = model.Grade });
                 
             }
-            UpdateRegNumberToBC(TempCertificateNo, model.RegistrationID);
+            UpdateRegNumberToBC(TempCertificateNo, model.RegistrationID,model.Grade,model.ReceiptNo);
             memoryCache.Set("CertFiles",files);
             model.CertificateNo = TempCertificateNo;
             model.FormStatus = "Finished";
@@ -537,13 +537,15 @@ namespace CICLatest.Controllers
             return RNo;
         }
 
-        public string UpdateRegNumberToBC(string regNumber,string custno)
+        public string UpdateRegNumberToBC(string regNumber,string regId,string grade,string receiptNo)
         {
             try
             {
                 var data1 = JObject.FromObject(new
                 {
-                    certificateNo = regNumber
+                    certificateNo = regNumber,
+                    receiptNo = receiptNo,
+                    grade = grade
                 }) ;
 
                 var json = JsonConvert.SerializeObject(data1);
@@ -551,7 +553,7 @@ namespace CICLatest.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     GetAccessToken();
-                    string BCUrl2 = _azureConfig.BCURL + "/customersContract1(" + custno + ")";
+                    string BCUrl2 = _azureConfig.BCURL + "/customersContract1(" + regId + ")";
                     Uri u = new Uri(BCUrl2);
                     var t = Task.Run(() => PatchData(u, json, "application/json",accessToken));
                     t.Wait();

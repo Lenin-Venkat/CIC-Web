@@ -333,7 +333,7 @@ namespace CICLatest.Controllers
             }
 
             CertificateForm1Controller certificateForm1 = new CertificateForm1Controller(memoryCache,_emailcofig,_azureConfig, Environment, _blobStorageService);
-            certificateForm1.UpdateRegNumberToBC(regNoName, model.RegistrationID);
+            certificateForm1.UpdateRegNumberToBC(regNoName, model.RegistrationID,model.Grade,model.ReceiptNo);
 
             memoryCache.Set("CertFiles",files);
             model.CertificateNo = regNoName;
