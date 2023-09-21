@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
 using CICLatest.Contracts;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CICLatest.Controllers
 {
@@ -442,6 +443,17 @@ namespace CICLatest.Controllers
             {
                 createdDate = (DateTime)myJObject["value"][i]["CreatedDate"];
             }
+            string subCategoryName = "";
+            if (myJObject["value"][i]["SubcatogoryId"] != null)
+            {
+                subCategoryName = GetSubCategorybyName(Convert.ToInt32(myJObject["value"][i]["SubcatogoryId"]));
+            }
+            if (subCategoryName.Contains("("))
+            {
+                String[] sub = new String[3];
+                sub = subCategoryName.Split("(");
+                subCategoryName = sub[0];
+            }
             try
             {
                 var data1 = JObject.FromObject(new
@@ -462,7 +474,7 @@ namespace CICLatest.Controllers
                     dateofPay = "2022-07-19",
                     typeofPay = "EFT",
                     bank = (string)myJObject["value"][i]["BankName"],
-                    category = (string)myJObject["value"][i]["Category"],
+                    category = subCategoryName,
                     monthofReg = createdDate.ToString("MMMM"),
                     typeofApplication = typeofApplication
                 });

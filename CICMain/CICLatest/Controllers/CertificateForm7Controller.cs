@@ -228,12 +228,14 @@ namespace CICLatest.Controllers
                 regNoName = "FM/S" + ManufacturersCnt.ToString().PadLeft(5, '0');
                 headerContrcatorName = "FOREIGN MANUFACTURER/SUPPLIER";
                 grade = "FM/S-" + cat;
+                //model.Grade = "FM/S-" + cat;
             }
             else
             {
                 regNoName = "M/S" + ManufacturersCnt.ToString().PadLeft(5, '0');
                 headerContrcatorName = "MANUFACTURER/SUPPLIER";
                 grade = "M/S-" + cat;
+               // model.Grade = "M/S-" + cat;
             }
             string fName1 = "MS" + ManufacturersCnt.ToString().PadLeft(5, '0');
             tempPath1 = "Files/" + "FOREIGNMANUFACTURERSUPPLIER.pdf";
@@ -319,6 +321,7 @@ namespace CICLatest.Controllers
             files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = grade });
             memoryCache.Set("CertFiles", files);
             model.CertificateNo = regNoName;
+            model.Grade = grade;
             model.FormStatus = "Finished";
             memoryCache.Set("Form7Model", model);
 

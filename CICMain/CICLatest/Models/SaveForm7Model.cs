@@ -278,5 +278,6 @@ namespace CICLatest.Models
 
         public string InvoiceNo { get; set; }
         public string RegistrationID { get; set; }
+        public string Grade { get; set; }
     }
 }

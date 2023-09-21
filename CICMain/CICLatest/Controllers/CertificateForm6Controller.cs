@@ -223,6 +223,7 @@ namespace CICLatest.Controllers
             files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = grade });
             memoryCache.Set("CertFiles", files);
             model.CertificateNo = regNoName;
+            model.Grade = grade;
             model.FormStatus = "Finished";
             memoryCache.Set("Form6Model", model);
 

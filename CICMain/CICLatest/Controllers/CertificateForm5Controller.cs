@@ -190,6 +190,9 @@ namespace CICLatest.Controllers
                 grade = "JVAP" + foreignstr;
             }
 
+            model.Grade = grade;
+
+
             string RNo = getReceiptNumberfromDB().ToString().PadLeft(5, '0');// getReceiptNo(model.RowKey);
 
             DateTime d = Convert.ToDateTime(model.CreatedDate).AddYears(1);

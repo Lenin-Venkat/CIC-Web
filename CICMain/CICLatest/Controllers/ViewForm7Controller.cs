@@ -104,6 +104,8 @@ namespace CICLatest.Controllers
                 model.comment = (string)myJObject["value"][i]["comment"];
                 model.CustNo = (string)myJObject["value"][i]["CustNo"];
                 model.ReceiptNo = (string)myJObject["value"][i]["ReceiptNo"];
+                model.Grade = (string)myJObject["value"][i]["Grade"];
+
                 if (myJObject["value"][i]["AdminFee"] != null)
                 {
                     model.AdminFee = (int)myJObject["value"][i]["AdminFee"];
@@ -326,7 +328,7 @@ namespace CICLatest.Controllers
 
                         for (int i = 0; i < cntJson; i++)
                         {
-                          model.RegistrationID = view1Form.UpdateRegistrationDetails(myJObject, i, invoiceno, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.PostalAddress,model.TradingStyle, Convert.ToDecimal(penalty), model.AppType);
+                          model.RegistrationID = view1Form.UpdateRegistrationDetails(myJObject, i, invoiceno, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee),model.PostalAddress,model.TradingStyle, Convert.ToDecimal(penalty), model.AppType, model.WorkDisciplineType);
                         }
 
                         break;

@@ -559,7 +559,7 @@ namespace CICLatest.Controllers
 
                             for (int i = 0; i < cntJson; i++)
                             {
-                                model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress, model.TradingStyle, Convert.ToDecimal(penalty),model.AppType);
+                                model.RegistrationID = UpdateRegistrationDetails(myJObject, i, model.InvoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.PostalAddress, model.TradingStyle, Convert.ToDecimal(penalty),model.AppType,model.Category);
                             }
                         }
 
@@ -947,7 +947,7 @@ namespace CICLatest.Controllers
         }
 
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle,decimal penaltyFee, string typeofApplication)
+        public string UpdateRegistrationDetails(JObject myJObject, int i,string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress, string tradeStyle,decimal penaltyFee, string typeofApplication,string category)
         {
             GetAccessToken();
             string custno = (string)myJObject["value"][i]["CustNo"];
@@ -977,7 +977,7 @@ namespace CICLatest.Controllers
                     dateofPay = "2022-07-19",
                     typeofPay = "EFT",
                     bank = (string)myJObject["value"][i]["BankName"],
-                    category = (string)myJObject["value"][i]["Category"],
+                    category = category, 
                     monthofReg = createdDate.ToString("MMMM"),
                     grade = (string)myJObject["value"][i]["Grade"],
                     typeofApplication = typeofApplication

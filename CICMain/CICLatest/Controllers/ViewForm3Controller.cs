@@ -495,9 +495,30 @@ namespace CICLatest.Controllers
                         int cntJson = myJObject["value"].Count();
 
                         accessToken = view1Form.GetAccessToken();
+                        string CategoryName = "";
                         for (int i = 0; i < cntJson; i++)
                         {
-                           model.RegistrationID =  UpdateRegistrationDetails(myJObject, i, invoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.Phyaddress, Convert.ToDecimal(penalty),model.AppType);
+                            if (model.CategoryId != 0)
+                            {
+                                CategoryName = GetCategorybyName(model.CategoryId);
+                            }
+                            if (CategoryName.Contains("General Building") == true)
+                            {
+                                CategoryName = "BUILDING WORKS (" + model.ProjectTitle + ")";
+                            }
+                            else if (CategoryName.Contains("General Civil") == true)
+                            {
+                                CategoryName = "CIVIL WORKS (" + model.ProjectTitle + ")";
+                            }
+                            else if (CategoryName.Contains("General Electrical") == true)
+                            {
+                                CategoryName = "ELECTRICAL WORKS (" + model.ProjectTitle + ")";
+                            }
+                            else if (CategoryName.Contains("General Mechanical") == true)
+                            {
+                                CategoryName = "MECHANICAL WORKS (" + model.ProjectTitle + ")";
+                            }
+                            model.RegistrationID =  UpdateRegistrationDetails(myJObject, i, invoiceNo, Convert.ToDecimal(model.RegistrationFee), Convert.ToDecimal(model.AdminFee), Convert.ToDecimal(model.RenewalFee), model.Phyaddress, Convert.ToDecimal(penalty),model.AppType, CategoryName);
                         }
 
                         break;
@@ -514,6 +535,16 @@ namespace CICLatest.Controllers
             }
             memoryCache.Remove("Form3Data");
             return RedirectToAction("ReviewerDashboard", "ReviewerDashboard");
+        }
+
+        public string GetCategorybyName(int categoryId)
+        {
+            string Name = "";
+            Name = (from categoryType in _context.Category
+                    where categoryType.CategoryID == categoryId
+                    select categoryType.CategoryName).FirstOrDefault();
+
+            return Name;
         }
 
         [HttpPost]
@@ -614,7 +645,7 @@ namespace CICLatest.Controllers
             return gradesList;
         }
 
-        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress,decimal penaltyFee,string typeofApplication)
+        public string UpdateRegistrationDetails(JObject myJObject, int i, string invoiceNo, decimal registratinFee, decimal adminFee, decimal reFee, string postalAddress,decimal penaltyFee,string typeofApplication,string CategoryName)
         {
             string custno = (string)myJObject["value"][i]["CustNo"];
             DateTime createdDate = DateTime.Now;
@@ -643,7 +674,7 @@ namespace CICLatest.Controllers
                     dateofPay = "2022-07-19",
                     typeofPay = "EFT",
                     bank = (string)myJObject["value"][i]["BankName"],
-                    category = (string)myJObject["value"][i]["Category"],
+                    category = CategoryName,
                     monthofReg = createdDate.ToString("MMMM"),
                     grade = (string)myJObject["value"][i]["JVGrade"],
                     typeofApplication = typeofApplication

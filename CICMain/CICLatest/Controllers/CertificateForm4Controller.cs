@@ -251,7 +251,7 @@ namespace CICLatest.Controllers
                 tempPath1 = "Files/" + "ALLIED PROFESSIONALS.pdf";
             }
 
-
+            model.Grade = grade;    
             //template file path
             path1 = Path.Combine(this.Environment.WebRootPath, tempPath1);
             PdfReader pdfReader = new PdfReader(path1);
@@ -352,6 +352,7 @@ namespace CICLatest.Controllers
             files.Add(new CertificateModel { FilePath = pdfnameServer, FileName = CertName, emailTo = model.CreatedBy, grade = grade });
             memoryCache.Set("CertFiles", files);
             model.CertificateNo = regNoName;
+            model.Grade = grade;
             model.FormStatus = "Finished";
             memoryCache.Set("Form4Model", model);
 

@@ -163,7 +163,7 @@ namespace CICLatest.Controllers
                 PKey = form4Model.PartitionKey;
                 RKey = form4Model.RowKey;
                 form4Model.ReceiptNo = rdata.RNo.ToString();
-                UpdateRegistrationDetails(form4Model.RowKey, rdata.RNo.ToString(), "cicform4",form4Model.CertificateNo,form4Model.BusinessType);
+                UpdateRegistrationDetails(form4Model.RowKey, rdata.RNo.ToString(), "cicform4",form4Model.CertificateNo,form4Model.Grade);
                 CertForm4Model data1 = new CertForm4Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form4");
@@ -193,7 +193,7 @@ namespace CICLatest.Controllers
                 RKey = form7Model.RowKey;
                 form7Model.ReceiptNo = rdata.RNo.ToString();
                 CertForm7Model data1 = new CertForm7Model();
-                UpdateRegistrationDetails(form7Model.RowKey, rdata.RNo.ToString(), "cicform7",form7Model.CertificateNo,form7Model.BusinessType);
+                UpdateRegistrationDetails(form7Model.RowKey, rdata.RNo.ToString(), "cicform7",form7Model.CertificateNo,form7Model.Grade);
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form7");
                 var response1 = AzureTablesData.UpdateEntity(StorageName, StorageKey, "cicform7", JsonConvert.SerializeObject(form7Model, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), form7Model.PartitionKey, form7Model.RowKey);
@@ -220,7 +220,11 @@ namespace CICLatest.Controllers
                 PKey = form6Model.PartitionKey;
                 RKey = form6Model.RowKey;
                 form6Model.ReceiptNo = rdata.RNo.ToString();
-                UpdateRegistrationDetails(form6Model.RowKey, rdata.RNo.ToString(), "cicform6",form6Model.CertificateNo,"");
+                string categories;
+                
+                categories = form6Model.Categories.Substring(0,form6Model.Categories.IndexOf('-'));
+
+                UpdateRegistrationDetails(form6Model.RowKey, rdata.RNo.ToString(), "cicform6",form6Model.CertificateNo,form6Model.Grade);
                 CertForm6Model data1 = new CertForm6Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data1);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data1, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form6");
@@ -304,7 +308,7 @@ namespace CICLatest.Controllers
                 PKey = form5Model.PartitionKey;
                 RKey = form5Model.RowKey;
                 form5Model.ReceiptNo = rdata.RNo.ToString();
-                UpdateRegistrationDetails(form5Model.RowKey, rdata.RNo.ToString(), "cicform5",form5Model.CertificateNo,"");
+                UpdateRegistrationDetails(form5Model.RowKey, rdata.RNo.ToString(), "cicform5",form5Model.CertificateNo,form5Model.Grade);
                 CertForm3Model data3 = new CertForm3Model();
                 isexist = memoryCache.TryGetValue("CertMaster", out data3);
                 var response = AzureTablesData.UpdateEntity(StorageName, StorageKey, "certificateMaster", JsonConvert.SerializeObject(data3, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), "Certificate", "Form3");
